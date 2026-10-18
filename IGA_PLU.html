@@ -476,59 +476,44 @@ if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
   recognition = new SR();
   recognition.lang = "fr-CA";
   recognition.interimResults = false;
-  recognition.maxAlternatives = 3;
-  recognition.continuous = true; // reste ouvert plus longtemps
+  recognition.maxAlternatives = 1;
 }
 
-let voiceTimeout = null;
-
 function startVoice(targetInput, after) {
-  if (!recognition) { alert("Recherche vocale non supportée"); return; }
+  if (!recognition) { 
+    alert("Recherche vocale non supportée sur ce navigateur"); 
+    return; 
+  }
   
-  // Clear any previous timeout
-  if (voiceTimeout) clearTimeout(voiceTimeout);
+  const btn = document.getElementById("floatMic");
+  if (btn) btn.style.background = "#c62828"; // rouge = écoute
   
   recognition.onresult = e => {
-    let text = e.results[0][0].transcript;
-    const alts = [];
-    for (let i = 0; i < e.results[0].length && i < 3; i++) {
-      alts.push(e.results[0][i].transcript);
-    }
-
-    let bestProducts = [];
-    let usedText = text;
-    for (const alt of alts) {
-      const matches = findBestMatches(alt);
-      if (matches.length) {
-        bestProducts = matches;
-        usedText = alt;
-        break;
-      }
-    }
-
-    if (bestProducts.length) {
-      targetInput.value = bestProducts[0].n;
-      if (after) after(bestProducts[0].n, bestProducts);
-    } else {
-      const cleaned = cleanWords(text).join(" ") || text;
+    const text = (e.results && e.results[0] && e.results[0][0]) ? e.results[0][0].transcript : "";
+    if (text) {
+      const cleaned = text.trim();
       targetInput.value = cleaned;
       if (after) after(cleaned, []);
     }
-    
-    // Stop after getting a result
-    try { recognition.stop(); } catch(e) {}
+    if (btn) btn.style.background = "#1565c0";
+  };
+  
+  recognition.onerror = e => {
+    console.log("Mic error:", e.error);
+    if (btn) btn.style.background = "#1565c0";
+    if (e.error === "not-allowed") alert("Permission micro refusée");
   };
   
   recognition.onend = () => {
-    if (voiceTimeout) clearTimeout(voiceTimeout);
+    if (btn) btn.style.background = "#1565c0";
   };
   
-  try { recognition.start(); } catch (e) {}
-  
-  // Auto-stop after 6 seconds if no speech detected
-  voiceTimeout = setTimeout(() => {
-    try { recognition.stop(); } catch(e) {}
-  }, 6000);
+  try {
+    recognition.start();
+  } catch (e) {
+    console.log("Start failed:", e);
+    if (btn) btn.style.background = "#1565c0";
+  }
 }
 
 

@@ -492,9 +492,11 @@ function startVoice(targetInput, after) {
   recognition.onresult = e => {
     const text = (e.results && e.results[0] && e.results[0][0]) ? e.results[0][0].transcript : "";
     if (text) {
-      const cleaned = text.trim();
+      // Use fuzzy matching with category hints
+      const matches = findBestMatches(text);
+      const cleaned = cleanWords(text).join(" ") || text.trim();
       targetInput.value = cleaned;
-      if (after) after(cleaned, []);
+      if (after) after(cleaned, matches);
     }
     if (btn) btn.style.background = "#1565c0";
   };

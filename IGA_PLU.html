@@ -16,7 +16,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .header input{flex:1;min-width:100px}
 .btn{background:#333;color:#fff;border:none;padding:10px 12px;border-radius:8px;font-size:13px;cursor:pointer}
 .btn.p{background:#2e7d32}
-.btn.voice{background:#1565c0}
+.btn.voice{background:#1565c0;padding:16px 20px;font-size:22px;min-width:60px;min-height:52px}
 .results{padding:8px;flex:1;overflow-y:auto}
 .item{background:#1a1a1a;border-radius:10px;padding:10px;margin-bottom:6px;display:flex;gap:10px;align-items:center;cursor:pointer}
 .item:active{background:#2a2a2a}
@@ -447,10 +447,17 @@ if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
   recognition.lang = "fr-CA";
   recognition.interimResults = false;
   recognition.maxAlternatives = 3;
+  recognition.continuous = true; // reste ouvert plus longtemps
 }
+
+let voiceTimeout = null;
 
 function startVoice(targetInput, after) {
   if (!recognition) { alert("Recherche vocale non supportée"); return; }
+  
+  // Clear any previous timeout
+  if (voiceTimeout) clearTimeout(voiceTimeout);
+  
   recognition.onresult = e => {
     let text = e.results[0][0].transcript;
     const alts = [];
@@ -470,17 +477,28 @@ function startVoice(targetInput, after) {
     }
 
     if (bestProducts.length) {
-      // Put the best matching product name in the box, but we'll search with the original intent
       targetInput.value = bestProducts[0].n;
       if (after) after(bestProducts[0].n, bestProducts);
     } else {
-      // Fallback: cleaned query so at least category words can help
       const cleaned = cleanWords(text).join(" ") || text;
       targetInput.value = cleaned;
       if (after) after(cleaned, []);
     }
+    
+    // Stop after getting a result
+    try { recognition.stop(); } catch(e) {}
   };
+  
+  recognition.onend = () => {
+    if (voiceTimeout) clearTimeout(voiceTimeout);
+  };
+  
   try { recognition.start(); } catch (e) {}
+  
+  // Auto-stop after 6 seconds if no speech detected
+  voiceTimeout = setTimeout(() => {
+    try { recognition.stop(); } catch(e) {}
+  }, 6000);
 }
 
 

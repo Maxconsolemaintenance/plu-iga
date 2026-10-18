@@ -65,13 +65,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 </style>
 </head>
 <body>
+<button id="floatMic">🎤</button>
 
 <div id="s" class="screen active">
 <div class="header">
 <input type="text" id="q" placeholder="Rechercher un produit...">
 <select id="catF"><option value="">Toutes catégories</option><option value="Agrumes">Agrumes</option><option value="Baies">Baies</option><option value="Bananes">Bananes</option><option value="Cerises">Cerises</option><option value="Champignons">Champignons</option><option value="Concombres">Concombres</option><option value="FLORAL ORCHIDEES">FLORAL ORCHIDEES</option><option value="FLORAL PLANTES">FLORAL PLANTES</option><option value="FLORAL ROSES">FLORAL ROSES</option><option value="Floral">Floral</option><option value="Fruits & Légumes V. Ajout">Fruits & Légumes V. Ajout</option><option value="Fruits Ethniques">Fruits Ethniques</option><option value="Fruits Saisonniers">Fruits Saisonniers</option><option value="Fruits Tropicaux">Fruits Tropicaux</option><option value="Fruits à noyau">Fruits à noyau</option><option value="GRAINES OISEAUX">GRAINES OISEAUX</option><option value="Herbes">Herbes</option><option value="Ingrédients">Ingrédients</option><option value="Jus, Vinaigrettes & Trempettes Réfrigérés">Jus, Vinaigrettes & Trempettes Réfrigérés</option><option value="Légumes Champ">Légumes Champ</option><option value="Légumes Cuisson">Légumes Cuisson</option><option value="Légumes Ethniques">Légumes Ethniques</option><option value="Légumes Racine">Légumes Racine</option><option value="Légumes Salade">Légumes Salade</option><option value="MULTICULT VRAC">MULTICULT VRAC</option><option value="Melons">Melons</option><option value="NE PAS UTILISER">NE PAS UTILISER</option><option value="PANIERS SUSPENDUS">PANIERS SUSPENDUS</option><option value="PLANTES EN FLEURS">PLANTES EN FLEURS</option><option value="Poires">Poires</option><option value="Poivrons">Poivrons</option><option value="Pommes">Pommes</option><option value="Pommes de terre">Pommes de terre</option><option value="Produits Secs V. Ajout">Produits Secs V. Ajout</option><option value="Raisins">Raisins</option><option value="Salades Emballées V. Ajout">Salades Emballées V. Ajout</option><option value="Standard">Standard</option><option value="Substituts Viande">Substituts Viande</option><option value="Tomates">Tomates</option><option value="VENTE CENTR. JARDIN">VENTE CENTR. JARDIN</option><option value="VENTE FLEURS">VENTE FLEURS</option><option value="VENTE FR. ET LEG.">VENTE FR. ET LEG.</option><option value="VIVACES">VIVACES</option><option value="Vrac Valeur Ajoutée">Vrac Valeur Ajoutée</option></select>
 <select id="tagF"><option value="">Tous tags</option></select>
-<button class="btn voice" id="voiceB">🎤</button>
+
 <button class="btn" id="scanB">📷</button>
 <button class="btn p" id="addB">+</button>
 </div>
@@ -476,78 +477,50 @@ if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
   recognition = new SR();
   recognition.lang = "fr-CA";
   recognition.interimResults = false;
-  recognition.maxAlternatives = 3;
-  recognition.continuous = true; // reste ouvert plus longtemps
+  recognition.maxAlternatives = 1;
 }
 
-let voiceTimeout = null;
-
 function startVoice(targetInput, after) {
-  if (!recognition) { alert("Recherche vocale non supportée"); return; }
+  if (!recognition) { 
+    alert("Recherche vocale non supportée sur ce navigateur"); 
+    return; 
+  }
   
-  // Clear any previous timeout
-  if (voiceTimeout) clearTimeout(voiceTimeout);
+  const btn = document.getElementById("floatMic");
+  if (btn) btn.style.background = "#c62828"; // rouge = écoute
   
   recognition.onresult = e => {
-    let text = e.results[0][0].transcript;
-    const alts = [];
-    for (let i = 0; i < e.results[0].length && i < 3; i++) {
-      alts.push(e.results[0][i].transcript);
-    }
-
-    let bestProducts = [];
-    let usedText = text;
-    for (const alt of alts) {
-      const matches = findBestMatches(alt);
-      if (matches.length) {
-        bestProducts = matches;
-        usedText = alt;
-        break;
-      }
-    }
-
-    if (bestProducts.length) {
-      targetInput.value = bestProducts[0].n;
-      if (after) after(bestProducts[0].n, bestProducts);
-    } else {
-      const cleaned = cleanWords(text).join(" ") || text;
+    const text = (e.results && e.results[0] && e.results[0][0]) ? e.results[0][0].transcript : "";
+    if (text) {
+      const cleaned = text.trim();
       targetInput.value = cleaned;
       if (after) after(cleaned, []);
     }
-    
-    // Stop after getting a result
-    try { recognition.stop(); } catch(e) {}
+    if (btn) btn.style.background = "#1565c0";
+  };
+  
+  recognition.onerror = e => {
+    console.log("Mic error:", e.error);
+    if (btn) btn.style.background = "#1565c0";
+    if (e.error === "not-allowed") alert("Permission micro refusée");
   };
   
   recognition.onend = () => {
-    if (voiceTimeout) clearTimeout(voiceTimeout);
+    if (btn) btn.style.background = "#1565c0";
   };
   
-  try { recognition.start(); } catch (e) {}
-  
-  // Auto-stop after 6 seconds if no speech detected
-  voiceTimeout = setTimeout(() => {
-    try { recognition.stop(); } catch(e) {}
-  }, 6000);
+  try {
+    recognition.start();
+  } catch (e) {
+    console.log("Start failed:", e);
+    if (btn) btn.style.background = "#1565c0";
+  }
 }
 
 
-document.getElementById("floatMic").onclick = ()=>{
+document.getElementById("floatMic").onclick = function(){ this.style.background="#c62828";
   startVoice(document.getElementById("q"), (text, products)=>{
     q = text;
-    if (products && products.length) {
-      renderList(document.getElementById("res"), products);
-      document.getElementById("emp").style.display = products.length ? "none" : "block";
-    } else {
-      renderMain();
-    }
-  });
-};
-
-document.getElementById("voiceB").onclick = ()=>{
-  startVoice(document.getElementById("q"), (text, products)=>{
-    q = text;
-    // If we have fuzzy products, show them directly; otherwise normal filter
     if (products && products.length) {
       renderList(document.getElementById("res"), products);
       document.getElementById("emp").style.display = products.length ? "none" : "block";
@@ -572,9 +545,16 @@ document.getElementById("voiceBd").onclick = ()=>{
 document.getElementById("scanB").onclick = ()=>scanFromPhoto(null);
 document.getElementById("fscanB").onclick = ()=>scanFromPhoto("fc");
 
-updateTagFilter();
-renderMain();
+try {
+  updateTagFilter();
+  renderMain();
+} catch(e) {
+  console.error("Init error:", e);
+  // Fallback: show products anyway
+  setTimeout(() => {
+    try { renderMain(); } catch(e2) {}
+  }, 100);
+}
 </script>
-<button id="floatMic">🎤</button>
 </body>
 </html>

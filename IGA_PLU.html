@@ -477,47 +477,58 @@ if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
   recognition.lang = "fr-CA";
   recognition.interimResults = false;
   recognition.maxAlternatives = 3;
+  recognition.continuous = true; // reste ouvert plus longtemps
 }
 
 let voiceTimeout = null;
 
 function startVoice(targetInput, after) {
-  if (!recognition) { alert("Recherche vocale non supportée sur ce navigateur"); return; }
+  if (!recognition) { alert("Recherche vocale non supportée"); return; }
   
+  // Clear any previous timeout
   if (voiceTimeout) clearTimeout(voiceTimeout);
   
   recognition.onresult = e => {
-    let text = "";
-    if (e.results && e.results[0] && e.results[0][0]) {
-      text = e.results[0][0].transcript || "";
+    let text = e.results[0][0].transcript;
+    const alts = [];
+    for (let i = 0; i < e.results[0].length && i < 3; i++) {
+      alts.push(e.results[0][i].transcript);
     }
-    if (!text) return;
+
+    let bestProducts = [];
+    let usedText = text;
+    for (const alt of alts) {
+      const matches = findBestMatches(alt);
+      if (matches.length) {
+        bestProducts = matches;
+        usedText = alt;
+        break;
+      }
+    }
+
+    if (bestProducts.length) {
+      targetInput.value = bestProducts[0].n;
+      if (after) after(bestProducts[0].n, bestProducts);
+    } else {
+      const cleaned = cleanWords(text).join(" ") || text;
+      targetInput.value = cleaned;
+      if (after) after(cleaned, []);
+    }
     
-    const cleaned = cleanWords(text).join(" ") || text;
-    targetInput.value = cleaned;
-    if (after) after(cleaned, []);
-    
-    try { recognition.stop(); } catch(err) {}
-  };
-  
-  recognition.onerror = e => {
-    console.log("Voice error:", e.error);
+    // Stop after getting a result
+    try { recognition.stop(); } catch(e) {}
   };
   
   recognition.onend = () => {
     if (voiceTimeout) clearTimeout(voiceTimeout);
   };
   
-  try {
-    recognition.start();
-  } catch (e) {
-    console.log("Start error:", e);
-  }
+  try { recognition.start(); } catch (e) {}
   
-  // Stay open up to 8 seconds
+  // Auto-stop after 6 seconds if no speech detected
   voiceTimeout = setTimeout(() => {
     try { recognition.stop(); } catch(e) {}
-  }, 8000);
+  }, 6000);
 }
 
 
@@ -548,8 +559,16 @@ document.getElementById("voiceBd").onclick = ()=>{
 document.getElementById("scanB").onclick = ()=>scanFromPhoto(null);
 document.getElementById("fscanB").onclick = ()=>scanFromPhoto("fc");
 
-updateTagFilter();
-renderMain();
+try {
+  updateTagFilter();
+  renderMain();
+} catch(e) {
+  console.error("Init error:", e);
+  // Fallback: show products anyway
+  setTimeout(() => {
+    try { renderMain(); } catch(e2) {}
+  }, 100);
+}
 </script>
 <button id="floatMic">🎤</button>
 </body>

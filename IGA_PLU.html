@@ -150,6 +150,56 @@ function updateTagFilter(){
   if(getTags().includes(c)) sel.value = c;
 }
 
+function getCategories(){
+  const c = new Set();
+  P.forEach(p => { if(p.cat && p.cat.trim()) c.add(p.cat.trim()); });
+  return [...c].sort((a,b)=>a.localeCompare(b, 'fr'));
+}
+
+function updateCatFilter(){
+  const sel = document.getElementById("catF");
+  const current = sel.value;
+  const cats = getCategories();
+  sel.innerHTML = '<option value="">Toutes catégories</option>' + cats.map(c=>`<option value="${c}">${c}</option>`).join("");
+  if(cats.includes(current)) sel.value = current;
+}
+
+function manageCategories(){
+  const cats = getCategories();
+  if(!cats.length){ alert("Aucune catégorie."); return; }
+  let msg = "Catégories actuelles:\n" + cats.map((c,i)=>`${i+1}. ${c}`).join("\n");
+  msg += "\n\nEntrez le numéro à supprimer, ou un nouveau nom pour en ajouter, ou 'renommer' pour renommer.";
+  const input = prompt(msg);
+  if(!input) return;
+  const num = parseInt(input);
+  if(!isNaN(num) && num >= 1 && num <= cats.length){
+    const toDelete = cats[num-1];
+    if(confirm(`Supprimer la catégorie "${toDelete}" ?\nLes produits seront déplacés vers "Standard".`)){
+      P.forEach(p => { if(p.cat === toDelete) p.cat = "Standard"; });
+      updateCatFilter();
+      updateTagFilter();
+updateCatFilter();
+      renderMain();
+      alert(`Catégorie "${toDelete}" supprimée.`);
+    }
+  } else if(input.toLowerCase() === "renommer"){
+    const oldName = prompt("Nom actuel de la catégorie à renommer:");
+    if(!oldName || !cats.includes(oldName)){ alert("Catégorie introuvable."); return; }
+    const newName = prompt("Nouveau nom:");
+    if(!newName || !newName.trim()) return;
+    P.forEach(p => { if(p.cat === oldName) p.cat = newName.trim(); });
+    updateCatFilter();
+    renderMain();
+    alert(`Renommée en "${newName.trim()}".`);
+  } else {
+    // Ajouter une nouvelle catégorie
+    const newCat = input.trim();
+    if(cats.includes(newCat)){ alert("Cette catégorie existe déjà."); return; }
+    // On l'ajoute simplement en créant un produit temporaire ou on la laisse disponible via le formulaire
+    alert(`Catégorie "${newCat}" disponible. Assignez-la à un produit via le formulaire pour qu'elle apparaisse.`);
+  }
+}
+
 function filterList(query){
   const nq = norm(query);
   const cat = document.getElementById("catF").value;
@@ -433,6 +483,7 @@ document.getElementById("qd").oninput = e=>{
 document.getElementById("backB").onclick = goMain;
 document.getElementById("fbackB").onclick = goMain;
 document.getElementById("addB").onclick = ()=>openForm(null, -1);
+document.getElementById("catMgmtB").onclick = manageCategories;
 document.getElementById("editB").onclick = ()=>openForm(cur, P.indexOf(cur));
 
 document.getElementById("fsaveB").onclick = ()=>{
@@ -449,6 +500,7 @@ document.getElementById("fsaveB").onclick = ()=>{
   if(editIdx >= 0) P[editIdx] = obj;
   else P.unshift(obj);
   updateTagFilter();
+  updateCatFilter();
   goMain();
 };
 
@@ -456,6 +508,7 @@ document.getElementById("fdelB").onclick = ()=>{
   if(editIdx >= 0 && confirm("Supprimer ce produit ?")){
     P.splice(editIdx, 1);
     updateTagFilter();
+    updateCatFilter();
     goMain();
   }
 };
@@ -651,6 +704,7 @@ document.getElementById("fscanB").onclick = ()=>scanFromPhoto("fc");
 
 try {
   updateTagFilter();
+  updateCatFilter();
   renderMain();
 } catch(e) {
   console.error("Init error:", e);

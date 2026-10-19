@@ -587,9 +587,33 @@ function cleanWords(spoken) {
     .filter(w => !Object.values(CAT_HINTS).flat().some(c => norm(c) === w));
 }
 
+// Synonymes phonétiques courants (reconnaissance vocale -> vrai nom)
+const PHONETIC = {
+  "kirkland": "cortland",
+  "portland": "cortland",
+  "courtland": "cortland",
+  "macintoch": "mcintosh",
+  "macintosh": "mcintosh",
+  "honey crisp": "honeycrisp",
+  "granny smith": "granny",
+  "golden delicious": "golden",
+  "red delicious": "delicious",
+  "gala": "gala",
+  "fuji": "fuji"
+};
+
+function normalizeSpoken(spoken) {
+  let s = (spoken || "").toLowerCase();
+  for (const [wrong, right] of Object.entries(PHONETIC)) {
+    if (s.includes(wrong)) s = s.replace(wrong, right);
+  }
+  return s;
+}
+
 function findBestMatches(spoken, limit = 15) {
-  const hint = detectCategoryHint(spoken);
-  const words = cleanWords(spoken);
+  const normalized = normalizeSpoken(spoken);
+  const hint = detectCategoryHint(normalized);
+  const words = cleanWords(normalized);
   if (!words.length && !hint) return [];
 
   const candidates = [];
@@ -632,7 +656,8 @@ if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
   recognition = new SR();
   recognition.lang = "fr-CA";
   recognition.interimResults = false;
-  recognition.maxAlternatives = 1;
+  recognition.maxAlternatives = 3;
+  recognition.continuous = false;
 }
 
 function startVoice(targetInput, after) {
@@ -642,12 +667,19 @@ function startVoice(targetInput, after) {
   }
   
   const btn = document.getElementById("floatMic");
-  if (btn) btn.style.background = "#c62828"; // rouge = écoute
+  if (btn) btn.style.background = "#c62828";
+  
+  // Laisser 6 secondes pour parler avant de fermer
+  let timeoutId = null;
   
   recognition.onresult = e => {
-    const text = (e.results && e.results[0] && e.results[0][0]) ? e.results[0][0].transcript : "";
+    clearTimeout(timeoutId);
+    let text = "";
+    if (e.results && e.results[0]) {
+      // Prendre la meilleure alternative
+      text = e.results[0][0].transcript || "";
+    }
     if (text) {
-      // Use fuzzy matching with category hints
       const matches = findBestMatches(text);
       const cleaned = cleanWords(text).join(" ") || text.trim();
       targetInput.value = cleaned;
@@ -657,20 +689,31 @@ function startVoice(targetInput, after) {
   };
   
   recognition.onerror = e => {
+    clearTimeout(timeoutId);
     console.log("Mic error:", e.error);
     if (btn) btn.style.background = "#1565c0";
     if (e.error === "not-allowed") alert("Permission micro refusée");
+    else if (e.error === "no-speech") {
+      // Silencieux, on ferme simplement
+    }
   };
   
   recognition.onend = () => {
+    clearTimeout(timeoutId);
     if (btn) btn.style.background = "#1565c0";
   };
   
   try {
     recognition.start();
+    // Auto-stop après 6 secondes si rien n'est dit
+    timeoutId = setTimeout(() => {
+      try { recognition.stop(); } catch(e) {}
+      if (btn) btn.style.background = "#1565c0";
+    }, 6000);
   } catch (e) {
     console.log("Start failed:", e);
     if (btn) btn.style.background = "#1565c0";
+    alert("Impossible de démarrer le micro. Vérifie les permissions.");
   }
 }
 

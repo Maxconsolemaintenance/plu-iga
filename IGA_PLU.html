@@ -168,11 +168,124 @@ function filterList(query){
   return items.slice(0, 80);
 }
 
+function getEmoji(name) {
+  const n = (name || "").toLowerCase();
+  if (n.includes("pomme") && !n.includes("terre")) return "🍎";
+  if (n.includes("banane")) return "🍌";
+  if (n.includes("orange")) return "🍊";
+  if (n.includes("citron") || n.includes("lime")) return "🍋";
+  if (n.includes("raisin")) return "🍇";
+  if (n.includes("fraise")) return "🍓";
+  if (n.includes("cerise")) return "🍒";
+  if (n.includes("poire")) return "🍐";
+  if (n.includes("peche") || n.includes("pêche")) return "🍑";
+  if (n.includes("melon") && n.includes("eau")) return "🍉";
+  if (n.includes("melon")) return "🍈";
+  if (n.includes("ananas")) return "🍍";
+  if (n.includes("mangue")) return "🥭";
+  if (n.includes("kiwi")) return "🥝";
+  if (n.includes("tomate")) return "🍅";
+  if (n.includes("avocat")) return "🥑";
+  if (n.includes("carotte")) return "🥕";
+  if (n.includes("mais") || n.includes("maïs")) return "🌽";
+  if (n.includes("poivron") || n.includes("piment")) return "🌶️";
+  if (n.includes("concombre")) return "🥒";
+  if (n.includes("laitue") || n.includes("salade")) return "🥬";
+  if (n.includes("brocoli")) return "🥦";
+  if (n.includes("oignon") || n.includes("ail") || n.includes("echalote")) return "🧅";
+  if (n.includes("patate") || n.includes("pomme de terre")) return "🥔";
+  if (n.includes("champignon")) return "🍄";
+  if (n.includes("aubergine")) return "🍆";
+  if (n.includes("courge") || n.includes("citrouille")) return "🎃";
+  if (n.includes("noix") || n.includes("amande")) return "🌰";
+  if (n.includes("kiwi")) return "🥝";
+  if (n.includes("coco")) return "🥥";
+  if (n.includes("bleuet") || n.includes("myrtille")) return "🫐";
+  return "🛒";
+}
+
+
+const IMG = {
+  "abricot": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Apricot_and_cross_section.jpg/80px-Apricot_and_cross_section.jpg",
+  "ail": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Garlic.jpg/80px-Garlic.jpg",
+  "ananas": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Pineapple_and_cross_section.jpg/80px-Pineapple_and_cross_section.jpg",
+  "aneth": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Dill_weed.jpg/80px-Dill_weed.jpg",
+  "artichaut": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Artichoke_J1.jpg/80px-Artichoke_J1.jpg",
+  "asperge": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Asparagus-Bundle.jpg/80px-Asparagus-Bundle.jpg",
+  "aubergine": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Solanum_melongena_24_08_2012_%281%29.JPG/80px-Solanum_melongena_24_08_2012_%281%29.JPG",
+  "avocat": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Avocado_with_cross_section.jpg/80px-Avocado_with_cross_section.jpg",
+  "banane": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Banana-Single.jpg/80px-Banana-Single.jpg",
+  "basilic": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Basil-Basilico-Ocimum_basilicum-albahaca.jpg/80px-Basil-Basilico-Ocimum_basilicum-albahaca.jpg",
+  "betterave": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Beetroot_jm26647.jpg/80px-Beetroot_jm26647.jpg",
+  "bleuet": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Blueberries.jpg/80px-Blueberries.jpg",
+  "brocoli": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Broccoli_and_cross_section_edit.jpg/80px-Broccoli_and_cross_section_edit.jpg",
+  "carotte": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Vegetable-Carrot-Bundle-wStalks.jpg/80px-Vegetable-Carrot-Bundle-wStalks.jpg",
+  "celeri": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Celery_cross_section.jpg/80px-Celery_cross_section.jpg",
+  "cerise": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Cherry_Stella444.jpg/80px-Cherry_Stella444.jpg",
+  "champignon": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Lactarius_deliciousus.jpg/80px-Lactarius_deliciousus.jpg",
+  "chou-fleur": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Chou-fleur_02.jpg/80px-Chou-fleur_02.jpg",
+  "chou": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Cabbage_and_cross_section_on_white.jpg/80px-Cabbage_and_cross_section_on_white.jpg",
+  "citron": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Lemon.jpg/80px-Lemon.jpg",
+  "clementine": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Clementine.jpg/80px-Clementine.jpg",
+  "concombre": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/ARS_cucumber.jpg/80px-ARS_cucumber.jpg",
+  "coriandre": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Coriander.png/80px-Coriander.png",
+  "courge": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Butternut_squash.jpg/80px-Butternut_squash.jpg",
+  "courgette": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Courgette_J1.jpg/80px-Courgette_J1.jpg",
+  "curcuma": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Turmeric_roots.jpg/80px-Turmeric_roots.jpg",
+  "datte": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Dates.jpg/80px-Dates.jpg",
+  "echalote": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Shallots.jpg/80px-Shallots.jpg",
+  "endive": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Endive.jpg/80px-Endive.jpg",
+  "epinard": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Spinach_leaves.jpg/80px-Spinach_leaves.jpg",
+  "fenouil": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Fennel.jpg/80px-Fennel.jpg",
+  "figue": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Figs.jpg/80px-Figs.jpg",
+  "fraise": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/PerfectStrawberry.jpg/80px-PerfectStrawberry.jpg",
+  "framboise": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Raspberries.jpg/80px-Raspberries.jpg",
+  "gingembre": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Ginger_root.jpg/80px-Ginger_root.jpg",
+  "kiwi": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Kiwi_%28Actinidia_chinensis%29_1_Luc_Viatour.jpg/80px-Kiwi_%28Actinidia_chinensis%29_1_Luc_Viatour.jpg",
+  "laitue": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Iceberg_lettuce_in_SB.jpg/80px-Iceberg_lettuce_in_SB.jpg",
+  "lime": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Lime-Whole-Split.jpg/80px-Lime-Whole-Split.jpg",
+  "mangue": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Hapus_Mango.jpg/80px-Hapus_Mango.jpg",
+  "melon": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Cantaloupe_and_cross_section.jpg/80px-Cantaloupe_and_cross_section.jpg",
+  "menthe": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Mint_leaves.jpg/80px-Mint_leaves.jpg",
+  "navet": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Turnip_2622027.jpg/80px-Turnip_2622027.jpg",
+  "nectarine": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Nectarine.jpg/80px-Nectarine.jpg",
+  "noix": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Walnuts.jpg/80px-Walnuts.jpg",
+  "oignon": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Onion_on_White.JPG/80px-Onion_on_White.JPG",
+  "orange": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Orange-Fruit-Pieces.jpg/80px-Orange-Fruit-Pieces.jpg",
+  "pamplemousse": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Grapefruit-Whole-Split.jpg/80px-Grapefruit-Whole-Split.jpg",
+  "papaye": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Papaya.jpg/80px-Papaya.jpg",
+  "patate": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Patates.jpg/80px-Patates.jpg",
+  "peche": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Autumn_Red_peaches.jpg/80px-Autumn_Red_peaches.jpg",
+  "persil": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Flat-leaf_parsley.jpg/80px-Flat-leaf_parsley.jpg",
+  "piment": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Red_chili_peppers.jpg/80px-Red_chili_peppers.jpg",
+  "poire": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Pears.jpg/80px-Pears.jpg",
+  "poireau": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Leek.jpg/80px-Leek.jpg",
+  "poivron": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Green-Yellow-Red-Pepper-2009.jpg/80px-Green-Yellow-Red-Pepper-2009.jpg",
+  "pomme": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Red_Apple.jpg/80px-Red_Apple.jpg",
+  "prune": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Plums.jpg/80px-Plums.jpg",
+  "radis": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Radish_2622027.jpg/80px-Radish_2622027.jpg",
+  "raisin": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Table_grapes_on_white.jpg/80px-Table_grapes_on_white.jpg",
+  "rhubarbe": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Rhubarb.jpg/80px-Rhubarb.jpg",
+  "romarin": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Rosemary.jpg/80px-Rosemary.jpg",
+  "thym": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Thyme.jpg/80px-Thyme.jpg",
+  "tomate": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Tomato_je.jpg/80px-Tomato_je.jpg",
+  "zucchini": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Courgette_J1.jpg/80px-Courgette_J1.jpg"
+};
+
+function getImg(name) {
+  const n = (name || "").toLowerCase();
+  const keys = Object.keys(IMG).sort((a, b) => b.length - a.length);
+  for (const key of keys) {
+    if (n.includes(key)) return IMG[key];
+  }
+  return null;
+}
+
 function renderList(container, items){
   if(!items.length){container.innerHTML = ""; return;}
   container.innerHTML = items.map(p=>`
     <div class="item" data-i="${P.indexOf(p)}">
-      <div class="thumb"></div>
+      <div class="thumb" style="display:flex;align-items:center;justify-content:center;overflow:hidden">${p.p && getImg(p.n) ? `<img src="${getImg(p.n)}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">` : (p.p ? getEmoji(p.n) : "")}</div>
       <div class="info">
         <div class="name">${p.n}</div>
         <div class="meta">${p.cat||""} ${p.p?'<span class="plu">PLU '+p.p+'</span>':''}</div>

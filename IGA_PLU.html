@@ -200,6 +200,21 @@ function manageCategories(){
   }
 }
 
+function getUsage(){
+  try { return JSON.parse(localStorage.getItem("plu_usage") || "{}"); }
+  catch(e) { return {}; }
+}
+function trackUsage(name){
+  if (!name) return;
+  const u = getUsage();
+  const current = u[name] || 0;
+  // Plafond à 10000 : au-delà, c'est déjà clairement prioritaire
+  if (current < 10000) {
+    u[name] = current + 1;
+    try { localStorage.setItem("plu_usage", JSON.stringify(u)); } catch(e) {}
+  }
+}
+
 function filterList(query){
   const nq = norm(query);
   const cat = document.getElementById("catF").value;
@@ -210,12 +225,27 @@ function filterList(query){
     if(nq.length >= 1 && !norm(p.n).includes(nq) && !(p.p||"").includes(query) && !(p.c||"").includes(query)) return false;
     return true;
   });
-  // PLU first, no PLU last
+  // Priorité: 1) PLU avant non-PLU  2) Plus utilisés  3) Meilleure correspondance
+  const usage = getUsage();
+  const queryWords = nq.split(/\s+/).filter(w => w.length > 2);
   items.sort((a, b) => {
-    const aHas = !!(a.p && a.p.trim());
-    const bHas = !!(b.p && b.p.trim());
+    const aHas = !!(a.p && String(a.p).trim());
+    const bHas = !!(b.p && String(b.p).trim());
+    // PLU toujours avant non-PLU
     if (aHas && !bHas) return -1;
     if (!aHas && bHas) return 1;
+    // Parmi le même groupe, plus utilisés d'abord
+    const aUse = usage[a.n] || 0;
+    const bUse = usage[b.n] || 0;
+    if (aUse !== bUse) return bUse - aUse;
+    // Puis meilleure correspondance
+    if (queryWords.length) {
+      const aName = norm(a.n);
+      const bName = norm(b.n);
+      const aScore = queryWords.filter(w => aName.includes(w)).length;
+      const bScore = queryWords.filter(w => bName.includes(w)).length;
+      if (aScore !== bScore) return bScore - aScore;
+    }
     return 0;
   });
   return items.slice(0, 80);
@@ -322,6 +352,7 @@ function renderMain(){
 
 function show(p){
   cur = p;
+  trackUsage(p.n);
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
   document.getElementById("d").classList.add("active");
   document.getElementById("demoji").textContent = p.p ? getEmoji(p.n) : "";
@@ -640,6 +671,9 @@ function findBestMatches(spoken, limit = 15) {
     
     // Category products get a boost (lower score = better)
     if (catMatch && hint) bestScore *= 0.7;
+    
+    // PLU items get priority (lower score = better)
+    if (p.p && String(p.p).trim()) bestScore *= 0.6;
     
     // Accept if reasonably close
     if (bestScore <= 0.55) {

@@ -651,17 +651,21 @@ function findBestMatches(spoken, limit = 15) {
 }
 
 let recognition = null;
-if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+function getRecognition() {
+  if (recognition) return recognition;
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) return null;
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   recognition = new SR();
   recognition.lang = "fr-CA";
   recognition.interimResults = false;
   recognition.maxAlternatives = 3;
   recognition.continuous = false;
+  return recognition;
 }
 
 function startVoice(targetInput, after) {
-  if (!recognition) { 
+  const rec = getRecognition();
+  if (!rec) { 
     alert("Recherche vocale non supportée sur ce navigateur"); 
     return; 
   }
@@ -672,7 +676,7 @@ function startVoice(targetInput, after) {
   // Laisser 6 secondes pour parler avant de fermer
   let timeoutId = null;
   
-  recognition.onresult = e => {
+  rec.onresult = e => {
     clearTimeout(timeoutId);
     let text = "";
     if (e.results && e.results[0]) {
@@ -688,7 +692,7 @@ function startVoice(targetInput, after) {
     if (btn) btn.style.background = "#1565c0";
   };
   
-  recognition.onerror = e => {
+  rec.onerror = e => {
     clearTimeout(timeoutId);
     console.log("Mic error:", e.error);
     if (btn) btn.style.background = "#1565c0";
@@ -698,16 +702,16 @@ function startVoice(targetInput, after) {
     }
   };
   
-  recognition.onend = () => {
+  rec.onend = () => {
     clearTimeout(timeoutId);
     if (btn) btn.style.background = "#1565c0";
   };
   
   try {
-    recognition.start();
+    rec.start();
     // Auto-stop après 6 secondes si rien n'est dit
     timeoutId = setTimeout(() => {
-      try { recognition.stop(); } catch(e) {}
+      try { rec.stop(); } catch(e) {}
       if (btn) btn.style.background = "#1565c0";
     }, 6000);
   } catch (e) {
@@ -718,17 +722,23 @@ function startVoice(targetInput, after) {
 }
 
 
-document.getElementById("floatMic").onclick = function(){ this.style.background="#c62828";
-  startVoice(document.getElementById("q"), (text, products)=>{
-    q = text;
-    if (products && products.length) {
-      renderList(document.getElementById("res"), products);
-      document.getElementById("emp").style.display = products.length ? "none" : "block";
-    } else {
-      renderMain();
-    }
+// Mic button - binding robuste
+const floatMicBtn = document.getElementById("floatMic");
+if (floatMicBtn) {
+  floatMicBtn.addEventListener("click", function(e) {
+    e.preventDefault();
+    this.style.background = "#c62828";
+    startVoice(document.getElementById("q"), (text, products) => {
+      q = text;
+      if (products && products.length) {
+        renderList(document.getElementById("res"), products);
+        document.getElementById("emp").style.display = "none";
+      } else {
+        renderMain();
+      }
+    });
   });
-};
+}
 
 document.getElementById("voiceBd").onclick = ()=>{
   startVoice(document.getElementById("qd"), (text, products)=>{
@@ -748,13 +758,31 @@ document.getElementById("fscanB").onclick = ()=>scanFromPhoto("fc");
 try {
   updateTagFilter();
   updateCatFilter();
+  // Force affichage initial des produits (PLU en premier)
+  q = "";
   renderMain();
+  // Si toujours vide, forcer un rendu direct
+  if (!document.getElementById("res").children.length) {
+    const pluItems = P.filter(p => p.p && p.p.trim()).slice(0, 60);
+    if (pluItems.length) {
+      renderList(document.getElementById("res"), pluItems);
+      document.getElementById("emp").style.display = "none";
+    }
+  }
 } catch(e) {
   console.error("Init error:", e);
-  // Fallback: show products anyway
   setTimeout(() => {
-    try { renderMain(); } catch(e2) {}
-  }, 100);
+    try {
+      q = "";
+      const pluItems = P.filter(p => p.p && p.p.trim()).slice(0, 60);
+      if (pluItems.length) {
+        renderList(document.getElementById("res"), pluItems);
+        document.getElementById("emp").style.display = "none";
+      }
+    } catch(e2) {
+      console.error("Fallback failed:", e2);
+    }
+  }, 150);
 }
 </script>
 </body>

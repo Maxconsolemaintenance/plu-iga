@@ -123,6 +123,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div class="factions">
 <button class="btn" id="fscanB">📷 Scanner CUP</button>
 <button class="btn p" id="fsaveB">Sauver</button>
+<button class="btn" id="fdelB" style="background:#c62828;display:none">Supprimer</button>
 </div>
 </div>
 </div>
@@ -331,6 +332,7 @@ function openForm(p, idx){
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
   document.getElementById("f").classList.add("active");
   document.getElementById("ftitle").textContent = p ? "Modifier" : "Nouveau produit";
+  document.getElementById("fdelB").style.display = (idx >= 0) ? "inline-block" : "none";
   document.getElementById("fn").value = p ? p.n : "";
   document.getElementById("fp").value = p ? p.p : "";
   document.getElementById("fc").value = p ? p.c : "";
@@ -448,6 +450,14 @@ document.getElementById("fsaveB").onclick = ()=>{
   else P.unshift(obj);
   updateTagFilter();
   goMain();
+};
+
+document.getElementById("fdelB").onclick = ()=>{
+  if(editIdx >= 0 && confirm("Supprimer ce produit ?")){
+    P.splice(editIdx, 1);
+    updateTagFilter();
+    goMain();
+  }
 };
 
 

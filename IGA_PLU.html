@@ -76,6 +76,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 
 <button class="btn" id="scanB">📷</button>
 <button class="btn" id="catMgmtB" title="Gérer catégories" style="background:#455a64">📁</button>
+<button class="btn" id="githubSaveB" title="Sauvegarder sur GitHub" style="background:#2e7d32">💾 GitHub</button>
 <button class="btn p" id="addB">+</button>
 </div>
 <div class="results" id="res"></div>
@@ -525,6 +526,7 @@ document.getElementById("backB").onclick = goMain;
 document.getElementById("fbackB").onclick = goMain;
 document.getElementById("addB").onclick = ()=>openForm(null, -1);
 document.getElementById("catMgmtB").onclick = manageCategories;
+document.getElementById("githubSaveB").onclick = saveToGitHub;
 document.getElementById("editB").onclick = ()=>openForm(cur, P.indexOf(cur));
 
 document.getElementById("fcat").onchange = function(){
@@ -776,12 +778,114 @@ function handleMicClick(e) {
 document.getElementById("scanB").onclick = ()=>scanFromPhoto(null);
 document.getElementById("fscanB").onclick = ()=>scanFromPhoto("fc");
 
+
+// ===== Sauvegarde GitHub =====
+const GITHUB_OWNER = "maxconsolemaintenance";
+const GITHUB_REPO = "plu-iga";
+const GITHUB_FILE = "plu_data.json";
+
+function getGitHubToken() {
+  let token = localStorage.getItem("github_token");
+  if (!token) {
+    token = prompt("Entre ton GitHub Personal Access Token (avec permission contents:write sur le repo):\n\nTu peux en créer un ici : https://github.com/settings/tokens\n(Choisis Fine-grained, repo plu-iga, Contents: Read and write)");
+    if (token) {
+      token = token.trim();
+      localStorage.setItem("github_token", token);
+    }
+  }
+  return token;
+}
+
+async function saveToGitHub() {
+  const token = getGitHubToken();
+  if (!token) {
+    alert("Token requis pour sauvegarder sur GitHub.");
+    return;
+  }
+
+  const btn = document.getElementById("githubSaveB");
+  const original = btn.textContent;
+  btn.textContent = "⏳";
+  btn.disabled = true;
+
+  try {
+    // 1. Récupérer le SHA actuel du fichier (s'il existe)
+    let sha = null;
+    const getUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
+    const getRes = await fetch(getUrl, {
+      headers: { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github+json" }
+    });
+    if (getRes.ok) {
+      const data = await getRes.json();
+      sha = data.sha;
+    }
+
+    // 2. Préparer le contenu
+    const content = JSON.stringify(P, null, 2);
+    const contentB64 = btoa(unescape(encodeURIComponent(content)));
+
+    // 3. Mettre à jour / créer le fichier
+    const putBody = {
+      message: "Mise à jour des données PLU depuis l'app",
+      content: contentB64,
+      branch: "main"
+    };
+    if (sha) putBody.sha = sha;
+
+    const putRes = await fetch(getUrl, {
+      method: "PUT",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Accept": "application/vnd.github+json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(putBody)
+    });
+
+    if (!putRes.ok) {
+      const err = await putRes.json().catch(() => ({}));
+      throw new Error(err.message || putRes.statusText);
+    }
+
+    alert("✅ Sauvegardé sur GitHub !\nLe site se mettra à jour dans 1-2 minutes.\nTout le monde verra les nouvelles données au prochain chargement.");
+  } catch (e) {
+    console.error(e);
+    alert("❌ Erreur GitHub : " + e.message + "\n\nVérifie le token et les permissions.");
+    // Option de réinitialiser le token
+    if (confirm("Effacer le token sauvegardé et réessayer ?")) {
+      localStorage.removeItem("github_token");
+    }
+  } finally {
+    btn.textContent = original;
+    btn.disabled = false;
+  }
+}
+
+// Chargement des données depuis plu_data.json au démarrage
+async function loadExternalData() {
+  try {
+    const res = await fetch("./plu_data.json?t=" + Date.now());
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        P = data;
+        console.log("Données chargées depuis plu_data.json (" + data.length + " produits)");
+        return true;
+      }
+    }
+  } catch (e) {
+    console.log("Pas de plu_data.json externe, utilisation des données intégrées");
+  }
+  return false;
+}
+
 try {
-  updateTagFilter();
-  updateCatFilter();
-  // Force affichage initial des produits (PLU en premier)
-  q = "";
-  renderMain();
+  loadExternalData().then(loaded => {
+    updateTagFilter();
+    updateCatFilter();
+    q = "";
+    renderMain();
+  });
   // Si toujours vide, forcer un rendu direct
   if (!document.getElementById("res").children.length) {
     const pluItems = P.filter(p => p.p && p.p.trim()).slice(0, 60);

@@ -186,6 +186,7 @@ function manageCategories(){
     const toDelete = cats[num-1];
     if(confirm(`Supprimer la catégorie "${toDelete}" ?\nLes produits seront déplacés vers "Standard".`)){
       P.forEach(p => { if(p.cat === toDelete) p.cat = "Standard"; });
+      saveLocal();
       updateCatFilter();
       updateTagFilter();
       renderMain();
@@ -197,6 +198,7 @@ function manageCategories(){
     const newName = prompt("Nouveau nom:");
     if(!newName || !newName.trim()) return;
     P.forEach(p => { if(p.cat === oldName) p.cat = newName.trim(); });
+    saveLocal();
     updateCatFilter();
     renderMain();
     alert(`Renommée en "${newName.trim()}".`);
@@ -207,6 +209,14 @@ function manageCategories(){
     // On l'ajoute simplement en créant un produit temporaire ou on la laisse disponible via le formulaire
     alert(`Catégorie "${newCat}" disponible. Assignez-la à un produit via le formulaire pour qu'elle apparaisse.`);
   }
+}
+
+
+function saveLocal() {
+  try {
+    localStorage.setItem("plu_data_local", JSON.stringify(P));
+    localStorage.setItem("plu_data_local_ts", Date.now().toString());
+  } catch(e) { console.log("Save local failed", e); }
 }
 
 function getUsage(){
@@ -909,7 +919,12 @@ try {
   loadExternalData().then(loaded => {
     updateTagFilter();
     updateCatFilter();
-        q = "";
+    q = "";
+    renderMain();
+  }).catch(() => {
+    updateTagFilter();
+    updateCatFilter();
+    q = "";
     renderMain();
   });
   // Si toujours vide, forcer un rendu direct

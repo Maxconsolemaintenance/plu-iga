@@ -851,7 +851,12 @@ async function saveToGitHub() {
       throw new Error(err.message || putRes.statusText);
     }
 
-    alert("✅ Sauvegardé sur GitHub !\nLe site se mettra à jour dans 1-2 minutes.\nTout le monde verra les nouvelles données au prochain chargement.");
+    // Sauver aussi localement pour que le refresh immédiat fonctionne
+    try {
+      localStorage.setItem("plu_data_local", JSON.stringify(P));
+      localStorage.setItem("plu_data_local_ts", Date.now().toString());
+    } catch(e) {}
+    alert("✅ Sauvegardé sur GitHub !\nTes modifications sont aussi gardées localement.\nRecharge la page pour les voir.");
   } catch (e) {
     console.error(e);
     alert("❌ Erreur GitHub : " + e.message + "\n\nVérifie le token et les permissions.");
@@ -867,18 +872,35 @@ async function saveToGitHub() {
 
 // Chargement des données depuis plu_data.json au démarrage
 async function loadExternalData() {
+  // 1. Essayer localStorage d'abord (modifications locales non encore poussées ou plus récentes)
+  try {
+    const local = localStorage.getItem("plu_data_local");
+    const localTs = localStorage.getItem("plu_data_local_ts");
+    if (local) {
+      const data = JSON.parse(local);
+      if (Array.isArray(data) && data.length > 0) {
+        P = data;
+        console.log("Données chargées depuis localStorage (" + data.length + " produits)");
+        return true;
+      }
+    }
+  } catch(e) {}
+
+  // 2. Sinon essayer plu_data.json sur GitHub Pages
   try {
     const res = await fetch("./plu_data.json?t=" + Date.now());
     if (res.ok) {
       const data = await res.json();
       if (Array.isArray(data) && data.length > 0) {
         P = data;
+        // Sauver aussi en local pour la prochaine fois
+        try { localStorage.setItem("plu_data_local", JSON.stringify(data)); } catch(e) {}
         console.log("Données chargées depuis plu_data.json (" + data.length + " produits)");
         return true;
       }
     }
   } catch (e) {
-    console.log("Pas de plu_data.json externe, utilisation des données intégrées");
+    console.log("Pas de plu_data.json externe");
   }
   return false;
 }

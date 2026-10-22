@@ -4,8 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>PLU IGA v2.1</title>
-<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.20.0/umd/index.min.js"></script>
+<script>
+/* PLU IGA APK: pont natif pour la reconnaissance vocale (SpeechRecognition n'existe pas dans WebView) */
+(function(){
+  if (!window.AndroidVoice) return;
+  var current=null;
+  window.__voiceResult=function(t){var r=current;current=null;if(!r)return;
+    if(r.onresult)r.onresult({results:[[{transcript:t,confidence:1}]]});if(r.onend)r.onend();};
+  window.__voiceError=function(code){var r=current;current=null;if(!r)return;
+    if(r.onerror)r.onerror({error:code});if(r.onend)r.onend();};
+  function NativeSR(){this.lang="fr-CA";this.interimResults=false;this.maxAlternatives=1;this.continuous=false;}
+  NativeSR.prototype.start=function(){current=this;AndroidVoice.start(this.lang||"fr-CA");};
+  NativeSR.prototype.stop=function(){/* le moteur natif s'arrete seul a la fin de la phrase */};
+  NativeSR.prototype.abort=function(){current=null;AndroidVoice.cancel();};
+  window.SpeechRecognition=NativeSR;window.webkitSpeechRecognition=NativeSR;
+})();
+</script>
+<script src="JsBarcode.all.min.js"></script>
+<script src="zxing.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#111;color:#eee;min-height:100vh}
@@ -63,6 +79,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   cursor:pointer;
 }
 #floatMic:active{background:#0d47a1;transform:scale(.95)}
+.ph-thumb{max-width:120px;max-height:120px;border-radius:8px;object-fit:cover;cursor:pointer}
+.ph-big{max-width:240px;max-height:240px}
+.setp{padding:14px;padding-top:56px;flex:1;overflow-y:auto}
+.setp h3{margin:14px 0 8px}
+.setp input{width:100%;padding:11px;margin-bottom:8px;border:1px solid #444;border-radius:8px;background:#222;color:#fff;font-size:15px}
+.logrow{background:#1a1a1a;border-radius:10px;padding:10px;margin-bottom:6px;font-size:.85em}
+.logrow .lc{color:#aaa;font-size:.9em;margin-top:4px;white-space:pre-wrap}
 </style>
 </head>
 <body>
@@ -76,9 +99,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 
 <button class="btn" id="scanB">📷</button>
 <button class="btn" id="catMgmtB" title="Gérer catégories" style="background:#455a64">📁</button>
+<button class="btn" id="githubLoadB" title="Charger depuis GitHub" style="background:#1565c0">🔄 Charger</button>
 <button class="btn" id="githubSaveB" title="Sauvegarder sur GitHub" style="background:#2e7d32">💾 GitHub</button>
+<button class="btn" id="setB" title="Paramètres" style="background:#455a64">⚙️</button>
 <button class="btn p" id="addB">+</button>
 </div>
+<div id="syncStatus" style="font-size:12px;padding:4px 8px;color:#555"></div>
 <div class="results" id="res"></div>
 <div class="empty" id="emp" style="display:none">Aucun résultat</div>
 </div>
@@ -126,11 +152,44 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <input type="text" id="fcatNew" placeholder="Nom de la nouvelle catégorie" style="display:none;width:100%;padding:11px;margin-bottom:8px;border:1px solid #444;border-radius:8px;background:#222;color:#fff;font-size:15px">
 <input type="text" id="ft" placeholder="Tags (séparés par des virgules)">
 <textarea id="fno" placeholder="Notes" rows="2"></textarea>
+<div id="fphotoBox" style="margin:6px 0 4px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+  <div id="fphotoPrev" style="font-size:.8em;color:#888">Aucune photo</div>
+  <button class="btn" id="fphotoB" type="button">📸 Photo</button>
+  <button class="btn" id="fphotoDelB" type="button" style="display:none;background:#6d4c41">🗑️ Retirer la photo</button>
+</div>
+<input type="file" id="fphotoIn" accept="image/*" capture="environment" style="display:none">
 <div class="factions">
 <button class="btn" id="fscanB">📷 Scanner CUP</button>
 <button class="btn p" id="fsaveB">Sauver</button>
 <button class="btn" id="fdelB" style="background:#c62828;display:none">Supprimer</button>
 </div>
+</div>
+</div>
+
+<div id="set" class="screen">
+<button class="btn back" id="setBackB">←</button>
+<div class="setp">
+<h3>⚙️ Paramètres</h3>
+<label style="font-size:.85em;color:#aaa">Ton nom (apparaît dans le journal)</label>
+<input type="text" id="setName" placeholder="Ex. : Max">
+<button class="btn p" id="setNameB">Enregistrer le nom</button>
+<h3>🔑 Token GitHub</h3>
+<div id="setTok" style="font-size:.9em;color:#ccc;margin-bottom:8px"></div>
+<button class="btn" id="setTokB">Entrer / changer le token</button>
+<button class="btn" id="clrTokB" style="background:#c62828">Effacer le token</button>
+<h3>📜 Journal</h3>
+<button class="btn" id="logB" style="background:#1565c0">Journal des modifications</button>
+<div style="font-size:.75em;color:#666;margin-top:18px">PLU IGA v1.2</div>
+</div>
+</div>
+
+<div id="logs" class="screen">
+<button class="btn back" id="logBackB">←</button>
+<div class="setp">
+<h3 id="logTitle">📜 Journal des modifications</h3>
+<input type="text" id="logQ" placeholder="Filtrer (nom, produit, PLU)…">
+<div id="logInfo" style="font-size:.75em;color:#888;margin-bottom:8px"></div>
+<div id="logList"></div>
 </div>
 </div>
 
@@ -363,7 +422,7 @@ function renderList(container, items){
     <div class="item" data-i="${P.indexOf(p)}">
       <div class="thumb" style="display:flex;align-items:center;justify-content:center;font-size:26px;background:#2a2a2a">${p.p ? getEmoji(p.n, p.cat) : ""}</div>
       <div class="info">
-        <div class="name">${p.n}</div>
+        <div class="name">${p.n}${p.photo?' <span title="Photo">📷</span>':''}</div>
         <div class="meta">${p.cat||""} ${p.p?'<span class="plu">PLU '+p.p+'</span>':''}</div>
       </div>
     </div>
@@ -395,6 +454,7 @@ function show(p){
   } else {
     photoEl.innerHTML = "";
   }
+  if (p.photo && p._id) showPhotoInto(photoEl, p);
   document.getElementById("dn").textContent = p.n;
   document.getElementById("dc").textContent = p.cat || "";
   document.getElementById("dp").textContent = p.p || "—";
@@ -458,6 +518,7 @@ function openForm(p, idx){
   document.getElementById("fcat").value = p ? p.cat : "";
   document.getElementById("ft").value = p ? (p.tags||[]).join(", ") : "";
   document.getElementById("fno").value = p ? p.notes : "";
+  initFormPhoto(p);
 }
 
 
@@ -554,6 +615,23 @@ document.getElementById("fbackB").onclick = goMain;
 document.getElementById("addB").onclick = ()=>openForm(null, -1);
 document.getElementById("catMgmtB").onclick = manageCategories;
 document.getElementById("githubSaveB").onclick = saveToGitHub;
+document.getElementById("setB").onclick = openSettings;
+document.getElementById("setBackB").onclick = goMain;
+document.getElementById("logBackB").onclick = ()=>{ if(logUser!==null){ logUser=null; renderLog(); } else openSettings(); };
+document.getElementById("logB").onclick = openLog;
+document.getElementById("logQ").oninput = renderLog;
+document.getElementById("setNameB").onclick = ()=>{ const v=document.getElementById("setName").value.trim(); localStorage.setItem("plu_user_name", v); alert(v?("✅ Nom enregistré : "+v):"Nom effacé."); };
+document.getElementById("setTokB").onclick = ()=>{ const t=prompt("Colle ton token GitHub (fine-grained, Contents: Read and write sur plu-iga) :"); if(t&&t.trim()){ localStorage.setItem("github_token", t.trim()); refreshTokUI(); alert("✅ Token enregistré."); } };
+document.getElementById("clrTokB").onclick = ()=>{ if(confirm("Effacer le token de ce téléphone ?")){ localStorage.removeItem("github_token"); refreshTokUI(); } };
+document.getElementById("fphotoB").onclick = ()=>document.getElementById("fphotoIn").click();
+document.getElementById("fphotoDelB").onclick = ()=>{ formPhoto={action:"remove"}; renderFormPhoto(null); };
+document.getElementById("fphotoIn").onchange = async (e)=>{
+  const file=e.target.files && e.target.files[0]; e.target.value="";
+  if(!file) return;
+  try{ const data=await resizeImage(file); formPhoto={action:"set", data}; renderFormPhoto(data); }
+  catch(err){ alert("❌ Impossible de lire la photo : "+err.message); }
+};
+document.getElementById("githubLoadB").onclick = ()=>syncFromGitHub(true);
 document.getElementById("editB").onclick = ()=>openForm(cur, P.indexOf(cur));
 
 document.getElementById("fcat").onchange = function(){
@@ -570,9 +648,16 @@ document.getElementById("fsaveB").onclick = ()=>{
     notes: document.getElementById("fno").value.trim(),
     img: editIdx >= 0 ? P[editIdx].img : ""
   };
+  if(editIdx >= 0 && P[editIdx]._id) obj._id = P[editIdx]._id; else obj._id = newId();
+  const oldP = editIdx >= 0 ? P[editIdx] : null;
+  if(oldP){ for(const k in oldP){ if(!(k in obj)) obj[k]=oldP[k]; } }
+  if(!obj.n) return;
+  applyFormPhoto(obj);
+  logChange(oldP ? "modif" : "ajout", oldP, obj);
   if(!obj.n) return;
   if(editIdx >= 0) P[editIdx] = obj;
   else P.unshift(obj);
+  saveLocal();
   updateTagFilter();
   updateCatFilter();
     goMain();
@@ -580,7 +665,11 @@ document.getElementById("fsaveB").onclick = ()=>{
 
 document.getElementById("fdelB").onclick = ()=>{
   if(editIdx >= 0 && confirm("Supprimer ce produit ?")){
+    const gone = P[editIdx];
+    logChange("suppr", gone, null);
+    if(gone.photo) markPhotoDelete(gone._id);
     P.splice(editIdx, 1);
+    saveLocal();
     updateTagFilter();
     updateCatFilter();
         goMain();
@@ -823,109 +912,343 @@ function getGitHubToken() {
   return token;
 }
 
-async function saveToGitHub() {
-  const token = getGitHubToken();
-  if (!token) {
-    alert("Token requis pour sauvegarder sur GitHub.");
-    return;
+
+// ===== SYNCHRO GITHUB (fusion à 3 voies) =====
+const API_URL = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
+function setStatus(t){ const el=document.getElementById("syncStatus"); if(el) el.textContent=t; }
+function newId(){ return "id_"+Date.now().toString(36)+"_"+Math.random().toString(36).slice(2,8); }
+function hashStr(str){ let h=5381; for(let i=0;i<str.length;i++){ h=((h<<5)+h+str.charCodeAt(i))|0; } return (h>>>0).toString(36); }
+// Donne un identifiant stable aux produits qui n'en ont pas (le même sur tous les appareils)
+function ensureIds(arr){
+  const seen={};
+  arr.forEach(p=>{
+    if(!p._id){ const k=hashStr((p.n||"")+"|"+(p.p||"")+"|"+(p.c||"")); seen[k]=(seen[k]||0)+1; p._id="h_"+k+(seen[k]>1?"_"+seen[k]:""); }
+  });
+  return arr;
+}
+function ser(p){ return p ? JSON.stringify(p) : null; }
+function toMap(arr){ const m=new Map(); (arr||[]).forEach(p=>m.set(p._id,p)); return m; }
+function getBase(){ try{ const b=localStorage.getItem("plu_sync_base"); return b?JSON.parse(b):null; }catch(e){ return null; } }
+function setBase(arr,sha){
+  try{ localStorage.setItem("plu_sync_base", JSON.stringify(arr)); if(sha) localStorage.setItem("plu_sync_sha", sha);
+       localStorage.setItem("plu_sync_time", Date.now().toString()); }catch(e){ console.warn("base non sauvegardée",e); }
+}
+function hasLocalChanges(){
+  const base=getBase(); if(!base) return true;
+  if(base.length!==P.length) return true;
+  const bm=toMap(base); return P.some(p=>ser(bm.get(p._id))!==ser(p));
+}
+// Fusion : modifications locales (depuis la dernière synchro) gagnent ; tout le reste vient de GitHub
+function mergeData(base, local, remote){
+  const B=toMap(base||[]), L=toMap(local), R=toMap(remote);
+  const out=[]; const done=new Set(); let localWins=0, remoteNew=0;
+  const pick=(id)=>{
+    const b=B.get(id), l=L.get(id), r=R.get(id);
+    const localChanged = base ? ser(l)!==ser(b) : (!!l && !r); // sans base (1re synchro) : GitHub gagne, ajouts locaux gardés
+    if(localChanged){ if(l){ localWins++; return l; } return null; } // l absent = supprimé localement
+    if(r && ser(r)!==ser(b)) remoteNew++;
+    return r || null;
+  };
+  // produits nouveaux localement en premier (ajoutés avec unshift)
+  local.forEach(p=>{ if(!R.has(p._id) && !B.has(p._id)){ const v=pick(p._id); if(v) out.push(v); done.add(p._id);} });
+  remote.forEach(p=>{ if(done.has(p._id)) return; done.add(p._id); const v=pick(p._id); if(v) out.push(v); });
+  local.forEach(p=>{ if(done.has(p._id)) return; done.add(p._id); const v=pick(p._id); if(v) out.push(v); });
+  return { data: out, localWins, remoteNew };
+}
+async function fetchRemote(){ const r=await fetchFile(GITHUB_FILE); if(r.data) ensureIds(r.data); return r; }
+function refreshUI(){ try{ updateTagFilter(); updateCatFilter(); renderMain(); }catch(e){} }
+function fmtTime(){ return new Date().toLocaleTimeString("fr-CA",{hour:"2-digit",minute:"2-digit"}); }
+
+// Récupère la dernière version sur GitHub et la fusionne avec les changements locaux (sans pousser)
+async function syncFromGitHub(manual){
+  const btn=document.getElementById("githubLoadB");
+  if(manual){ btn.disabled=true; btn.textContent="⏳"; }
+  setStatus("🔄 Vérification de GitHub…");
+  try{
+    const remote=await fetchRemote();
+    if(!remote.data){ setStatus("Aucun fichier sur GitHub pour l'instant."); return false; }
+    const pending=hasLocalChanges() && getBase();
+    const m=mergeData(getBase(), P, remote.data);
+    P=m.data; setBase(remote.data, remote.sha); saveLocal(); refreshUI();
+    const msg = pending ? `✅ À jour avec GitHub (${fmtTime()}). Tes modifications locales sont gardées — appuie sur 💾 pour les envoyer.`
+                        : `✅ À jour avec GitHub (${fmtTime()}) — ${P.length} produits.`;
+    setStatus(msg); if(manual) alert(msg);
+    return true;
+  }catch(e){
+    console.warn(e);
+    const msg="📴 Hors ligne ou GitHub inaccessible — copie du téléphone utilisée.";
+    setStatus(msg); if(manual) alert(msg+"\n("+e.message+")");
+    return false;
+  }finally{ if(manual){ btn.disabled=false; btn.textContent="🔄 Charger"; } }
+}
+
+
+// ===== UTILISATEUR / PARAMÈTRES =====
+function userName(){ return localStorage.getItem("plu_user_name") || "Inconnu"; }
+function maskTok(t){ return t ? (t.slice(0,4)+"…"+t.slice(-4)) : ""; }
+function refreshTokUI(){ const t=localStorage.getItem("github_token"); document.getElementById("setTok").textContent = t ? ("Token enregistré : "+maskTok(t)) : "Aucun token enregistré (lecture seule)."; }
+function showScreen(id){ document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active")); document.getElementById(id).classList.add("active"); }
+function openSettings(){ document.getElementById("setName").value = localStorage.getItem("plu_user_name")||""; refreshTokUI(); showScreen("set"); }
+function askNameOnce(){
+  if(localStorage.getItem("plu_user_name") || localStorage.getItem("plu_user_asked")) return;
+  localStorage.setItem("plu_user_asked","1");
+  const v=prompt("Bienvenue ! Quel est ton nom ? (sert au journal des modifications)\nTu peux laisser vide et le changer plus tard dans ⚙️ Paramètres.");
+  if(v && v.trim()) localStorage.setItem("plu_user_name", v.trim());
+}
+
+// ===== JOURNAL DES MODIFICATIONS =====
+const LOG_FILE="changelog.json", LOG_MAX=2000;
+const LOG_FIELDS={n:"Nom",p:"PLU",c:"CUP",cat:"Catégorie",tags:"Tags",notes:"Notes",photo:"Photo"};
+function fmtVal(k,v){ if(k==="photo") return v?"oui":"non"; if(Array.isArray(v)) return v.join(", "); return (v===undefined||v===null||v==="")?"∅":String(v); }
+function diffProduct(a,b){
+  const ch={};
+  for(const k in LOG_FIELDS){
+    const o=a?fmtVal(k,a[k]):undefined, n=b?fmtVal(k,b[k]):undefined;
+    if(!a){ if(n!=="∅" && n!=="non") ch[k]=["∅",n]; }
+    else if(!b){ if(o!=="∅" && o!=="non") ch[k]=[o,"∅"]; }
+    else if(o!==n) ch[k]=[o,n];
+    else if(k==="photo" && a.photo && b.photo && a.photo.v!==b.photo.v) ch[k]=["oui","nouvelle photo"];
   }
-
-  const btn = document.getElementById("githubSaveB");
-  const original = btn.textContent;
-  btn.textContent = "⏳";
-  btn.disabled = true;
-
-  try {
-    // 1. Récupérer le SHA actuel du fichier (s'il existe)
-    let sha = null;
-    const getUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
-    const getRes = await fetch(getUrl, {
-      headers: { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github+json" }
-    });
-    if (getRes.ok) {
-      const data = await getRes.json();
-      sha = data.sha;
-    }
-
-    // 2. Préparer le contenu
-    const content = JSON.stringify(P, null, 2);
-    const contentB64 = btoa(unescape(encodeURIComponent(content)));
-
-    // 3. Mettre à jour / créer le fichier
-    const putBody = {
-      message: "Mise à jour des données PLU depuis l'app",
-      content: contentB64,
-      branch: "main"
-    };
-    if (sha) putBody.sha = sha;
-
-    const putRes = await fetch(getUrl, {
-      method: "PUT",
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "Accept": "application/vnd.github+json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(putBody)
-    });
-
-    if (!putRes.ok) {
-      const err = await putRes.json().catch(() => ({}));
-      throw new Error(err.message || putRes.statusText);
-    }
-
-    // Sauver aussi localement pour que le refresh immédiat fonctionne
-    try {
-      localStorage.setItem("plu_data_local", JSON.stringify(P));
-      localStorage.setItem("plu_data_local_ts", Date.now().toString());
-    } catch(e) {}
-    alert("✅ Sauvegardé sur GitHub !\nTes modifications sont aussi gardées localement.\nRecharge la page pour les voir.");
-  } catch (e) {
-    console.error(e);
-    alert("❌ Erreur GitHub : " + e.message + "\n\nVérifie le token et les permissions.");
-    // Option de réinitialiser le token
-    if (confirm("Effacer le token sauvegardé et réessayer ?")) {
-      localStorage.removeItem("github_token");
-    }
-  } finally {
-    btn.textContent = original;
-    btn.disabled = false;
+  return ch;
+}
+function getJSON(k,d){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } }
+function setJSON(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){ console.warn(e); } }
+function logChange(action, oldP, newP){
+  const ch=diffProduct(oldP,newP);
+  if(action==="modif" && !Object.keys(ch).length) return;
+  const p=newP||oldP;
+  const e={ id:newId(), d:new Date().toISOString(), u:userName(), a:action, pid:p._id, plu:p.p||"", n:p.n||"", ch };
+  const pend=getJSON("plu_log_pending",[]); pend.push(e); setJSON("plu_log_pending", pend.slice(-LOG_MAX));
+}
+function mergeLog(a,b){
+  const m=new Map(); (a||[]).concat(b||[]).forEach(e=>{ if(e&&e.id) m.set(e.id,e); });
+  return Array.from(m.values()).sort((x,y)=>x.d<y.d?-1:x.d>y.d?1:0).slice(-LOG_MAX);
+}
+let logUser=null, logAll=[];
+async function openLog(){
+  logUser=null; showScreen("logs"); document.getElementById("logQ").value="";
+  logAll=mergeLog(getJSON("plu_log_cache",[]), getJSON("plu_log_pending",[]));
+  document.getElementById("logInfo").textContent="Chargement depuis GitHub…"; renderLog();
+  try{
+    const r=await fetchFile(LOG_FILE);
+    if(r.data){ setJSON("plu_log_cache", r.data); logAll=mergeLog(r.data, getJSON("plu_log_pending",[])); }
+    document.getElementById("logInfo").textContent="✅ Journal à jour.";
+  }catch(e){ document.getElementById("logInfo").textContent="📴 Hors ligne — journal du téléphone seulement."; }
+  renderLog();
+}
+function fmtDate(iso){ try{ return new Date(iso).toLocaleString("fr-CA",{year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"}); }catch(e){ return iso; } }
+const ACT={ajout:"➕ Ajout",modif:"✏️ Modification",suppr:"🗑️ Suppression"};
+function esc(t){ return String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function groupLogByUser(entries){
+  const g={};
+  entries.forEach(e=>{ const u=e.u||"Inconnu"; if(!g[u]) g[u]={u, count:0, last:""}; g[u].count++; if(e.d>g[u].last) g[u].last=e.d; });
+  return Object.values(g).sort((a,b)=>a.last<b.last?1:-1);
+}
+function renderLog(){
+  const fq=norm(document.getElementById("logQ").value.trim());
+  const pending=new Set(getJSON("plu_log_pending",[]).map(e=>e.id));
+  const list=document.getElementById("logList");
+  const match=e=>!fq || norm([e.u,e.n,e.plu,e.a,JSON.stringify(e.ch)].join(" ")).includes(fq);
+  if(logUser===null){
+    document.getElementById("logTitle").textContent="📜 Journal des modifications";
+    const groups=groupLogByUser(logAll.filter(match));
+    list.innerHTML = groups.length ? groups.map(g=>`<div class="logrow" data-u="${esc(g.u)}" style="cursor:pointer"><b>👤 ${esc(g.u)}</b> — ${g.count} modification${g.count>1?"s":""}<div class="lc">Dernière : ${fmtDate(g.last)}</div></div>`).join("") : '<div class="empty">Aucune modification.</div>';
+    list.querySelectorAll(".logrow").forEach(el=>el.onclick=()=>{ logUser=el.dataset.u; renderLog(); });
+  } else {
+    document.getElementById("logTitle").textContent="👤 "+logUser;
+    const items=logAll.filter(e=>(e.u||"Inconnu")===logUser && match(e)).reverse();
+    list.innerHTML = items.length ? items.map(e=>`<div class="logrow"><b>${ACT[e.a]||e.a}</b> · ${esc(e.n)}${e.plu?' <span class="plu">PLU '+esc(e.plu)+'</span>':''}${pending.has(e.id)?' <span style="color:#ff9800">(pas encore envoyé)</span>':''}
+<div class="lc">${fmtDate(e.d)}\n${Object.entries(e.ch||{}).map(([k,v])=>`${LOG_FIELDS[k]||k} : ${esc(v[0])} → ${esc(v[1])}`).join("\n")}</div></div>`).join("") : '<div class="empty">Aucune modification.</div>';
   }
 }
 
-// Chargement des données depuis plu_data.json au démarrage
+// ===== PHOTOS (IndexedDB + images/<id>.jpg sur GitHub) =====
+let _db=null;
+function idb(){ if(_db) return _db; _db=new Promise((res,rej)=>{ const r=indexedDB.open("plu_photos",1); r.onupgradeneeded=()=>r.result.createObjectStore("img"); r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error); }); return _db; }
+async function idbOp(mode, fn){ const db=await idb(); return new Promise((res,rej)=>{ const tx=db.transaction("img",mode); const st=tx.objectStore("img"); const r=fn(st); tx.oncomplete=()=>res(r&&r.result); tx.onerror=()=>rej(tx.error); }); }
+const photoGet=id=>idbOp("readonly",st=>st.get(id)).catch(()=>null);
+const photoPut=(id,v)=>idbOp("readwrite",st=>st.put(v,id));
+const photoDel=id=>idbOp("readwrite",st=>st.delete(id)).catch(()=>{});
+const photoAll=()=>idbOp("readonly",st=>st.getAll()).catch(()=>[]);
+function photoPath(id){ return "images/"+id+".jpg"; }
+function resizeImage(file){
+  return new Promise((res,rej)=>{
+    const url=URL.createObjectURL(file); const im=new Image();
+    im.onload=()=>{
+      const MAX=240; let w=im.width,h=im.height; const sc=Math.min(1,MAX/Math.max(w,h)); w=Math.round(w*sc); h=Math.round(h*sc);
+      const cv=document.createElement("canvas"); cv.width=w; cv.height=h; cv.getContext("2d").drawImage(im,0,0,w,h);
+      URL.revokeObjectURL(url);
+      let q=0.7, d=cv.toDataURL("image/jpeg",q);
+      while(d.length*0.75>20000 && q>0.35){ q-=0.1; d=cv.toDataURL("image/jpeg",q); }
+      res(d);
+    };
+    im.onerror=()=>{ URL.revokeObjectURL(url); rej(new Error("format non supporté")); };
+    im.src=url;
+  });
+}
+let formPhoto={action:"keep"};
+function renderFormPhoto(data){
+  const box=document.getElementById("fphotoPrev");
+  box.innerHTML = data ? `<img src="${data}" class="ph-thumb">` : "Aucune photo";
+  document.getElementById("fphotoDelB").style.display = data ? "inline-block" : "none";
+}
+async function initFormPhoto(p){
+  formPhoto={action:"keep"}; renderFormPhoto(null);
+  if(p && p.photo){ const d=await loadPhoto(p); if(formPhoto.action==="keep") renderFormPhoto(d || null); if(!d) document.getElementById("fphotoDelB").style.display="inline-block"; }
+}
+function markPhotoDelete(id){ const l=getJSON("plu_img_del",[]); if(!l.includes(id)) l.push(id); setJSON("plu_img_del",l); photoDel(id); }
+function applyFormPhoto(obj){
+  if(formPhoto.action==="set"){
+    const v=Date.now(); obj.photo={path:photoPath(obj._id), v};
+    photoPut(obj._id,{data:formPhoto.data, v, pending:true});
+    setJSON("plu_img_del", getJSON("plu_img_del",[]).filter(x=>x!==obj._id));
+  } else if(formPhoto.action==="remove"){
+    if(obj.photo) markPhotoDelete(obj._id);
+    delete obj.photo;
+  }
+  formPhoto={action:"keep"};
+}
+async function loadPhoto(p){
+  const c=await photoGet(p._id);
+  if(c && c.data && c.v===p.photo.v) return c.data;
+  try{
+    const r=await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${p.photo.path||photoPath(p._id)}?ref=main&t=${Date.now()}`,{headers:ghHeaders(),cache:"no-store"});
+    if(!r.ok) return c&&c.data||null;
+    const j=await r.json(); const data="data:image/jpeg;base64,"+(j.content||"").replace(/\s/g,"");
+    await photoPut(p._id,{data, v:p.photo.v, sha:j.sha});
+    return data;
+  }catch(e){ return c&&c.data||null; }
+}
+async function showPhotoInto(el, p){
+  const d=await loadPhoto(p);
+  if(!d || cur!==p) return;
+  el.innerHTML=`<img src="${d}" class="ph-thumb" alt="Photo">`;
+  const im=el.querySelector("img"); im.onclick=()=>im.classList.toggle("ph-big");
+}
+function ghHeaders(json){ const t=localStorage.getItem("github_token"); const h={"Accept":"application/vnd.github+json"}; if(t) h["Authorization"]=`Bearer ${t}`; if(json) h["Content-Type"]="application/json"; return h; }
+async function listDir(dir){
+  const r=await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${dir}?ref=main&t=${Date.now()}`,{headers:ghHeaders(),cache:"no-store"});
+  if(r.status===404) return [];
+  if(!r.ok) throw new Error("GitHub "+r.status);
+  return r.json();
+}
+async function pushPhotos(){
+  const all=await photoAll(); const keys=await idbOp("readonly",st=>st.getAllKeys()).catch(()=>[]);
+  const pend=[]; all.forEach((v,i)=>{ if(v && v.pending) pend.push([keys[i],v]); });
+  const dels=getJSON("plu_img_del",[]);
+  if(!pend.length && !dels.length) return {up:0,del:0,fail:0};
+  const shas={}; (await listDir("images")).forEach(e=>shas[e.name]=e.sha);
+  let up=0,del=0,fail=0;
+  for(const [id,v] of pend){
+    const body={message:"Photo produit "+id, content:v.data.split(",")[1], branch:"main"};
+    if(shas[id+".jpg"]) body.sha=shas[id+".jpg"];
+    const r=await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${photoPath(id)}`,{method:"PUT",headers:ghHeaders(true),body:JSON.stringify(body)});
+    if(r.ok){ const j=await r.json().catch(()=>({})); v.pending=false; v.sha=j.content&&j.content.sha; await photoPut(id,v); up++; } else fail++;
+  }
+  const left=[];
+  for(const id of dels){
+    const sha=shas[id+".jpg"]; if(!sha){ del++; continue; }
+    const r=await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${photoPath(id)}`,{method:"DELETE",headers:ghHeaders(true),body:JSON.stringify({message:"Suppression photo "+id, sha, branch:"main"})});
+    if(r.ok||r.status===404) del++; else { fail++; left.push(id); }
+  }
+  setJSON("plu_img_del",left);
+  return {up,del,fail};
+}
+async function pushLog(){
+  const pend=getJSON("plu_log_pending",[]);
+  if(!pend.length) return 0;
+  for(let attempt=0; attempt<2; attempt++){
+    const r=await fetchFile(LOG_FILE);
+    const merged=mergeLog(r.data||[], pend);
+    const body={message:"Journal des modifications ("+userName()+")", content:btoa(unescape(encodeURIComponent(JSON.stringify(merged,null,1)))), branch:"main"};
+    if(r.sha) body.sha=r.sha;
+    const res=await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${LOG_FILE}`,{method:"PUT",headers:ghHeaders(true),body:JSON.stringify(body)});
+    if(res.ok){ setJSON("plu_log_cache",merged); const sent=new Set(pend.map(e=>e.id)); setJSON("plu_log_pending", getJSON("plu_log_pending",[]).filter(e=>!sent.has(e.id))); return pend.length; }
+    if(res.status!==409 && res.status!==422) throw new Error("journal : GitHub "+res.status);
+  }
+  throw new Error("journal : conflit, réessaie 💾");
+}
+// Lit un fichier JSON à la racine du repo (SHA via la liste du dossier, contenu en brut : marche au-delà de 1 Mo)
+async function fetchFile(name){
+  const entry=(await listDir("")).find(e=>e.name===name);
+  if(!entry) return {data:null, sha:null};
+  const h=ghHeaders(); h["Accept"]="application/vnd.github.raw";
+  const res=await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${name}?ref=main&t=${Date.now()}`,{headers:h,cache:"no-store"});
+  if(!res.ok) throw new Error("GitHub "+res.status);
+  const data=JSON.parse(await res.text());
+  if(!Array.isArray(data)) throw new Error("Fichier GitHub invalide");
+  return {data, sha:entry.sha};
+}
+
+async function saveToGitHub() {
+  const token = getGitHubToken();
+  if (!token) { alert("Token requis pour sauvegarder sur GitHub."); return; }
+  const btn = document.getElementById("githubSaveB");
+  const original = btn.textContent;
+  btn.textContent = "⏳"; btn.disabled = true;
+  try {
+    let lastErr=null;
+    for(let attempt=0; attempt<2; attempt++){
+      setStatus("🔄 Récupération de la dernière version sur GitHub…");
+      const remote=await fetchRemote();
+      let merged=P, stats={localWins:0,remoteNew:0};
+      if(remote.data){ const m=mergeData(getBase(), P, remote.data); merged=m.data; stats=m; }
+      setStatus("⬆️ Envoi sur GitHub…");
+      const contentB64 = btoa(unescape(encodeURIComponent(JSON.stringify(merged, null, 2))));
+      const putBody = { message: "Mise à jour des données PLU depuis l'app", content: contentB64, branch: "main" };
+      if (remote.sha) putBody.sha = remote.sha;
+      const putRes = await fetch(API_URL, { method: "PUT",
+        headers: { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github+json", "Content-Type": "application/json" },
+        body: JSON.stringify(putBody) });
+      if (putRes.ok) {
+        const r=await putRes.json().catch(()=>({}));
+        P=merged; setBase(merged, r.content && r.content.sha); saveLocal(); refreshUI();
+        let extra="";
+        try{ setStatus("⬆️ Envoi des photos…"); const ph=await pushPhotos(); if(ph.up||ph.del) extra+=`\n📷 Photos : ${ph.up} envoyée(s), ${ph.del} retirée(s).`; if(ph.fail) extra+=`\n⚠️ ${ph.fail} photo(s) non envoyée(s) — réessaie 💾.`; }
+        catch(e){ extra+="\n⚠️ Photos non envoyées ("+e.message+") — réessaie 💾."; }
+        try{ setStatus("⬆️ Envoi du journal…"); const n=await pushLog(); if(n) extra+=`\n📜 Journal : ${n} entrée(s) ajoutée(s).`; }
+        catch(e){ extra+="\n⚠️ Journal non envoyé ("+e.message+") — réessaie 💾."; }
+        const msg=`✅ Sauvegardé sur GitHub (${fmtTime()}).`+(stats.remoteNew?`\n${stats.remoteNew} changement(s) faits par les autres ont été récupérés.`:"")+extra;
+        setStatus(msg.replace("\n"," ")); alert(msg); return;
+      }
+      const err = await putRes.json().catch(() => ({}));
+      lastErr = new Error(err.message || putRes.statusText);
+      lastErr.status = putRes.status;
+      if(putRes.status===409 || putRes.status===422){ setStatus("⚠️ Quelqu'un vient de sauvegarder — nouvelle fusion…"); continue; }
+      break;
+    }
+    throw lastErr;
+  } catch (e) {
+    console.error(e);
+    if(e.status===409||e.status===422){
+      setStatus("⚠️ Conflit : réessaie 💾 dans quelques secondes.");
+      alert("⚠️ Quelqu'un d'autre sauvegarde en même temps. Rien n'est perdu : réessaie 💾 dans quelques secondes.");
+    } else if(e.status===401||e.status===403||e.status===404){
+      setStatus("❌ Erreur GitHub : "+e.message);
+      alert("❌ Erreur GitHub : " + e.message + "\n\nVérifie le token et les permissions.");
+      if (confirm("Effacer le token sauvegardé et réessayer ?")) localStorage.removeItem("github_token");
+    } else {
+      setStatus("📴 Pas de connexion — tes modifications restent dans le téléphone.");
+      alert("📴 Impossible de joindre GitHub (" + e.message + ").\nTes modifications sont gardées dans le téléphone ; réessaie 💾 quand tu auras du réseau.");
+    }
+  } finally { btn.textContent = original; btn.disabled = false; }
+}
+
+// Chargement des données au démarrage : copie locale (ou fichier fourni), puis synchro GitHub si en ligne
 async function loadExternalData() {
-  // 1. Essayer localStorage d'abord (modifications locales non encore poussées ou plus récentes)
+  let ok=false;
   try {
     const local = localStorage.getItem("plu_data_local");
-    const localTs = localStorage.getItem("plu_data_local_ts");
-    if (local) {
-      const data = JSON.parse(local);
-      if (Array.isArray(data) && data.length > 0) {
-        P = data;
-        console.log("Données chargées depuis localStorage (" + data.length + " produits)");
-        return true;
-      }
-    }
+    if (local) { const data = JSON.parse(local); if (Array.isArray(data) && data.length > 0) { P = data; ok=true; } }
   } catch(e) {}
-
-  // 2. Sinon essayer plu_data.json sur GitHub Pages
-  try {
-    const res = await fetch("./plu_data.json?t=" + Date.now());
-    if (res.ok) {
-      const data = await res.json();
-      if (Array.isArray(data) && data.length > 0) {
-        P = data;
-        // Sauver aussi en local pour la prochaine fois
-        try { localStorage.setItem("plu_data_local", JSON.stringify(data)); } catch(e) {}
-        console.log("Données chargées depuis plu_data.json (" + data.length + " produits)");
-        return true;
-      }
-    }
-  } catch (e) {
-    console.log("Pas de plu_data.json externe");
+  if(!ok){
+    try {
+      const res = await fetch("./plu_data.json?t=" + Date.now());
+      if (res.ok) { const data = await res.json(); if (Array.isArray(data) && data.length > 0) { P = data; ok=true; } }
+    } catch (e) { console.log("Pas de plu_data.json externe"); }
   }
-  return false;
+  ensureIds(P); saveLocal();
+  return ok;
 }
 
 try {
@@ -934,6 +1257,8 @@ try {
     updateCatFilter();
     q = "";
     renderMain();
+    syncFromGitHub(false);
+    setTimeout(askNameOnce, 800);
   }).catch(() => {
     updateTagFilter();
     updateCatFilter();

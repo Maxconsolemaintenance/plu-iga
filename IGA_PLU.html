@@ -270,8 +270,21 @@ function filterList(query){
   return items.slice(0, 80);
 }
 
-function getEmoji(name) {
+function getEmoji(name, cat) {
   const n = (name || "").toLowerCase();
+  const c = (cat || "").toLowerCase();
+  // Priorité à la catégorie si définie
+  if (c.includes("pomme") && !c.includes("terre")) return "🍎";
+  if (c.includes("banane")) return "🍌";
+  if (c.includes("agrume") || c.includes("orange") || c.includes("citron")) return "🍊";
+  if (c.includes("poire")) return "🍐";
+  if (c.includes("tomate")) return "🍅";
+  if (c.includes("baie") || c.includes("fraise") || c.includes("framboise")) return "🍓";
+  if (c.includes("melon")) return "🍈";
+  if (c.includes("herbe") || c.includes("persil") || c.includes("coriandre")) return "🌿";
+  if (c.includes("légume") || c.includes("legume")) return "🥬";
+  if (c.includes("champignon")) return "🍄";
+  if (c.includes("floral") || c.includes("fleur")) return "🌸";
   // Pommes (toutes les variétés)
   if (n.includes("pomme") && !n.includes("terre") && !n.includes("de terre")) return "🍎";
   // Fruits
@@ -348,7 +361,7 @@ function renderList(container, items){
   if(!items.length){container.innerHTML = ""; return;}
   container.innerHTML = items.map(p=>`
     <div class="item" data-i="${P.indexOf(p)}">
-      <div class="thumb" style="display:flex;align-items:center;justify-content:center;font-size:26px;background:#2a2a2a">${p.p ? getEmoji(p.n) : ""}</div>
+      <div class="thumb" style="display:flex;align-items:center;justify-content:center;font-size:26px;background:#2a2a2a">${p.p ? getEmoji(p.n, p.cat) : ""}</div>
       <div class="info">
         <div class="name">${p.n}</div>
         <div class="meta">${p.cat||""} ${p.p?'<span class="plu">PLU '+p.p+'</span>':''}</div>
@@ -374,7 +387,7 @@ function show(p){
   trackUsage(p.n);
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
   document.getElementById("d").classList.add("active");
-  document.getElementById("demoji").textContent = p.p ? getEmoji(p.n) : "";
+  document.getElementById("demoji").textContent = p.p ? getEmoji(p.n, p.cat) : "";
   // Photo uniquement dans la vue détail
   const photoEl = document.getElementById("dphoto");
   if (p.img && p.img.startsWith("data:image") && !p.img.includes("svg+xml")) {

@@ -28,5 +28,32 @@
     "oui"
    ]
   }
+ },
+ {
+  "id": "id_mvk74z7v_7t6co5",
+  "d": "2026-10-22T23:52:55.627Z",
+  "u": "Max",
+  "a": "suppr",
+  "pid": "h_wf4idj",
+  "plu": "3110",
+  "n": "Oranges cara cara",
+  "ch": {
+   "n": [
+    "Oranges cara cara",
+    "∅"
+   ],
+   "p": [
+    "3110",
+    "∅"
+   ],
+   "cat": [
+    "Agrumes",
+    "∅"
+   ],
+   "tags": [
+    "",
+    "∅"
+   ]
+  }
  }
 ]

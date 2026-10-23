@@ -74,14 +74,18 @@
     "_id": "h_gba2v3"
   },
   {
-    "n": "(See also RADISH) Daikon",
+    "n": "Daikon",
     "p": "4598",
     "c": "",
     "cat": "Légumes Racine",
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjZjFjNDBmIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+KDwvdGV4dD48L3N2Zz4=",
-    "_id": "h_e9idol"
+    "_id": "h_e9idol",
+    "photo": {
+      "path": "images/h_e9idol.jpg",
+      "v": 1792713428491
+    }
   },
   {
     "n": "Sucré Dumpling Courge",
@@ -201,7 +205,11 @@
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjMWFiYzljIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+QTwvdGV4dD48L3N2Zz4=",
-    "_id": "h_xtck5q"
+    "_id": "h_xtck5q",
+    "photo": {
+      "path": "images/h_xtck5q.jpg",
+      "v": 1792713508724
+    }
   },
   {
     "n": "Anaheim Vert and Rouge Poivrons (capsicums)",
@@ -241,7 +249,11 @@
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjMTZhMDg1IiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+QTwvdGV4dD48L3N2Zz4=",
-    "_id": "h_po80os"
+    "_id": "h_po80os",
+    "photo": {
+      "path": "images/h_po80os.jpg",
+      "v": 1792713620967
+    }
   },
   {
     "n": "Antares Pommes",
@@ -321,7 +333,11 @@
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjMjk4MGI5IiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+QTwvdGV4dD48L3N2Zz4=",
-    "_id": "h_epvjuw"
+    "_id": "h_epvjuw",
+    "photo": {
+      "path": "images/h_epvjuw.jpg",
+      "v": 1792716733922
+    }
   },
   {
     "n": "Australian Blue Courge",
@@ -814,14 +830,18 @@
     "_id": "h_1tkcsc0"
   },
   {
-    "n": "Blood Oranges",
+    "n": "Oranges sanguine",
     "p": "4381",
     "c": "",
     "cat": "Agrumes",
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjOWI1OWI2IiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+QjwvdGV4dD48L3N2Zz4=",
-    "_id": "h_1hp0g98"
+    "_id": "h_1hp0g98",
+    "photo": {
+      "path": "images/h_1hp0g98.jpg",
+      "v": 1792719067758
+    }
   },
   {
     "n": "Blue/Black Avec pépins Raisins",
@@ -2174,14 +2194,18 @@
     "_id": "h_1uqxuap"
   },
   {
-    "n": "Fairchild Tangerines/mandarins",
+    "n": "Fairchild Tangerine",
     "p": "4452",
     "c": "",
-    "cat": "Standard",
+    "cat": "Agrumes",
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjZTc0YzNjIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+RjwvdGV4dD48L3N2Zz4=",
-    "_id": "h_1dstgmm"
+    "_id": "h_1dstgmm",
+    "photo": {
+      "path": "images/h_1dstgmm.jpg",
+      "v": 1792719001647
+    }
   },
   {
     "n": "Fairy Ring Champignon Champignons",
@@ -2244,14 +2268,18 @@
     "_id": "h_16m5cbl"
   },
   {
-    "n": "Fiddlehead ferns",
+    "n": "Tête de violon",
     "p": "4606",
     "c": "",
-    "cat": "Standard",
+    "cat": "Légumes Cuisson",
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjMzQ5OGRiIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+RjwvdGV4dD48L3N2Zz4=",
-    "_id": "h_1t0q6at"
+    "_id": "h_1t0q6at",
+    "photo": {
+      "path": "images/h_1t0q6at.jpg",
+      "v": 1792717079906
+    }
   },
   {
     "n": "Fiesta Pommes",
@@ -2684,14 +2712,18 @@
     "_id": "h_jp2hql"
   },
   {
-    "n": "Oignons verts",
+    "n": "Oignons verts (échalote)",
     "p": "4068",
     "c": "",
     "cat": "Légumes Cuisson",
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjMjdhZTYwIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+VjwvdGV4dD48L3N2Zz4=",
-    "_id": "h_100orxc"
+    "_id": "h_100orxc",
+    "photo": {
+      "path": "images/h_100orxc.jpg",
+      "v": 1792716525538
+    }
   },
   {
     "n": "Vert Asperge",
@@ -2744,14 +2776,18 @@
     "_id": "h_1nw0p8n"
   },
   {
-    "n": "Vert Escarole/batavian chicory",
+    "n": "Scarole",
     "p": "4605",
     "c": "",
-    "cat": "Standard",
+    "cat": "Légumes Salade",
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjMjk4MGI5IiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+VjwvdGV4dD48L3N2Zz4=",
-    "_id": "h_1d8qd9d"
+    "_id": "h_1d8qd9d",
+    "photo": {
+      "path": "images/h_1d8qd9d.jpg",
+      "v": 1792719253319
+    }
   },
   {
     "n": "Laitue feuille verte",
@@ -2894,14 +2930,18 @@
     "_id": "h_i7xsoh"
   },
   {
-    "n": "Heirloom Tomates",
+    "n": "Tomates ancestrale",
     "p": "3423",
     "c": "",
     "cat": "Tomates",
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjMmVjYzcxIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+SDwvdGV4dD48L3N2Zz4=",
-    "_id": "h_1b805mt"
+    "_id": "h_1b805mt",
+    "photo": {
+      "path": "images/h_1b805mt.jpg",
+      "v": 1792717306614
+    }
   },
   {
     "n": "Helda/Flat Haricots",
@@ -3904,14 +3944,18 @@
     "_id": "h_5ove12"
   },
   {
-    "n": "Gros Greenhouse/Hydroponic/Regular Tomates",
+    "n": "Tomates rouge de serre",
     "p": "4799",
     "c": "",
     "cat": "Tomates",
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjZDM1NDAwIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+RzwvdGV4dD48L3N2Zz4=",
-    "_id": "h_6mhyja"
+    "_id": "h_6mhyja",
+    "photo": {
+      "path": "images/h_6mhyja.jpg",
+      "v": 1792718631740
+    }
   },
   {
     "n": "Gros Haralson Pommes",
@@ -4514,14 +4558,18 @@
     "_id": "h_eh435t_2"
   },
   {
-    "n": "Gros Vine Ripe, Regular Tomates",
+    "n": "Tomates rouge mûre large",
     "p": "3151",
     "c": "",
     "cat": "Tomates",
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjZTY3ZTIyIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+RzwvdGV4dD48L3N2Zz4=",
-    "_id": "h_1g0i2e7"
+    "_id": "h_1g0i2e7",
+    "photo": {
+      "path": "images/h_1g0i2e7.jpg",
+      "v": 1792717491646
+    }
   },
   {
     "n": "Gros Blanc Asperge",
@@ -5364,14 +5412,18 @@
     "_id": "h_sb4g61"
   },
   {
-    "n": "Minneola Tangelo",
+    "n": "Minneola Tangerine",
     "p": "4383",
     "c": "",
-    "cat": "Standard",
+    "cat": "Agrumes",
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjMjk4MGI5IiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+TTwvdGV4dD48L3N2Zz4=",
-    "_id": "h_wlq4q4"
+    "_id": "h_wlq4q4",
+    "photo": {
+      "path": "images/h_wlq4q4.jpg",
+      "v": 1792718948460
+    }
   },
   {
     "n": "Minnewashta Pommes",
@@ -6084,14 +6136,18 @@
     "_id": "h_r0qgq"
   },
   {
-    "n": "Plum/Italian/Saladette/Roma Tomates",
+    "n": "Roma Tomates Italienne",
     "p": "4087",
     "c": "",
     "cat": "Tomates",
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjMWFiYzljIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+UDwvdGV4dD48L3N2Zz4=",
-    "_id": "h_rph7k"
+    "_id": "h_rph7k",
+    "photo": {
+      "path": "images/h_rph7k.jpg",
+      "v": 1792719486341
+    }
   },
   {
     "n": "Plumac Pommes",
@@ -6814,24 +6870,32 @@
     "_id": "h_1nl1cda"
   },
   {
-    "n": "Regular Rhubarb",
+    "n": "Rhubarbe",
     "p": "4745",
     "c": "",
-    "cat": "Standard",
+    "cat": "Légumes Champ",
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjZTc0YzNjIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+UjwvdGV4dD48L3N2Zz4=",
-    "_id": "h_lx932h"
+    "_id": "h_lx932h",
+    "photo": {
+      "path": "images/h_lx932h.jpg",
+      "v": 1792719646203
+    }
   },
   {
     "n": "Rutabagas navet",
     "p": "4747",
     "c": "",
-    "cat": "Standard",
+    "cat": "Légumes Racine",
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjZTY3ZTIyIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+UjwvdGV4dD48L3N2Zz4=",
-    "_id": "h_10ewzyj"
+    "_id": "h_10ewzyj",
+    "photo": {
+      "path": "images/h_10ewzyj.jpg",
+      "v": 1792719364091
+    }
   },
   {
     "n": "Regular Tomates",
@@ -6854,14 +6918,18 @@
     "_id": "h_1nwk70d"
   },
   {
-    "n": "Regular Tomates",
+    "n": "Tomates rouge en grappe",
     "p": "4664",
     "c": "",
     "cat": "Tomates",
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjMjdhZTYwIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+UjwvdGV4dD48L3N2Zz4=",
-    "_id": "h_1nxdi9s"
+    "_id": "h_1nxdi9s",
+    "photo": {
+      "path": "images/h_1nxdi9s.jpg",
+      "v": 1792717199584
+    }
   },
   {
     "n": "Regular Tomates",
@@ -6884,14 +6952,18 @@
     "_id": "h_5mvcpd"
   },
   {
-    "n": "Regular/Bunched Épinard",
+    "n": "Épinard frais",
     "p": "4090",
     "c": "",
     "cat": "Légumes Salade",
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjZjM5YzEyIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+UjwvdGV4dD48L3N2Zz4=",
-    "_id": "h_1uj57aj"
+    "_id": "h_1uj57aj",
+    "photo": {
+      "path": "images/h_1uj57aj.jpg",
+      "v": 1792716448514
+    }
   },
   {
     "n": "Regular/Curly Persil",
@@ -9364,14 +9436,18 @@
     "_id": "h_tqee16"
   },
   {
-    "n": "Retailer Assigned Oranges",
+    "n": "Oranges sanguine",
     "p": "4390",
     "c": "",
     "cat": "Agrumes",
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjZDM1NDAwIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+UjwvdGV4dD48L3N2Zz4=",
-    "_id": "h_tqeen6"
+    "_id": "h_tqeen6",
+    "photo": {
+      "path": "images/h_tqeen6.jpg",
+      "v": 1792719096315
+    }
   },
   {
     "n": "Retailer Assigned Oranges",
@@ -11064,14 +11140,18 @@
     "_id": "h_pc08uq"
   },
   {
-    "n": "Retailer Assigned Tomates",
+    "n": "Tomates rouge de serre",
     "p": "4807",
     "c": "",
     "cat": "Tomates",
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjMWFiYzljIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+UjwvdGV4dD48L3N2Zz4=",
-    "_id": "h_pc08vn"
+    "_id": "h_pc08vn",
+    "photo": {
+      "path": "images/h_pc08vn.jpg",
+      "v": 1792717145001
+    }
   },
   {
     "n": "Retailer Assigned Tomates",
@@ -13991,7 +14071,11 @@
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjMzQ5OGRiIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+WTwvdGV4dD48L3N2Zz4=",
-    "_id": "h_f4q3gg"
+    "_id": "h_f4q3gg",
+    "photo": {
+      "path": "images/h_f4q3gg.jpg",
+      "v": 1792716992943
+    }
   },
   {
     "n": "Zucchini/Courgette Courge",
@@ -14004,14 +14088,18 @@
     "_id": "h_1hih228"
   },
   {
-    "n": "Zucchini/Courgette Courge",
+    "n": "Zucchini/Courgette",
     "p": "4067",
     "c": "",
     "cat": "Légumes Cuisson",
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjOGU0NGFkIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+WjwvdGV4dD48L3N2Zz4=",
-    "_id": "h_1hj3idt"
+    "_id": "h_1hj3idt",
+    "photo": {
+      "path": "images/h_1hj3idt.jpg",
+      "v": 1792716668102
+    }
   },
   {
     "n": "CITRON BIO 16/454G",
@@ -16074,14 +16162,18 @@
     "_id": "h_1idk5d0"
   },
   {
-    "n": "ANDYBOY RAPPINI 26/1UN",
+    "n": "RAPPINI",
     "p": "4547",
-    "c": "02-04547-00000",
+    "c": "",
     "cat": "Légumes Cuisson",
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjMTZhMDg1IiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+QTwvdGV4dD48L3N2Zz4=",
-    "_id": "h_1ifodg5"
+    "_id": "h_1ifodg5",
+    "photo": {
+      "path": "images/h_1ifodg5.jpg",
+      "v": 1792720842891
+    }
   },
   {
     "n": "ASPERGE BIO 5KG/1KG",
@@ -27594,14 +27686,18 @@
     "_id": "h_18am4m1"
   },
   {
-    "n": "ECHALOTTE BIO",
+    "n": "ÉCHALOTTE BIO",
     "p": "94068",
     "c": "",
-    "cat": "Standard",
+    "cat": "Légumes Cuisson",
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjMmVjYzcxIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+RTwvdGV4dD48L3N2Zz4=",
-    "_id": "h_13ch4d7"
+    "_id": "h_13ch4d7",
+    "photo": {
+      "path": "images/h_13ch4d7.jpg",
+      "v": 1792716551685
+    }
   },
   {
     "n": "ECHALOTTE SECHE BIO",
@@ -29371,7 +29467,11 @@
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjZTc0YzNjIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+VDwvdGV4dD48L3N2Zz4=",
-    "_id": "h_1jsginh"
+    "_id": "h_1jsginh",
+    "photo": {
+      "path": "images/h_1jsginh.jpg",
+      "v": 1792717242723
+    }
   },
   {
     "n": "TOMATE ROUGE SERRE BIO",
@@ -29381,7 +29481,11 @@
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjZTY3ZTIyIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+VDwvdGV4dD48L3N2Zz4=",
-    "_id": "h_13cezve"
+    "_id": "h_13cezve",
+    "photo": {
+      "path": "images/h_13cezve.jpg",
+      "v": 1792718601116
+    }
   },
   {
     "n": "TOMATE ROUGE SERRE BIO",
@@ -29411,7 +29515,11 @@
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjMTZhMDg1IiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+VDwvdGV4dD48L3N2Zz4=",
-    "_id": "h_1x3uez2"
+    "_id": "h_1x3uez2",
+    "photo": {
+      "path": "images/h_1x3uez2.jpg",
+      "v": 1792717317981
+    }
   },
   {
     "n": "TOMATES PANIER",
@@ -29491,7 +29599,11 @@
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjMzQ5OGRiIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+WjwvdGV4dD48L3N2Zz4=",
-    "_id": "h_13frb4v"
+    "_id": "h_13frb4v",
+    "photo": {
+      "path": "images/h_13frb4v.jpg",
+      "v": 1792716681949
+    }
   },
   {
     "n": "CURCUMA",

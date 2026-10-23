@@ -55,5 +55,566 @@
     "∅"
    ]
   }
+ },
+ {
+  "id": "id_mvk7aebw_cywtyg",
+  "d": "2026-10-22T23:57:08.492Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_e9idol",
+  "plu": "4598",
+  "n": "Daikon",
+  "ch": {
+   "n": [
+    "(See also RADISH) Daikon",
+    "Daikon"
+   ],
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvk7c48l_ym10yv",
+  "d": "2026-10-22T23:58:28.725Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_xtck5q",
+  "plu": "3438",
+  "n": "Ambrosia Pommes",
+  "ch": {
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvk7eiuf_9g1zxb",
+  "d": "2026-10-23T00:00:20.967Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_po80os",
+  "plu": "4417",
+  "n": "Anjou Poires",
+  "ch": {
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvk934lf_cxmmn8",
+  "d": "2026-10-23T00:47:28.515Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_1uj57aj",
+  "plu": "4090",
+  "n": "Épinard frais",
+  "ch": {
+   "n": [
+    "Regular/Bunched Épinard",
+    "Épinard frais"
+   ],
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvk94s0y_awao6y",
+  "d": "2026-10-23T00:48:45.538Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_100orxc",
+  "plu": "4068",
+  "n": "Oignons verts",
+  "ch": {
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvk95c7a_7rsnky",
+  "d": "2026-10-23T00:49:11.686Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_13ch4d7",
+  "plu": "94068",
+  "n": "ECHALOTTE BIO",
+  "ch": {
+   "cat": [
+    "Standard",
+    "Légumes Cuisson"
+   ],
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvk95rdc_3ncwjw",
+  "d": "2026-10-23T00:49:31.344Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_100orxc",
+  "plu": "4068",
+  "n": "Oignons verts (échalote)",
+  "ch": {
+   "n": [
+    "Oignons verts",
+    "Oignons verts (échalote)"
+   ]
+  }
+ },
+ {
+  "id": "id_mvk968kp_wfez0b",
+  "d": "2026-10-23T00:49:53.641Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_13ch4d7",
+  "plu": "94068",
+  "n": "ÉCHALOTTE BIO",
+  "ch": {
+   "n": [
+    "ECHALOTTE BIO",
+    "ÉCHALOTTE BIO"
+   ]
+  }
+ },
+ {
+  "id": "id_mvk97u13_bqh90w",
+  "d": "2026-10-23T00:51:08.103Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_1hj3idt",
+  "plu": "4067",
+  "n": "Zucchini/Courgette",
+  "ch": {
+   "n": [
+    "Zucchini/Courgette Courge",
+    "Zucchini/Courgette"
+   ],
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvk984pq_9c8wrn",
+  "d": "2026-10-23T00:51:21.950Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_13frb4v",
+  "plu": "94067",
+  "n": "ZUCCHINI VERT BIO",
+  "ch": {
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvk998te_k3p1ub",
+  "d": "2026-10-23T00:52:13.922Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_epvjuw",
+  "plu": "4220",
+  "n": "Atemoyas",
+  "ch": {
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvk9esog_udz5ca",
+  "d": "2026-10-23T00:56:32.944Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_f4q3gg",
+  "plu": "4819",
+  "n": "Yuca root/cassava/manioc",
+  "ch": {
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvk9gns3_b2gtq0",
+  "d": "2026-10-23T00:57:59.907Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_1t0q6at",
+  "plu": "4606",
+  "n": "Tête de violon",
+  "ch": {
+   "n": [
+    "Fiddlehead ferns",
+    "Tête de violon"
+   ],
+   "cat": [
+    "Standard",
+    "Légumes Cuisson"
+   ],
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvk9i209_owds87",
+  "d": "2026-10-23T00:59:05.001Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_pc08vn",
+  "plu": "4807",
+  "n": "Tomates rouge de serre",
+  "ch": {
+   "n": [
+    "Retailer Assigned Tomates",
+    "Tomates rouge de serre"
+   ],
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvk9j84i_19c07u",
+  "d": "2026-10-23T00:59:59.586Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_1nxdi9s",
+  "plu": "4664",
+  "n": "Tomates rouge en grappe",
+  "ch": {
+   "n": [
+    "Regular Tomates",
+    "Tomates rouge en grappe"
+   ],
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvk9k5es_jnas3l",
+  "d": "2026-10-23T01:00:42.725Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_1jsginh",
+  "plu": "94664",
+  "n": "TOMATE GRAPPE BIO",
+  "ch": {
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvk9lipj_s33ong",
+  "d": "2026-10-23T01:01:46.615Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_1b805mt",
+  "plu": "3423",
+  "n": "Tomates ancestrale",
+  "ch": {
+   "n": [
+    "Heirloom Tomates",
+    "Tomates ancestrale"
+   ],
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvk9lrha_mqk542",
+  "d": "2026-10-23T01:01:57.982Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_1x3uez2",
+  "plu": "93423",
+  "n": "TOMATES ANCESTRALES BIO",
+  "ch": {
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvk9phhb_dpj1h0",
+  "d": "2026-10-23T01:04:51.647Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_1g0i2e7",
+  "plu": "3151",
+  "n": "Tomates rouge mûre large",
+  "ch": {
+   "n": [
+    "Gros Vine Ripe, Regular Tomates",
+    "Tomates rouge mûre large"
+   ],
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvkad9jx_r4h11z",
+  "d": "2026-10-23T01:23:21.117Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_13cezve",
+  "plu": "94799",
+  "n": "TOMATE ROUGE SERRE BIO",
+  "ch": {
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvkadx6l_jwa6ib",
+  "d": "2026-10-23T01:23:51.741Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_6mhyja",
+  "plu": "4799",
+  "n": "Tomates rouge de serre",
+  "ch": {
+   "n": [
+    "Gros Greenhouse/Hydroponic/Regular Tomates",
+    "Tomates rouge de serre"
+   ],
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvkakpkc_dkbd5g",
+  "d": "2026-10-23T01:29:08.460Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_wlq4q4",
+  "plu": "4383",
+  "n": "Minneola Tangerine",
+  "ch": {
+   "n": [
+    "Minneola Tangelo",
+    "Minneola Tangerine"
+   ],
+   "cat": [
+    "Standard",
+    "Agrumes"
+   ],
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvkaluls_byfsed",
+  "d": "2026-10-23T01:30:01.648Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_1dstgmm",
+  "plu": "4452",
+  "n": "Fairchild Tangerine",
+  "ch": {
+   "n": [
+    "Fairchild Tangerines/mandarins",
+    "Fairchild Tangerine"
+   ],
+   "cat": [
+    "Standard",
+    "Agrumes"
+   ],
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvkan9m6_kfh96w",
+  "d": "2026-10-23T01:31:07.758Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_1hp0g98",
+  "plu": "4381",
+  "n": "Oranges sanguine",
+  "ch": {
+   "n": [
+    "Blood Oranges",
+    "Oranges sanguine"
+   ],
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvkanvng_44lh21",
+  "d": "2026-10-23T01:31:36.316Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_tqeen6",
+  "plu": "4390",
+  "n": "Oranges sanguine",
+  "ch": {
+   "n": [
+    "Retailer Assigned Oranges",
+    "Oranges sanguine"
+   ],
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvkar8so_68zmin",
+  "d": "2026-10-23T01:34:13.320Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_1d8qd9d",
+  "plu": "4605",
+  "n": "Scarole",
+  "ch": {
+   "n": [
+    "Vert Escarole/batavian chicory",
+    "Scarole"
+   ],
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvkaskk6_b01ri7",
+  "d": "2026-10-23T01:35:15.222Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_1d8qd9d",
+  "plu": "4605",
+  "n": "Scarole",
+  "ch": {
+   "cat": [
+    "Standard",
+    "Légumes Salade"
+   ]
+  }
+ },
+ {
+  "id": "id_mvkatm9n_emsgyf",
+  "d": "2026-10-23T01:36:04.092Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_10ewzyj",
+  "plu": "4747",
+  "n": "Rutabagas navet",
+  "ch": {
+   "cat": [
+    "Standard",
+    "Légumes Racine"
+   ],
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvkaw8li_wipk0i",
+  "d": "2026-10-23T01:38:06.342Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_rph7k",
+  "plu": "4087",
+  "n": "Roma Tomates Italienne",
+  "ch": {
+   "n": [
+    "Plum/Italian/Saladette/Roma Tomates",
+    "Roma Tomates Italienne"
+   ],
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvkazny4_5r2obb",
+  "d": "2026-10-23T01:40:46.204Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_lx932h",
+  "plu": "4745",
+  "n": "Rhubarbe",
+  "ch": {
+   "n": [
+    "Regular Rhubarb",
+    "Rhubarbe"
+   ],
+   "cat": [
+    "Standard",
+    "Légumes Champ"
+   ],
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
+ },
+ {
+  "id": "id_mvkbpbbl_jggjlj",
+  "d": "2026-10-23T02:00:42.897Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_1ifodg5",
+  "plu": "4547",
+  "n": "RAPPINI",
+  "ch": {
+   "n": [
+    "ANDYBOY RAPPINI 26/1UN",
+    "RAPPINI"
+   ],
+   "c": [
+    "02-04547-00000",
+    "∅"
+   ],
+   "photo": [
+    "non",
+    "oui"
+   ]
+  }
  }
 ]

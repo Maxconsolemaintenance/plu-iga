@@ -1116,5 +1116,36 @@
     "oui"
    ]
   }
+ },
+ {
+  "id": "id_mvl83zta_k9b67g",
+  "d": "2026-10-23T17:07:55.534Z",
+  "u": "Max",
+  "a": "ajout",
+  "pid": "id_mvl83zt6_ib7aks",
+  "plu": "4568",
+  "n": "Chou-fleur mauve",
+  "ch": {
+   "n": [
+    "∅",
+    "Chou-fleur mauve"
+   ],
+   "p": [
+    "∅",
+    "4568"
+   ],
+   "cat": [
+    "∅",
+    "Légumes Champ"
+   ],
+   "tags": [
+    "∅",
+    ""
+   ],
+   "photo": [
+    "∅",
+    "oui"
+   ]
+  }
  }
 ]

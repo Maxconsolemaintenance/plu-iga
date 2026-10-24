@@ -2,7 +2,7 @@
 <html lang="fr-CA">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>PLU IGA v2.1</title>
 <script>
 /* PLU IGA APK: pont natif pour la reconnaissance vocale (SpeechRecognition n'existe pas dans WebView) */
@@ -59,26 +59,41 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 #camInput{display:none}
 
 .btn.voice{background:#1565c0;padding:16px 20px;font-size:22px;min-width:60px;min-height:52px}
-#floatMic{
+#micBar{
   position:fixed;
-  bottom:24px;
-  right:20px;
-  width:64px;
-  height:64px;
-  border-radius:50%;
-  background:#1565c0;
-  color:#fff;
-  border:none;
-  font-size:28px;
-  box-shadow:0 4px 12px rgba(0,0,0,.4);
+  left:0;
+  right:0;
+  bottom:0;
   z-index:9999;
-  touch-action:manipulation;
-  display:flex;
+  display:none;
   align-items:center;
   justify-content:center;
+  gap:8px;
+  width:100%;
+  height:calc(48px + env(safe-area-inset-bottom, 0px));
+  padding:0 16px env(safe-area-inset-bottom, 0px);
+  margin:0;
+  border:none;
+  border-radius:0;
+  background:#1565c0;
+  color:#fff;
+  font-family:inherit;
+  font-size:16px;
+  font-weight:800;
+  letter-spacing:.01em;
+  box-shadow:0 -2px 8px rgba(0,0,0,.35);
+  touch-action:manipulation;
   cursor:pointer;
 }
-#floatMic:active{background:#0d47a1;transform:scale(.95)}
+#micBar.on{display:flex}
+#micBar .mic-ico{font-size:20px;line-height:1}
+#micBar.listening{background:#c62828}
+#micBar:active{background:#0d47a1}
+#micBar.listening:active{background:#b71c1c}
+#micBar:focus-visible{outline:2px solid #fff;outline-offset:-4px}
+#s.screen.active,#perte.screen.active{padding-top:env(safe-area-inset-top, 0px)}
+body.mic-on #perte.screen.active{padding-bottom:calc(48px + env(safe-area-inset-bottom, 0px))}
+body.mic-on #s .results{padding-bottom:calc(56px + env(safe-area-inset-bottom, 0px))}
 .ph-thumb{max-width:120px;max-height:120px;border-radius:8px;object-fit:cover;cursor:pointer}
 .ph-big{max-width:240px;max-height:240px}
 .setp{padding:14px;padding-top:8px;flex:1;overflow-y:auto}
@@ -111,28 +126,30 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 #perte .topbar{flex:0 0 auto;background:#111}
 #perteSearchBar{flex-wrap:nowrap;position:static;padding:8px 10px}
 #perteSearchBar input{flex:1;min-width:0;font-size:18px;padding:14px 12px;min-height:56px}
-.perte-mic{background:#1565c0;font-size:24px;min-width:60px;min-height:56px;padding:12px 16px;flex:0 0 auto;touch-action:manipulation}
-.perte-navline{display:flex;align-items:center;gap:8px;padding:10px;background:#161616;border-bottom:1px solid #333}
-.perte-navline .back{margin:0;flex:0 0 auto;min-height:56px;min-width:112px;padding:14px 18px;font-size:20px;font-weight:800;color:#fff;background:#2e7d32;border:none;border-radius:16px}
-.crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:8px;min-width:0;flex:1}
-.crumbs button,.crumbs .here{white-space:nowrap;min-height:56px;border-radius:16px;font-size:20px;font-weight:800;display:inline-flex;align-items:center;touch-action:manipulation}
-.crumbs button{background:#1e3a5f;border:1px solid #64b5f6;color:#e3f2fd;padding:14px 16px;cursor:pointer}
-.crumbs .here{color:#fff;background:#333;border:1px solid #777;padding:14px 16px}
-.crumbs .sep{color:#eee;font-size:28px;font-weight:800;line-height:1;padding:0 1px}
-.perte-depts{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:14px 12px 24px}
-.perte-dept{background:#1c1c1c;color:#fff;border:2px solid #333;border-radius:18px;min-height:190px;padding:14px 8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;font-size:1.35em;font-weight:800;touch-action:manipulation}
+.perte-navline{display:flex;align-items:center;flex-wrap:nowrap;gap:6px;padding:2px 8px;height:44px;background:#161616;border-bottom:1px solid #333;overflow:hidden}
+.perte-navline .back{margin:0;flex:0 0 auto;align-self:center;height:40px;min-width:0;padding:0 14px;font-size:16px;font-weight:800;line-height:40px;color:#fff;background:#2e7d32;border:none;border-radius:12px}
+.crumbs{display:flex;flex-wrap:nowrap;align-items:center;gap:6px;min-width:0;flex:1;overflow:hidden}
+.crumbs button,.crumbs .here{white-space:nowrap;height:40px;max-width:100%;border-radius:12px;font-size:16px;font-weight:800;line-height:1;display:inline-flex;align-items:center;min-width:0;overflow:hidden;text-overflow:ellipsis;touch-action:manipulation}
+.crumbs button{background:#1e3a5f;border:1px solid #64b5f6;color:#e3f2fd;padding:0 12px;cursor:pointer;flex:0 0 auto}
+.crumbs .here{color:#fff;background:#333;border:1px solid #777;padding:0 12px;flex:0 1 auto}
+.crumbs .sep{color:#eee;font-size:18px;font-weight:800;line-height:1;padding:0;flex:0 0 auto}
+.perte-depts{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:minmax(0,1fr);gap:10px;padding:8px 10px;height:100%;min-height:0;flex:1}
+.perte-dept{background:#1c1c1c;color:#fff;border:2px solid #333;border-radius:18px;min-height:0;height:100%;padding:8px 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;font-size:1.35em;font-weight:800;touch-action:manipulation;overflow:hidden}
 .perte-dept[data-dept="fruits"]{border-color:#c62828}
 .perte-dept[data-dept="legumes"]{border-color:#2e7d32}
 .perte-ico{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:34px;line-height:1;flex:0 0 auto}
-.perte-dept .perte-ico{width:104px;height:104px;font-size:58px}
+.perte-dept .perte-ico{width:clamp(64px, 16dvh, 104px);height:clamp(64px, 16dvh, 104px);font-size:clamp(36px, 8dvh, 58px)}
 .perte-ico svg{width:70%;height:70%;display:block}
 .perte-dept .cnt{font-size:.72rem;font-weight:700;color:#9e9e9e}
 .perte-dept:active,.perte-cat:active{background:#2a2a2a}
-.perte-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:8px 2px 28px;margin:0 -8px}
-.perte-cat{background:#1a1a1a;color:#fff;border:1px solid #2c2c2c;border-radius:14px;padding:8px 1px 8px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:4px;cursor:pointer;min-height:118px;min-width:0;touch-action:manipulation;user-select:none}
-.perte-cat .lbl{font-size:16px;font-weight:800;text-align:center;line-height:1.2;max-width:100%;hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word}
-.perte-cat .cnt{font-size:10px;color:#9ccc65;font-weight:700}
-#perteBody.results{flex:1;min-height:0;padding-bottom:96px;-webkit-overflow-scrolling:touch}
+.perte-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(0,1fr);gap:4px;padding:6px 2px 6px;margin:0 -8px;height:100%;min-height:0;flex:1;overflow:hidden}
+.perte-cat{background:#1a1a1a;color:#fff;border:1px solid #2c2c2c;border-radius:14px;padding:4px 1px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;min-height:0;min-width:0;height:100%;touch-action:manipulation;user-select:none;overflow:hidden}
+.perte-cat .perte-ico{width:clamp(32px, 8dvh, 64px);height:clamp(32px, 8dvh, 64px);font-size:clamp(18px, 4dvh, 34px)}
+.perte-cat .lbl{font-size:16px;font-weight:800;text-align:center;line-height:1.2;max-width:100%;hyphens:auto;-webkit-hyphens:auto;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.perte-cat .cnt{font-size:10px;color:#9ccc65;font-weight:700;line-height:1}
+#perteBody.results{flex:1;min-height:0;padding-bottom:0;-webkit-overflow-scrolling:touch}
+#perte[data-level="dept"]:not(.searching) #perteBody,#perte[data-level="cats"]:not(.searching) #perteBody{overflow:hidden;display:flex;flex-direction:column}
+#perte[data-level="list"] #perteBody,#perte.searching #perteBody{overflow-y:auto;display:block}
 #perteBody .item{min-height:54px}
 #perteBody .name{white-space:normal;overflow:visible;text-overflow:unset;line-height:1.25}
 .perte-plu{color:#4caf50;font-weight:800;font-size:1.2em;letter-spacing:.02em;flex:0 0 auto;text-align:right;padding-left:8px;line-height:1.05}
@@ -140,8 +157,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .mode-tab:focus-visible,.perte-cat:focus-visible,.perte-dept:focus-visible,.crumbs button:focus-visible{outline:2px solid #4caf50;outline-offset:2px}
 </style>
 </head>
-<body>
-<button id="floatMic" onclick="handleMicClick(event)">🎤</button>
+<body class="mic-on">
+<button type="button" id="micBar" class="on" onclick="handleMicClick(event)" aria-label="Recherche vocale" title="Recherche vocale"><span class="mic-ico" aria-hidden="true">🎤</span><span class="mic-label">Recherche vocale</span></button>
 
 <div id="s" class="screen active">
 <div class="home-sticky">
@@ -286,7 +303,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 </div>
 <div class="header" id="perteSearchBar">
 <input type="text" id="perteQ" placeholder="Rechercher dans Perte…" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
-<button type="button" class="btn perte-mic" id="perteMic" title="Recherche vocale dans Perte" aria-label="Recherche vocale dans Perte">🎤</button>
 </div>
 </div>
 <div id="perteHint" class="inv-hint"></div>
@@ -900,10 +916,23 @@ function scopedPerteMatches(spoken, poolOrCat){
   hits.sort(function(a,b){ return a.best - b.best; });
   return hits.map(function(h){ return h.p; });
 }
-function syncFloatMic(){
-  const btn = document.getElementById("floatMic");
+function syncMicBar(){
+  const btn = document.getElementById("micBar");
   if(!btn) return;
-  btn.style.display = "flex";
+  const top = nav[nav.length - 1];
+  const screen = top && top.screen;
+  const show = screen === "s" || screen === "perte";
+  btn.classList.toggle("on", !!show);
+  document.body.classList.toggle("mic-on", !!show);
+  if(!show || btn.classList.contains("listening")) return;
+  let voiceLabel = "Recherche vocale";
+  if(screen === "perte" && top){
+    const level = top.level || "dept";
+    const phrase = perteScopePhrase(top);
+    voiceLabel = "Recherche vocale dans " + (level === "dept" ? "Perte" : phrase);
+  }
+  btn.title = voiceLabel;
+  btn.setAttribute("aria-label", voiceLabel);
 }
 function perteBackTo(idx){
   if(!(idx >= 0) || idx >= nav.length - 1) return;
@@ -1018,6 +1047,11 @@ function renderPerteProducts(entry, preset){
   const body = document.getElementById("perteBody");
   const hint = document.getElementById("perteHint");
   const phrase = perteScopePhrase(entry);
+  const root = document.getElementById("perte");
+  if(root){
+    root.setAttribute("data-level", level);
+    root.classList.toggle("searching", showPerteResults(entry) && level !== "list");
+  }
   if(!body) return;
   if(!all.length){
     const none = level === "list" ? "Aucun PLU dans cette catégorie." : "Aucun PLU.";
@@ -1051,31 +1085,30 @@ function renderPerte(entry){
   const body = document.getElementById("perteBody");
   const root = document.getElementById("perte");
   const phrase = perteScopePhrase(entry);
-  if(root) root.setAttribute("data-level", level);
+  if(root){
+    root.setAttribute("data-level", level);
+    root.classList.toggle("searching", showPerteResults(entry) && level !== "list");
+  }
   renderPerteCrumbs(entry);
   if(searchBar) searchBar.style.display = "flex";
   const qEl = document.getElementById("perteQ");
-  const mic = document.getElementById("perteMic");
-  const voiceLabel = "Recherche vocale dans " + (level === "dept" ? "Perte" : phrase);
   if(qEl){
     qEl.placeholder = perteScopePlaceholder(entry);
     if(document.activeElement !== qEl && qEl.value !== (perteQuery || "")) qEl.value = perteQuery || "";
   }
-  if(mic){
-    mic.title = voiceLabel;
-    mic.setAttribute("aria-label", voiceLabel);
-  }
-  if(!body) { syncFloatMic(); return; }
+  if(!body) { syncMicBar(); return; }
   if(!showPerteResults(entry) && level === "dept"){
     if(hint) hint.textContent = "Choisissez Fruits ou Légumes. La recherche couvre tout Perte.";
     body.innerHTML = renderPerteDepts();
+    body.scrollTop = 0;
   } else if(!showPerteResults(entry) && level === "cats"){
     if(hint) hint.textContent = "Choisissez une catégorie. La recherche reste dans " + phrase + ".";
     body.innerHTML = renderPerteGrid(entry.dept);
+    body.scrollTop = 0;
   } else {
     renderPerteProducts(entry);
   }
-  syncFloatMic();
+  syncMicBar();
 }
 function bindPerteUi(){
   const qEl = document.getElementById("perteQ");
@@ -1086,8 +1119,6 @@ function bindPerteUi(){
     if(showPerteResults(top)) renderPerteProducts(top);
     else renderPerte(top);
   };
-  const mic = document.getElementById("perteMic");
-  if(mic) mic.onclick = function(e){ handleMicClick(e); };
   const back = document.getElementById("perteBackB");
   if(back) back.onclick = function(){ handleAppBack(); };
   const tabs = document.querySelectorAll("[data-mode]");
@@ -1200,7 +1231,7 @@ function applyNav(entry){
     const perteQEl = document.getElementById("perteQ");
     if(perteQEl) perteQEl.value = "";
   }
-  syncFloatMic();
+  syncMicBar();
 }
 function resetToRoot(){
   const steps=Math.max(0, nav.length-1);
@@ -1607,13 +1638,16 @@ function startVoice(targetInput, after, pool) {
 }
 
 function paintMics(recording) {
-  const buttons = [document.getElementById("floatMic"), document.getElementById("perteMic")];
-  for (let i = 0; i < buttons.length; i++) {
-    const btn = buttons[i];
-    if (!btn) continue;
-    btn.style.background = recording ? "#c62828" : "#1565c0";
-    btn.textContent = recording ? "🔴" : "🎤";
+  const btn = document.getElementById("micBar");
+  if (!btn) return;
+  btn.classList.toggle("listening", !!recording);
+  const label = btn.querySelector(".mic-label");
+  if (recording) {
+    if (label) label.textContent = "Écoute…";
+    return;
   }
+  if (label) label.textContent = "Recherche vocale";
+  syncMicBar();
 }
 function resetMicBtn() {
   paintMics(false);

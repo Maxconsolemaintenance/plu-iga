@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr-CA">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>PLU IGA v2.1</title>
+<title>PLU IGA</title>
 <script>
 /* PLU IGA APK: pont natif pour la reconnaissance vocale (SpeechRecognition n'existe pas dans WebView) */
 (function(){
@@ -86,14 +86,128 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .setp input{width:100%;padding:11px;margin-bottom:8px;border:1px solid #444;border-radius:8px;background:#222;color:#fff;font-size:15px}
 .logrow{background:#1a1a1a;border-radius:10px;padding:10px;margin-bottom:6px;font-size:.85em}
 .logrow .lc{color:#aaa;font-size:.9em;margin-top:4px;white-space:pre-wrap}
+
+#topbar{position:sticky;top:0;z-index:40;background:#141414;border-bottom:1px solid #2c2c2c;padding:10px 12px 8px}
+.who{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+#whoBtn{background:none;border:none;color:#fff;font-size:18px;font-weight:800;padding:0;cursor:pointer;text-align:left;max-width:58%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#whoDept{color:#9ccc65;font-size:13px;margin-left:auto;text-align:right}
+.searchrow{display:flex;gap:6px;flex-wrap:wrap}
+.searchrow input{flex:1;min-width:160px;padding:12px;font-size:16px;border:none;border-radius:10px;background:#222;color:#fff}
+.searchrow select{flex:1;min-width:140px;padding:12px;font-size:14px;border:none;border-radius:10px;background:#222;color:#fff}
+#syncStatus{font-size:12px;color:#888;min-height:16px;padding-top:4px}
+#tabbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:#161616;border-top:1px solid #333;display:flex;padding:4px 4px calc(6px + env(safe-area-inset-bottom))}
+#tabbar button{flex:1;background:none;border:none;color:#9e9e9e;font-size:13px;font-weight:700;padding:10px 2px;cursor:pointer}
+body.chrome-on .header{position:static}
+#d .detail{padding-top:56px}
+#d .back{top:14px}
+#tabbar button.on{color:#81c784;font-weight:800}
+body.chrome-on .screen.active{padding-bottom:76px}
+.screen-label{padding:10px 12px 0;font-size:13px;font-weight:800;color:#9ccc65;letter-spacing:.02em}
+.home-title{padding:16px 16px 0;font-size:26px;font-weight:800}
+#homeSub{padding:4px 16px 8px}
+#doors{display:flex;flex-direction:column;gap:12px;padding:8px 16px 16px}
+.door{background:#1b1b1b;border:1px solid #2e7d32;border-radius:16px;padding:20px 16px;color:#fff;font-size:24px;font-weight:800;text-align:left;cursor:pointer}
+.door small{display:block;margin-top:4px;font-size:14px;font-weight:600;color:#a5d6a7}
+.door:active{background:#243024}
+.hint{color:#aaa;font-size:13px;line-height:1.35;padding:8px 12px 0}
+.sec{padding:12px 12px 4px;color:#9ccc65;font-size:12px;font-weight:800;letter-spacing:.04em}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:8px 12px}
+.chips button{background:#222;color:#ddd;border:1px solid #3a3a3a;border-radius:999px;padding:7px 11px;font-size:12px;white-space:nowrap;cursor:pointer}
+.chips button.on{background:#2e7d32;border-color:#2e7d32;color:#fff}
+.badge{display:inline-block;background:#1b5e20;color:#c8e6c9;border-radius:8px;padding:1px 6px;font-size:11px;margin-left:4px;font-weight:700}
+.badge.cat{background:#263238;color:#b0bec5}
+.setup-wrap{padding:28px 18px 40px;max-width:520px;margin:0 auto;width:100%}
+.setup-wrap h1{font-size:32px;margin-bottom:8px}
+.setup-wrap p{color:#bdbdbd;margin-bottom:8px;line-height:1.4}
+.setup-wrap label{display:block;font-size:13px;color:#ccc;margin:14px 0 6px}
+.setup-wrap input,.setup-wrap select{width:100%;padding:14px;border-radius:10px;border:1px solid #444;background:#1c1c1c;color:#fff;font-size:16px}
+.leadbig{color:#ddd;font-size:14px;line-height:1.4;margin:8px auto;max-width:360px}
+.cuponly{background:#1e1e1e;border:1px dashed #777;border-radius:10px;padding:10px 12px;margin:10px auto;max-width:340px;color:#eee;font-size:15px}
+.xferbox{background:#1a1a1a;border:1px solid #3a3a3a;border-radius:12px;padding:10px;margin:10px auto;max-width:340px;text-align:center}
+.xferbox .meta{color:#9ccc65;font-size:12px;font-weight:700}
+.bbox svg{max-width:100%;height:auto}
+html.need-setup #topbar,html.need-setup #tabbar,html.need-setup #floatMic,html.need-setup #home.screen.active{display:none!important}
+html.need-setup #setup.screen{display:flex!important}
+#autotestOut{white-space:pre-wrap;padding:12px;color:#fff}
+
 </style>
 </head>
-<body>
-<button id="floatMic" onclick="handleMicClick(event)">🎤</button>
+<body class="chrome-on">
+<script>try{if(!localStorage.getItem("plu_user_name")||!localStorage.getItem("plu_user_dept"))document.documentElement.classList.add("need-setup");}catch(e){}</script>
 
-<div id="s" class="screen active">
+<button id="floatMic" onclick="handleMicClick(event)">🎤</button>
+<header id="topbar">
+  <div class="who">
+    <button type="button" id="whoBtn">Bonjour</button>
+    <button type="button" class="btn" id="chgBtn">Changer</button>
+    <span id="whoDept"></span>
+    <button type="button" class="btn" id="setTopB" title="Paramètres">⚙️</button>
+  </div>
+  <div class="searchrow">
+    <input type="text" id="q" placeholder="Rechercher un produit, un code…" autocomplete="off" enterkeyhint="search">
+    <select id="deptF" aria-label="Département"></select>
+  </div>
+  <div id="syncStatus"></div>
+</header>
+<nav id="tabbar">
+  <button type="button" id="tabHome">Accueil</button>
+  <button type="button" id="tabProd">Produits</button>
+  <button type="button" id="tabPerte">Perte</button>
+  <button type="button" id="tabPrep">Préparation</button>
+</nav>
+<div id="setup" class="screen">
+  <div class="setup-wrap">
+    <button type="button" class="btn" id="setupBack" style="display:none;margin-bottom:14px">← Retour</button>
+    <h1>PLU IGA</h1>
+    <p>Tablette partagée. Écris ton nom et ton département. Le nom apparaît dans le journal des modifications.</p>
+    <label for="setupName">Ton nom</label>
+    <input id="setupName" type="text" autocomplete="name" placeholder="Ex. : Max">
+    <label for="setupDept">Ton département</label>
+    <select id="setupDept"></select>
+    <button type="button" class="btn p" id="setupGo" style="width:100%;margin-top:16px;padding:14px;font-size:16px">Commencer</button>
+  </div>
+</div>
+<div id="home" class="screen active">
+  <h2 class="home-title" id="homeTitle">Fruits et légumes</h2>
+  <p class="hint" id="homeSub">Produits, pertes et préparation du rayon.</p>
+  <div id="doors">
+    <button type="button" class="door" id="doorProd">Produits<small>PLU utilisés au comptoir</small></button>
+    <button type="button" class="door" id="doorPerte">Perte<small>Créer une perte</small></button>
+    <button type="button" class="door" id="doorPrep">Préparation<small>Codes de la feuille</small></button>
+  </div>
+  <div id="homeToday"></div>
+  <div class="results" id="homeResults"></div>
+  <div class="empty" id="homeEmp" style="display:none">Aucun résultat</div>
+</div>
+<div id="perte" class="screen">
+  <div class="screen-label">Perte</div>
+  <p class="hint" id="perteHint">Pour créer une perte. Le code-barres du pistolet contient seulement les chiffres du PLU, pas le code-barres du produit.</p>
+  <div class="results" id="perteRes"></div>
+  <div class="empty" id="perteEmp" style="display:none">Aucun PLU</div>
+</div>
+<div id="prep" class="screen">
+  <div class="screen-label">Préparation</div>
+  <p class="hint" id="prepHint">Codes de la feuille préparation.</p>
+  <div class="chips" id="prepCats"></div>
+  <div class="results" id="prepRes"></div>
+  <div class="empty" id="prepEmp" style="display:none">Aucune préparation</div>
+</div>
+<div id="mine" class="screen">
+  <button type="button" class="btn back" id="mineBack">←</button>
+  <div class="setp">
+    <h3 id="mineTitle">Bonjour</h3>
+    <div id="mineDept" class="notes" style="margin-bottom:8px"></div>
+    <h3>Modifications de produits</h3>
+    <div id="mineLog"></div>
+    <button type="button" class="btn" id="mineLogB" style="margin:8px 0">Tout le journal</button>
+    <div id="mineToday"></div>
+    <button type="button" class="btn" id="mineChg" style="margin-top:12px">Changer de nom ou de département</button>
+  </div>
+</div>
+<pre id="autotestOut" hidden></pre>
+<div id="s" class="screen">
+<div class="screen-label">Produits</div>
 <div class="header">
-<input type="text" id="q" placeholder="Rechercher un produit...">
 <select id="catF"><option value="">Toutes catégories</option><option value="Agrumes">Agrumes</option><option value="Baies">Baies</option><option value="Bananes">Bananes</option><option value="Cerises">Cerises</option><option value="Champignons">Champignons</option><option value="Concombres">Concombres</option><option value="FLORAL ORCHIDEES">FLORAL ORCHIDEES</option><option value="FLORAL PLANTES">FLORAL PLANTES</option><option value="FLORAL ROSES">FLORAL ROSES</option><option value="Floral">Floral</option><option value="Fruits & Légumes V. Ajout">Fruits & Légumes V. Ajout</option><option value="Fruits Ethniques">Fruits Ethniques</option><option value="Fruits Saisonniers">Fruits Saisonniers</option><option value="Fruits Tropicaux">Fruits Tropicaux</option><option value="Fruits à noyau">Fruits à noyau</option><option value="GRAINES OISEAUX">GRAINES OISEAUX</option><option value="Herbes">Herbes</option><option value="Ingrédients">Ingrédients</option><option value="Jus, Vinaigrettes & Trempettes Réfrigérés">Jus, Vinaigrettes & Trempettes Réfrigérés</option><option value="Légumes Champ">Légumes Champ</option><option value="Légumes Cuisson">Légumes Cuisson</option><option value="Légumes Ethniques">Légumes Ethniques</option><option value="Légumes Racine">Légumes Racine</option><option value="Légumes Salade">Légumes Salade</option><option value="MULTICULT VRAC">MULTICULT VRAC</option><option value="Melons">Melons</option><option value="NE PAS UTILISER">NE PAS UTILISER</option><option value="PANIERS SUSPENDUS">PANIERS SUSPENDUS</option><option value="PLANTES EN FLEURS">PLANTES EN FLEURS</option><option value="Poires">Poires</option><option value="Poivrons">Poivrons</option><option value="Pommes">Pommes</option><option value="Pommes de terre">Pommes de terre</option><option value="Produits Secs V. Ajout">Produits Secs V. Ajout</option><option value="Raisins">Raisins</option><option value="Salades Emballées V. Ajout">Salades Emballées V. Ajout</option><option value="Standard">Standard</option><option value="Substituts Viande">Substituts Viande</option><option value="Tomates">Tomates</option><option value="VENTE CENTR. JARDIN">VENTE CENTR. JARDIN</option><option value="VENTE FLEURS">VENTE FLEURS</option><option value="VENTE FR. ET LEG.">VENTE FR. ET LEG.</option><option value="VIVACES">VIVACES</option><option value="Vrac Valeur Ajoutée">Vrac Valeur Ajoutée</option></select>
 <select id="tagF"><option value="">Tous tags</option></select>
 
@@ -104,7 +218,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <button class="btn" id="setB" title="Paramètres" style="background:#455a64">⚙️</button>
 <button class="btn p" id="addB">+</button>
 </div>
-<div id="syncStatus" style="font-size:12px;padding:4px 8px;color:#555"></div>
 <div class="results" id="res"></div>
 <div class="empty" id="emp" style="display:none">Aucun résultat</div>
 </div>
@@ -116,8 +229,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div id="dphoto" style="margin-bottom:10px;text-align:center"></div>
 <div class="dname" id="dn"></div>
 <div class="dcat" id="dc"></div>
+<div class="leadbig" id="dlead" style="display:none"></div>
 <div class="bbox" id="pluBox" style="display:none">
-  <div style="font-size:.7em;color:#666;margin-bottom:4px">PLU</div>
+  <div id="pluLbl" style="font-size:.75em;color:#333;font-weight:700;margin-bottom:4px">PLU</div>
   <svg id="bcPlu"></svg>
 </div>
 <div class="plubig" id="dp"></div>
@@ -126,6 +240,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   <svg id="bcCup"></svg>
   <div id="cupText" style="font-size:.75em;color:#333;margin-top:4px"></div>
 </div>
+<div class="cuponly" id="dcupOnly" style="display:none"></div>
+<div id="dxfer"></div>
 <div class="tags" id="dt"></div>
 <div class="notes" id="dno"></div>
 <div style="margin-top:12px;display:flex;gap:6px;justify-content:center">
@@ -150,6 +266,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   <option value="__new__">+ Créer une nouvelle...</option>
 </select>
 <input type="text" id="fcatNew" placeholder="Nom de la nouvelle catégorie" style="display:none;width:100%;padding:11px;margin-bottom:8px;border:1px solid #444;border-radius:8px;background:#222;color:#fff;font-size:15px">
+<select id="fdept" aria-label="Département" style="width:100%;padding:11px;margin-bottom:8px;border:1px solid #444;border-radius:8px;background:#222;color:#fff;font-size:15px"></select>
 <input type="text" id="ft" placeholder="Tags (séparés par des virgules)">
 <textarea id="fno" placeholder="Notes" rows="2"></textarea>
 <div id="fphotoBox" style="margin:6px 0 4px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
@@ -177,9 +294,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div id="setTok" style="font-size:.9em;color:#ccc;margin-bottom:8px"></div>
 <button class="btn" id="setTokB">Entrer / changer le token</button>
 <button class="btn" id="clrTokB" style="background:#c62828">Effacer le token</button>
+<h3>Profil</h3>
+<div id="setDeptLine" class="notes" style="margin-bottom:8px"></div>
+<button type="button" class="btn" id="setProfileB">Changer le nom ou le département</button>
+<h3>Catalogue</h3>
+<label style="font-size:.9em;color:#ccc;display:flex;gap:8px;align-items:flex-start;margin-bottom:8px"><input type="checkbox" id="adminCat" style="margin-top:3px"> Afficher le catalogue complet dans la recherche (admin). Sans cette case, on cherche seulement les produits utilisés.</label>
+<h3>Synchro GitHub</h3>
+<button type="button" class="btn" id="setLoadB" style="background:#1565c0">🔄 Charger</button>
+<button type="button" class="btn" id="setSaveB" style="background:#2e7d32">💾 Sauvegarder</button>
 <h3>📜 Journal</h3>
 <button class="btn" id="logB" style="background:#1565c0">Journal des modifications</button>
-<div style="font-size:.75em;color:#666;margin-top:18px">PLU IGA v1.2</div>
+<div style="font-size:.75em;color:#666;margin-top:18px">PLU IGA — fruits et légumes</div>
 </div>
 </div>
 
@@ -291,13 +416,26 @@ function trackUsage(name){
     u[name] = current + 1;
     try { localStorage.setItem("plu_usage", JSON.stringify(u)); } catch(e) {}
   }
+  try {
+    const key = (typeof ymd==="function") ? ymd() : "";
+    if(!key) return;
+    const day = JSON.parse(localStorage.getItem("plu_usage_day") || "null") || {date:"", items:[]};
+    if(day.date !== key){ day.date = key; day.items = []; }
+    day.items = (day.items || []).filter(n => n !== name);
+    day.items.unshift(name);
+    day.items = day.items.slice(0, 40);
+    localStorage.setItem("plu_usage_day", JSON.stringify(day));
+  } catch(e) {}
 }
 
-function filterList(query){
-  const nq = norm(query);
-  const cat = document.getElementById("catF").value;
-  const tag = document.getElementById("tagF").value;
+function filterList(query, opts){
+  opts = opts || {};
+  const nq = norm(query || "");
+  const cat = opts.ignoreCat ? "" : ((document.getElementById("catF")||{}).value || "");
+  const tag = opts.ignoreTag ? "" : ((document.getElementById("tagF")||{}).value || "");
+  const dept = opts.ignoreDept ? "" : (typeof selectedDept==="function" ? selectedDept() : "");
   let items = P.filter(p=>{
+    if(dept && productDept(p) !== dept) return false;
     if(cat && p.cat !== cat) return false;
     if(tag && !(p.tags||[]).includes(tag)) return false;
     if(nq.length >= 1 && !norm(p.n).includes(nq) && !(p.p||"").includes(query) && !(p.c||"").includes(query)) return false;
@@ -432,79 +570,14 @@ function renderList(container, items){
   });
 }
 
-function renderMain(){
-  const items = filterList(q);
-  const r = document.getElementById("res");
-  const e = document.getElementById("emp");
-  if(!items.length){r.innerHTML=""; e.style.display="block"; return;}
-  e.style.display="none";
-  renderList(r, items);
-}
-
-function show(p){
-  cur = p;
-  trackUsage(p.n);
-  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
-  document.getElementById("d").classList.add("active");
-  document.getElementById("demoji").textContent = p.p ? getEmoji(p.n, p.cat) : "";
-  // Photo uniquement dans la vue détail
-  const photoEl = document.getElementById("dphoto");
-  if (p.img && p.img.startsWith("data:image") && !p.img.includes("svg+xml")) {
-    photoEl.innerHTML = `<img src="${p.img}" style="max-width:180px;max-height:140px;border-radius:8px;object-fit:contain" alt="">`;
-  } else {
-    photoEl.innerHTML = "";
-  }
-  if (p.photo && p._id) showPhotoInto(photoEl, p);
-  document.getElementById("dn").textContent = p.n;
-  document.getElementById("dc").textContent = p.cat || "";
-  document.getElementById("dp").textContent = p.p || "—";
-  document.getElementById("dt").innerHTML = (p.tags||[]).map(t=>`<span class="tag">${t}</span>`).join("");
-  document.getElementById("dno").textContent = p.notes || "";
-
-  // PLU barcode (always if PLU exists)
-  const pluBox = document.getElementById("pluBox");
-  const bcPlu = document.getElementById("bcPlu");
-  bcPlu.innerHTML = "";
-  if (p.p) {
-    pluBox.style.display = "block";
-    try { JsBarcode("#bcPlu", p.p, {format:"CODE128", width:1.6, height:45, displayValue:false, margin:0}); }
-    catch(e) { pluBox.style.display = "none"; }
-  } else {
-    pluBox.style.display = "none";
-  }
-
-  // Product barcode (only if CUP exists)
-  const cupBox = document.getElementById("cupBox");
-  const bcCup = document.getElementById("bcCup");
-  const cupText = document.getElementById("cupText");
-  bcCup.innerHTML = "";
-  const cup = (p.c || "").replace(/-/g, "");
-  if (cup) {
-    cupBox.style.display = "block";
-    cupText.textContent = p.c;
-    try { JsBarcode("#bcCup", cup, {format:"CODE128", width:1.6, height:45, displayValue:false, margin:0}); }
-    catch(e) { cupBox.style.display = "none"; }
-  } else {
-    cupBox.style.display = "none";
-  }
-
-  document.getElementById("qd").value = "";
-  document.getElementById("resd").innerHTML = "";
-}
-
-function goMain(){
-  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
-  document.getElementById("s").classList.add("active");
-  document.getElementById("q").value = q;
-  document.getElementById("q").focus();
-  renderMain();
-}
-
 function openForm(p, idx){
+  if(typeof rememberBack==="function") rememberBack();
   editIdx = idx;
+  view = "form";
+  if(typeof hideChrome==="function") hideChrome();
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
   document.getElementById("f").classList.add("active");
-  document.getElementById("ftitle").textContent = p ? "Modifier" : "Nouveau produit";
+  document.getElementById("ftitle").textContent = idx>=0 ? "Modifier" : (p ? "Ajouter aux produits utilisés" : "Nouveau produit");
   document.getElementById("fdelB").style.display = (idx >= 0) ? "inline-block" : "none";
   // Peupler le select des catégories
   const sel = document.getElementById("fcat");
@@ -518,6 +591,7 @@ function openForm(p, idx){
   document.getElementById("fcat").value = p ? p.cat : "";
   document.getElementById("ft").value = p ? (p.tags||[]).join(", ") : "";
   document.getElementById("fno").value = p ? p.notes : "";
+  if(typeof fillFormDept==="function") fillFormDept(p);
   initFormPhoto(p);
 }
 
@@ -574,21 +648,7 @@ function scanFromPhoto(targetField){
       if(targetField){
         document.getElementById(targetField).value = code;
       } else {
-        // Try to find product by extracted PLU or CUP
-        const found = findByCode(code);
-        if (found) {
-          q = found.n;
-          document.getElementById("q").value = found.n;
-          renderMain();
-          // Optionally show detail directly
-          // show(found);
-        } else {
-          // Fallback: put extracted PLU or full code in search
-          const extracted = extractPluFromBarcode(code);
-          q = extracted || code;
-          document.getElementById("q").value = q;
-          renderMain();
-        }
+        onScanCode(code);
       }
     }catch(err){
       alert("Aucun code-barres détecté dans la photo");
@@ -620,7 +680,7 @@ document.getElementById("setBackB").onclick = goMain;
 document.getElementById("logBackB").onclick = ()=>{ if(logUser!==null){ logUser=null; renderLog(); } else openSettings(); };
 document.getElementById("logB").onclick = openLog;
 document.getElementById("logQ").oninput = renderLog;
-document.getElementById("setNameB").onclick = ()=>{ const v=document.getElementById("setName").value.trim(); localStorage.setItem("plu_user_name", v); alert(v?("✅ Nom enregistré : "+v):"Nom effacé."); };
+document.getElementById("setNameB").onclick = ()=>{ const v=document.getElementById("setName").value.trim(); localStorage.setItem("plu_user_name", v); if(typeof updateWho==="function") updateWho(); alert(v?("✅ Nom enregistré : "+v):"Nom effacé."); };
 document.getElementById("setTokB").onclick = ()=>{ const t=prompt("Colle ton token GitHub (fine-grained, Contents: Read and write sur plu-iga) :"); if(t&&t.trim()){ localStorage.setItem("github_token", t.trim()); refreshTokUI(); alert("✅ Token enregistré."); } };
 document.getElementById("clrTokB").onclick = ()=>{ if(confirm("Effacer le token de ce téléphone ?")){ localStorage.removeItem("github_token"); refreshTokUI(); } };
 document.getElementById("fphotoB").onclick = ()=>document.getElementById("fphotoIn").click();
@@ -651,6 +711,8 @@ document.getElementById("fsaveB").onclick = ()=>{
   if(editIdx >= 0 && P[editIdx]._id) obj._id = P[editIdx]._id; else obj._id = newId();
   const oldP = editIdx >= 0 ? P[editIdx] : null;
   if(oldP){ for(const k in oldP){ if(!(k in obj)) obj[k]=oldP[k]; } }
+  const deptPick = document.getElementById("fdept") ? document.getElementById("fdept").value : "";
+  if(deptPick) obj.dept = deptPick; else delete obj.dept;
   if(!obj.n) return;
   applyFormPhoto(obj);
   logChange(oldP ? "modif" : "ajout", oldP, obj);
@@ -877,19 +939,6 @@ function resetMicBtn() {
   if (btn) { btn.style.background = "#1565c0"; btn.textContent = "🎤"; }
 }
 
-function handleMicClick(e) {
-  if (e) { e.preventDefault(); e.stopPropagation(); }
-  startVoice(document.getElementById("q"), (text, products) => {
-    q = text;
-    if (products && products.length) {
-      renderList(document.getElementById("res"), products);
-      document.getElementById("emp").style.display = "none";
-    } else {
-      renderMain();
-    }
-  });
-}
-
 // Photo barcode scan
 document.getElementById("scanB").onclick = ()=>scanFromPhoto(null);
 document.getElementById("fscanB").onclick = ()=>scanFromPhoto("fc");
@@ -998,7 +1047,7 @@ function askNameOnce(){
 
 // ===== JOURNAL DES MODIFICATIONS =====
 const LOG_FILE="changelog.json", LOG_MAX=2000;
-const LOG_FIELDS={n:"Nom",p:"PLU",c:"CUP",cat:"Catégorie",tags:"Tags",notes:"Notes",photo:"Photo"};
+const LOG_FIELDS={n:"Nom",p:"PLU",c:"CUP",cat:"Catégorie",tags:"Tags",notes:"Notes",photo:"Photo",dept:"Département"};
 function fmtVal(k,v){ if(k==="photo") return v?"oui":"non"; if(Array.isArray(v)) return v.join(", "); return (v===undefined||v===null||v==="")?"∅":String(v); }
 function diffProduct(a,b){
   const ch={};
@@ -1026,6 +1075,7 @@ function mergeLog(a,b){
 }
 let logUser=null, logAll=[];
 async function openLog(){
+  view="logs"; if(typeof hideChrome==="function") hideChrome();
   logUser=null; showScreen("logs"); document.getElementById("logQ").value="";
   logAll=mergeLog(getJSON("plu_log_cache",[]), getJSON("plu_log_pending",[]));
   document.getElementById("logInfo").textContent="Chargement depuis GitHub…"; renderLog();
@@ -1248,46 +1298,857 @@ async function loadExternalData() {
     } catch (e) { console.log("Pas de plu_data.json externe"); }
   }
   ensureIds(P); saveLocal();
+  if (typeof FULL_CATALOG !== "undefined" && P !== FULL_CATALOG) catalogIsSeparate = true;
   return ok;
 }
 
-try {
-  loadExternalData().then(loaded => {
-    updateTagFilter();
-    updateCatFilter();
-    q = "";
-    renderMain();
-    syncFromGitHub(false);
-    setTimeout(askNameOnce, 800);
-  }).catch(() => {
-    updateTagFilter();
-    updateCatFilter();
-    q = "";
-    renderMain();
-  });
-  // Si toujours vide, forcer un rendu direct
-  if (!document.getElementById("res").children.length) {
-    const pluItems = P.filter(p => p.p && p.p.trim()).slice(0, 60);
-    if (pluItems.length) {
-      renderList(document.getElementById("res"), pluItems);
-      document.getElementById("emp").style.display = "none";
-    }
-  }
-} catch(e) {
-  console.error("Init error:", e);
-  setTimeout(() => {
-    try {
-      q = "";
-      const pluItems = P.filter(p => p.p && p.p.trim()).slice(0, 60);
-      if (pluItems.length) {
-        renderList(document.getElementById("res"), pluItems);
-        document.getElementById("emp").style.display = "none";
-      }
-    } catch(e2) {
-      console.error("Fallback failed:", e2);
-    }
-  }, 150);
+const FULL_CATALOG = P;
+let catalogIsSeparate = false;
+let view = "home";
+let backView = "home";
+let voiceHits = null;
+let prepCat = "";
+const CODES_EMBED = {"source":"Deux feuilles CODES PRODUITS (PAM / préparation F&L) — codes validés avec Max","note":"Aïoli (gros) sans code sur la feuille. Transfert = codes à intégrer dans fiches produit / lignes d'ingrédients, pas une section séparée en haut.","preparations":[{"name":"César (familiale)","code":"8177","category":"SALADES VERTES","kind":"prep"},{"name":"César (gros)","code":"8233","category":"SALADES VERTES","kind":"prep"},{"name":"César (petit)","code":"8445","category":"SALADES VERTES","kind":"prep"},{"name":"César Parmesan (large)","code":"35233","category":"SALADES VERTES","kind":"prep"},{"name":"César Poulet (gros)","code":"28247","category":"SALADES VERTES","kind":"prep"},{"name":"César Poulet (petit)","code":"28261","category":"SALADES VERTES","kind":"prep"},{"name":"Chef (familiale)","code":"8499","category":"SALADES VERTES","kind":"prep"},{"name":"Chef (gros)","code":"8619","category":"SALADES VERTES","kind":"prep"},{"name":"Chef (petit)","code":"8616","category":"SALADES VERTES","kind":"prep"},{"name":"Jambon petit","code":"8166","category":"SALADES VERTES","kind":"prep"},{"name":"Poulet (gros)","code":"8172","category":"SALADES VERTES","kind":"prep"},{"name":"Asiatique","code":"16876","category":"SALADES COMPOSÉES","kind":"prep"},{"name":"Brocoli","code":"61771","category":"SALADES COMPOSÉES","kind":"prep"},{"name":"COBB","code":"46094","category":"SALADES COMPOSÉES","kind":"prep"},{"name":"Goberge petit","code":"8366","category":"SALADES COMPOSÉES","kind":"prep"},{"name":"Grecque (gros)","code":"8610","category":"SALADES COMPOSÉES","kind":"prep"},{"name":"Grecque (petit)","code":"8506","category":"SALADES COMPOSÉES","kind":"prep"},{"name":"Mélange Grecque","code":"62956","category":"SALADES COMPOSÉES","kind":"prep"},{"name":"Roquette fraise (fam.)","code":"85816","category":"SALADES COMPOSÉES","kind":"prep"},{"name":"Salade fraise-canneberges","code":"28259","category":"SALADES COMPOSÉES","kind":"prep"},{"name":"Œuf (gros)","code":"16869","category":"SALADES COMPOSÉES","kind":"prep"},{"name":"Œuf (petit)","code":"61128","category":"SALADES COMPOSÉES","kind":"prep"},{"name":"Ananas (Décortiqué)","code":"8439","category":"FRUITS","kind":"prep"},{"name":"Ananas (gros)","code":"8612","category":"FRUITS","kind":"prep"},{"name":"Ananas (petit)","code":"8440","category":"FRUITS","kind":"prep"},{"name":"Ananas (verre)","code":"8220","category":"FRUITS","kind":"prep"},{"name":"Ananas/Fraise (verre)","code":"8505","category":"FRUITS","kind":"prep"},{"name":"Arc-en-ciel (petit)","code":"8622","category":"FRUITS","kind":"prep"},{"name":"Cantaloup (Demi)","code":"8993","category":"FRUITS","kind":"prep"},{"name":"Cantaloup (gros)","code":"8406","category":"FRUITS","kind":"prep"},{"name":"Cantaloup (petit)","code":"8444","category":"FRUITS","kind":"prep"},{"name":"Cantaloup (verre)","code":"8921","category":"FRUITS","kind":"prep"},{"name":"Compliment (petit)","code":"8614","category":"FRUITS","kind":"prep"},{"name":"Duo melon (gros)","code":"8451","category":"FRUITS","kind":"prep"},{"name":"Duo melon (petit)","code":"8369","category":"FRUITS","kind":"prep"},{"name":"Exquis (verre)","code":"8131","category":"FRUITS","kind":"prep"},{"name":"Hawaïen (petit)","code":"8452","category":"FRUITS","kind":"prep"},{"name":"Kiwi petit fruit","code":"88299","category":"FRUITS","kind":"prep"},{"name":"Melon d'eau (gros)","code":"8446","category":"FRUITS","kind":"prep"},{"name":"Melon d'eau (petit)","code":"8443","category":"FRUITS","kind":"prep"},{"name":"Melon d'eau (Quartier)","code":"4342","category":"FRUITS","kind":"prep"},{"name":"Melon d'eau (Tranche)","code":"7978","category":"FRUITS","kind":"prep"},{"name":"Melon d'eau (verre)","code":"8371","category":"FRUITS","kind":"prep"},{"name":"Melon d'eau jaune (Q.)","code":"4341","category":"FRUITS","kind":"prep"},{"name":"Melon miel (Demi)","code":"8994","category":"FRUITS","kind":"prep"},{"name":"Mix Cantaloup/Ananas/Fraise","code":"88860","category":"FRUITS","kind":"prep"},{"name":"Mix Cantaloup/Fraise/Clém.","code":"88636","category":"FRUITS","kind":"prep"},{"name":"Mix Fruits rouges","code":"58724","category":"FRUITS","kind":"prep"},{"name":"Mix Melons/Ananas","code":"88455","category":"FRUITS","kind":"prep"},{"name":"Passion (petit)","code":"8620","category":"FRUITS","kind":"prep"},{"name":"Petit fruit (petit)","code":"8145","category":"FRUITS","kind":"prep"},{"name":"Raisins/Cheddar blanc","code":"67076","category":"FRUITS","kind":"prep"},{"name":"Raisins/Grains","code":"67070","category":"FRUITS","kind":"prep"},{"name":"Raisins/Marbré","code":"67073","category":"FRUITS","kind":"prep"},{"name":"Salade fruit (gros)","code":"8088","category":"FRUITS","kind":"prep"},{"name":"Salade fruit (petit)","code":"8124","category":"FRUITS","kind":"prep"},{"name":"Salade fruits (fam.)","code":"8617","category":"FRUITS","kind":"prep"},{"name":"Salade fruits (verre)","code":"8611","category":"FRUITS","kind":"prep"},{"name":"Trio melon (gros)","code":"88602","category":"FRUITS","kind":"prep"},{"name":"Yogourt Fraise","code":"28231","category":"FRUITS","kind":"prep"},{"name":"Yogourt Framboise","code":"28235","category":"FRUITS","kind":"prep"},{"name":"Yogourt Petit fruits","code":"29192","category":"FRUITS","kind":"prep"},{"name":"Aïoli (gros)","code":null,"category":"TREMPETTES","kind":"prep"},{"name":"Aïoli (petit)","code":"61594","category":"TREMPETTES","kind":"prep"},{"name":"Cajun","code":"62667","category":"TREMPETTES","kind":"prep"},{"name":"Épinard (gros)","code":"60821","category":"TREMPETTES","kind":"prep"},{"name":"Épinard (petit)","code":"61753","category":"TREMPETTES","kind":"prep"},{"name":"Légume (gros)","code":"60620","category":"TREMPETTES","kind":"prep"},{"name":"Légume (petit)","code":"60589","category":"TREMPETTES","kind":"prep"},{"name":"Onion","code":"62695","category":"TREMPETTES","kind":"prep"},{"name":"Salsa des fêtes (gros)","code":"61755","category":"TREMPETTES","kind":"prep"},{"name":"Salsa des fêtes (petit)","code":"61756","category":"TREMPETTES","kind":"prep"},{"name":"Salsa Taco","code":"35286","category":"TREMPETTES","kind":"prep"},{"name":"4 Variété","code":"8564","category":"LÉGUMES","kind":"prep"},{"name":"Brocoli (petit)","code":"63079","category":"LÉGUMES","kind":"prep"},{"name":"Brocoli/chou-fleur (g)","code":"8968","category":"LÉGUMES","kind":"prep"},{"name":"Brocoli/chou-fleur (p)","code":"8681","category":"LÉGUMES","kind":"prep"},{"name":"Buffet (petit)","code":"8478","category":"LÉGUMES","kind":"prep"},{"name":"Carotte (petit)","code":"8476","category":"LÉGUMES","kind":"prep"},{"name":"Céleri (petit)","code":"8615","category":"LÉGUMES","kind":"prep"},{"name":"Chou-fleur (petit)","code":"63080","category":"LÉGUMES","kind":"prep"},{"name":"Crudité trempette","code":"8565","category":"LÉGUMES","kind":"prep"},{"name":"Entrée crudité (petit)","code":"8365","category":"LÉGUMES","kind":"prep"},{"name":"Légumes jardinière","code":"8609","category":"LÉGUMES","kind":"prep"},{"name":"Mix (gros)","code":"8449","category":"LÉGUMES","kind":"prep"},{"name":"Mix (petit)","code":"8613","category":"LÉGUMES","kind":"prep"},{"name":"Plateau 4 Variété","code":"62859","category":"LÉGUMES","kind":"prep"},{"name":"Plateau Classique","code":"88044","category":"LÉGUMES","kind":"prep"},{"name":"Plateau mini lég. 2","code":"38821","category":"LÉGUMES","kind":"prep"},{"name":"Trempette lég. (gros)","code":"8441","category":"LÉGUMES","kind":"prep"},{"name":"Trempette lég. (petit)","code":"8442","category":"LÉGUMES","kind":"prep"},{"name":"Asperge classique","code":"67077","category":"PRÊT À CUIRE","kind":"prep"},{"name":"Asperge grecque","code":"67083","category":"PRÊT À CUIRE","kind":"prep"},{"name":"BBQ Deluxe","code":"67092","category":"PRÊT À CUIRE","kind":"prep"},{"name":"Butternut navet","code":"87592","category":"PRÊT À CUIRE","kind":"prep"},{"name":"Carotte herbe et ail","code":"54811","category":"PRÊT À CUIRE","kind":"prep"},{"name":"Cent façon","code":"8064","category":"PRÊT À CUIRE","kind":"prep"},{"name":"Chou Bruxelles demi","code":"87589","category":"PRÊT À CUIRE","kind":"prep"},{"name":"Chou-fleur herbe et ail","code":"54812","category":"PRÊT À CUIRE","kind":"prep"},{"name":"Coloré","code":"8062","category":"PRÊT À CUIRE","kind":"prep"},{"name":"Légume du jardin","code":"8589","category":"PRÊT À CUIRE","kind":"prep"},{"name":"Légume du jardin (AIL)","code":"8588","category":"PRÊT À CUIRE","kind":"prep"},{"name":"Mélange grelot","code":"87095","category":"PRÊT À CUIRE","kind":"prep"},{"name":"Mélange poivrons","code":"82053","category":"PRÊT À CUIRE","kind":"prep"},{"name":"Mélange Wok","code":"62549","category":"PRÊT À CUIRE","kind":"prep"},{"name":"Oriental","code":"8448","category":"PRÊT À CUIRE","kind":"prep"},{"name":"Parmentier","code":"8593","category":"PRÊT À CUIRE","kind":"prep"},{"name":"Parmentier (AIL)","code":"8712","category":"PRÊT À CUIRE","kind":"prep"},{"name":"Pépéronnata","code":"8097","category":"PRÊT À CUIRE","kind":"prep"},{"name":"Presto","code":"8069","category":"PRÊT À CUIRE","kind":"prep"},{"name":"Soupière","code":"8174","category":"PRÊT À CUIRE","kind":"prep"}],"transferts":[{"name":"Butternut","code":"4759","category":"TRANSFERT poids","kind":"transfert_poids"},{"name":"Chou Bruxelles","code":"4550","category":"TRANSFERT poids","kind":"transfert_poids"},{"name":"Clémentine","code":"4450","category":"TRANSFERT poids","kind":"transfert_poids"},{"name":"Échalote","code":"4062","category":"TRANSFERT poids","kind":"transfert_poids"},{"name":"Fève germée","code":"4536","category":"TRANSFERT poids","kind":"transfert_poids"},{"name":"Oignon blanc","code":"4663","category":"TRANSFERT poids","kind":"transfert_poids"},{"name":"Oignon espagnol","code":"4093","category":"TRANSFERT poids","kind":"transfert_poids"},{"name":"Oignon rouge","code":"4082","category":"TRANSFERT poids","kind":"transfert_poids"},{"name":"Patate douce","code":"4091","category":"TRANSFERT poids","kind":"transfert_poids"},{"name":"Piment jaune","code":"4689","category":"TRANSFERT poids","kind":"transfert_poids"},{"name":"Piment orange","code":"3121","category":"TRANSFERT poids","kind":"transfert_poids"},{"name":"Piment rouge","code":"4688","category":"TRANSFERT poids","kind":"transfert_poids"},{"name":"Piment vert","code":"4065","category":"TRANSFERT poids","kind":"transfert_poids"},{"name":"Poireau","code":"4629","category":"TRANSFERT poids","kind":"transfert_poids"},{"name":"Pois mange-tout","code":"4092","category":"TRANSFERT poids","kind":"transfert_poids"},{"name":"Radis","code":"4089","category":"TRANSFERT poids","kind":"transfert_poids"},{"name":"Raisin rouge","code":"4023","category":"TRANSFERT poids","kind":"transfert_poids"},{"name":"Raisin vert","code":"4022","category":"TRANSFERT poids","kind":"transfert_poids"},{"name":"Rutabaga","code":"4747","category":"TRANSFERT poids","kind":"transfert_poids"},{"name":"Zucchini","code":"4067","category":"TRANSFERT poids","kind":"transfert_poids"},{"name":"Ananas","code":"4430","category":"TRANSFERT unité","kind":"transfert_unite"},{"name":"Asperge","code":"4080","category":"TRANSFERT unité","kind":"transfert_unite"},{"name":"Brocoli","code":"4060","category":"TRANSFERT unité","kind":"transfert_unite"},{"name":"Cantaloup","code":"4050","category":"TRANSFERT unité","kind":"transfert_unite"},{"name":"Céleri","code":"4070","category":"TRANSFERT unité","kind":"transfert_unite"},{"name":"Chou-fleur","code":"4079","category":"TRANSFERT unité","kind":"transfert_unite"},{"name":"Citrons","code":"4053","category":"TRANSFERT unité","kind":"transfert_unite"},{"name":"Concombres anglais","code":"4593","category":"TRANSFERT unité","kind":"transfert_unite"},{"name":"Kiwi","code":"4030","category":"TRANSFERT unité","kind":"transfert_unite"},{"name":"Melon miel","code":"4034","category":"TRANSFERT unité","kind":"transfert_unite"},{"name":"Oignons verts","code":"4068","category":"TRANSFERT unité","kind":"transfert_unite"},{"name":"Radis romains","code":"4040","category":"TRANSFERT unité","kind":"transfert_unite"}]};
+let CODES = CODES_EMBED;
+
+// Portes fruits et légumes : Produits, Perte, Préparation.
+// Les transferts ne sont pas un onglet : fiches produit + recherche.
+// CODES_EMBED est injecté depuis codes-produits.json (feuille validée).
+
+const DEPTS = ["Fruits et légumes","Boucherie","Poissonnerie","Boulangerie","Charcuterie","Épicerie","Produits laitiers","Surgelés","Floral"];
+
+const XFER_ALIASES = {
+  "4759":["butternut"],
+  "4550":["brussels sprout","chou de bruxelles","choux de bruxelles"],
+  "4450":["clementine"],
+  "4062":["echalote francaise","shallot"],
+  "4536":["mung","haricot sprout","feve germee"],
+  "4663":["oignon blanc","blanc oignon","white onion"],
+  "4093":["oignon espagnol","yellow brown oignon","spanish onion","oignon jaune"],
+  "4082":["oignon rouge","rouge oignon","red onion"],
+  "4091":["patate douce","sweet potato","sucre potato","kumara"],
+  "4689":["piment jaune","poivron jaune","yellow pepper"],
+  "3121":["piment orange","poivron orange","orange pepper"],
+  "4688":["piment rouge","poivron rouge","red pepper","rouge poivron"],
+  "4065":["piment vert","poivron vert","green pepper","vert poivron"],
+  "4629":["poireau","leek"],
+  "4092":["pois mange-tout","pois mange tout","mange tout","snow pea"],
+  "4089":["radis","radish"],
+  "4023":["raisin rouge","rouge raisin","red grape"],
+  "4022":["raisin vert","vert raisin","green grape"],
+  "4747":["rutabaga","swede"],
+  "4067":["zucchini","courgette"],
+  "4430":["ananas","pineapple"],
+  "4080":["asperge","asparagus"],
+  "4060":["brocoli","broccoli"],
+  "4050":["cantaloup","cantaloupe","rockmelon"],
+  "4070":["celeri","celery"],
+  "4079":["chou-fleur","chou fleur","cauliflower"],
+  "4053":["citron","lemon"],
+  "4593":["concombre anglais","english cucumber"],
+  "4030":["kiwi","kiwifruit"],
+  "4034":["melon miel","honeydew"],
+  "4068":["oignon vert","green onion","scallion"],
+  "4040":["radis romain"]
+};
+
+function ymd(){
+  const t=new Date();
+  const m=String(t.getMonth()+1), d=String(t.getDate());
+  return t.getFullYear()+"-"+(m.length<2?"0"+m:m)+"-"+(d.length<2?"0"+d:d);
 }
+function selectedDept(){
+  const el=document.getElementById("deptF");
+  return el && el.value ? el.value : "";
+}
+function productDept(p){
+  if(p && p.dept && DEPTS.indexOf(p.dept)>=0) return p.dept;
+  const c=norm((p&&p.cat)||"");
+  if(/floral|plante|jardin|fleur|orchide/.test(c)) return "Floral";
+  return "Fruits et légumes";
+}
+function barcodeDigits(raw){
+  const d=String(raw==null?"":raw).replace(/\D/g,"");
+  return (d.length===4 || d.length===5) ? d : "";
+}
+function stemText(s){
+  return norm(s).replace(/[^a-z0-9]+/g," ").replace(/\b([a-z]{4,})s\b/g,"$1").replace(/\s+/g," ").trim();
+}
+function hasPhrase(hay, needle){
+  const n=stemText(needle);
+  if(!n) return false;
+  return (" "+stemText(hay)+" ").indexOf(" "+n+" ")>=0;
+}
+function transferScore(p, t){
+  if(!p || !t) return 0;
+  const code=String(t.code);
+  const hay=stemText(p.n||"");
+  const padded=" "+hay+" ";
+  if(/\bseche\b/.test(hay) || /\bdried\b/.test(hay)) return 0;
+  if(code==="4070" && (padded.indexOf(" rave ")>=0 || padded.indexOf(" celeriac ")>=0)) return 0;
+  if(code==="4089" && padded.indexOf(" romain ")>=0) return 0;
+  if(code==="4053" && padded.indexOf(" concombre ")>=0) return 0;
+  const aliases=XFER_ALIASES[code] || [t.name];
+  let best=0;
+  for(let i=0;i<aliases.length;i++){
+    if(hasPhrase(p.n, aliases[i])) best=Math.max(best, stemText(aliases[i]).length);
+  }
+  return best;
+}
+function matchTransfers(p){
+  const scored=[];
+  const list=(CODES&&CODES.transferts)||[];
+  for(let i=0;i<list.length;i++){
+    const score=transferScore(p, list[i]);
+    if(score>0) scored.push({t:list[i], score:score});
+  }
+  scored.sort((a,b)=>b.score-a.score);
+  return scored.map(s=>s.t);
+}
+function xferLabel(t){
+  return t && t.kind==="transfert_unite" ? "Transfert à l'unité" : "Transfert au poids";
+}
+function allowPrepXfer(){
+  const d=selectedDept();
+  return !d || d==="Fruits et légumes";
+}
+function rememberBack(){
+  if(["home","produits","perte","prep","mine"].indexOf(view)>=0) backView=view;
+}
+function hideChrome(){
+  document.body.classList.remove("chrome-on");
+  const t=document.getElementById("topbar"); if(t) t.style.display="none";
+  const b=document.getElementById("tabbar"); if(b) b.style.display="none";
+  placeMic();
+}
+function showChrome(){
+  document.body.classList.add("chrome-on");
+  const t=document.getElementById("topbar"); if(t) t.style.display="block";
+  const b=document.getElementById("tabbar"); if(b) b.style.display="flex";
+  placeMic();
+}
+function placeMic(){
+  const m=document.getElementById("floatMic");
+  if(!m) return;
+  const setup=view==="setup";
+  m.style.display = setup ? "none" : "flex";
+  m.style.bottom = document.body.classList.contains("chrome-on") ? "92px" : "24px";
+}
+function updateWho(){
+  const n=localStorage.getItem("plu_user_name")||"";
+  const d=localStorage.getItem("plu_user_dept")||"";
+  const b=document.getElementById("whoBtn");
+  if(b) b.textContent = n ? ("Bonjour, "+n) : "Bonjour";
+  const dd=document.getElementById("whoDept");
+  if(dd) dd.textContent=d;
+}
+function setActiveTab(v){
+  const map={home:"tabHome",produits:"tabProd",perte:"tabPerte",prep:"tabPrep"};
+  document.querySelectorAll("#tabbar button").forEach(btn=>btn.classList.remove("on"));
+  const id=map[v];
+  if(id && document.getElementById(id)) document.getElementById(id).classList.add("on");
+}
+function fillDeptFilter(){
+  const sel=document.getElementById("deptF");
+  if(!sel) return;
+  const cur=sel.value;
+  sel.innerHTML='<option value="">Tous les départements</option>'+DEPTS.map(d=>'<option value="'+esc(d)+'">'+esc(d)+'</option>').join("");
+  if(!cur || DEPTS.indexOf(cur)>=0) sel.value=cur;
+}
+function fillSetup(){
+  const name=document.getElementById("setupName");
+  const sel=document.getElementById("setupDept");
+  if(name) name.value=localStorage.getItem("plu_user_name")||"";
+  if(sel){
+    sel.innerHTML='<option value="">Choisir…</option>'+DEPTS.map(d=>'<option value="'+esc(d)+'">'+esc(d)+'</option>').join("");
+    const cur=localStorage.getItem("plu_user_dept")||"";
+    if(DEPTS.indexOf(cur)>=0) sel.value=cur;
+  }
+  const back=document.getElementById("setupBack");
+  const has=localStorage.getItem("plu_user_name") && localStorage.getItem("plu_user_dept");
+  if(back) back.style.display=has?"inline-block":"none";
+}
+function saveSetup(){
+  const n=(document.getElementById("setupName").value||"").trim();
+  const d=document.getElementById("setupDept").value;
+  if(!n){ alert("Écris ton nom."); return; }
+  if(!d){ alert("Choisis ton département."); return; }
+  localStorage.setItem("plu_user_name", n);
+  localStorage.setItem("plu_user_dept", d);
+  document.documentElement.classList.remove("need-setup");
+  const dest=(backView && backView!=="setup") ? backView : "home";
+  goView(dest);
+}
+function fillFormDept(p){
+  const fd=document.getElementById("fdept");
+  if(!fd) return;
+  fd.innerHTML='<option value="">Département automatique</option>'+DEPTS.map(d=>'<option value="'+esc(d)+'">'+esc(d)+'</option>').join("");
+  fd.value=(p && p.dept && DEPTS.indexOf(p.dept)>=0) ? p.dept : "";
+}
+function goView(v){
+  if(["setup","form","set","logs","mine","detail"].indexOf(v)>=0) rememberBack();
+  view=v;
+  const map={setup:"setup",home:"home",produits:"s",perte:"perte",prep:"prep",detail:"d",form:"f",set:"set",logs:"logs",mine:"mine"};
+  showScreen(map[v]||"home");
+  if(v==="setup") document.documentElement.classList.add("need-setup");
+  else document.documentElement.classList.remove("need-setup");
+  if(["home","produits","perte","prep"].indexOf(v)>=0) showChrome();
+  else hideChrome();
+  const deptEl=document.getElementById("deptF");
+  if(deptEl) deptEl.style.display=(v==="home"||v==="produits")?"":"none";
+  setActiveTab(v);
+  updateWho();
+  if(v==="setup") fillSetup();
+  if(["home","produits","perte","prep"].indexOf(v)>=0) renderView();
+}
+function renderView(){
+  if(view==="home") renderHome();
+  else if(view==="produits") renderProduits();
+  else if(view==="perte") renderPerte();
+  else if(view==="prep") renderPrep();
+}
+function takeVoiceHits(){
+  if(!voiceHits || !voiceHits.length){ voiceHits=null; return null; }
+  const hits=voiceHits;
+  voiceHits=null;
+  const dept=selectedDept();
+  const out=hits.filter(p=>!dept || productDept(p)===dept);
+  return out.length ? out : null;
+}
+function searchPreps(query){
+  const nq=norm((query||"").trim());
+  const raw=(query||"").trim();
+  if(!nq) return [];
+  return (CODES.preparations||[]).filter(p=>norm(p.name).indexOf(nq)>=0 || (p.code && String(p.code).indexOf(raw)>=0));
+}
+function searchXfers(query){
+  const nq=norm((query||"").trim());
+  const raw=(query||"").trim();
+  if(!nq) return [];
+  return (CODES.transferts||[]).filter(t=>norm(t.name).indexOf(nq)>=0 || String(t.code).indexOf(raw)>=0);
+}
+function catalogHits(query){
+  if(localStorage.getItem("plu_admin_catalog")!=="1") return [];
+  if(!catalogIsSeparate || FULL_CATALOG===P) return [];
+  const nq=norm((query||"").trim());
+  const raw=(query||"").trim();
+  if(nq.length<2) return [];
+  const have={};
+  P.forEach(p=>{ have[norm(p.n)+"|"+(p.p||"")+"|"+(p.c||"")]=1; });
+  const out=[];
+  for(let i=0;i<FULL_CATALOG.length;i++){
+    const p=FULL_CATALOG[i];
+    const k=norm(p.n)+"|"+(p.p||"")+"|"+(p.c||"");
+    if(have[k]) continue;
+    if(norm(p.n).indexOf(nq)>=0 || (p.p||"").indexOf(raw)>=0 || (p.c||"").indexOf(raw)>=0) out.push(p);
+    if(out.length>=20) break;
+  }
+  return out;
+}
+function productRows(items, openKind){
+  return items.map(p=>{
+    const inP=P.indexOf(p)>=0;
+    const idx=inP ? P.indexOf(p) : FULL_CATALOG.indexOf(p);
+    const kind=inP ? (openKind||"produit") : "cat";
+    const xfers=inP ? matchTransfers(p).slice(0,1) : [];
+    const xbadge=xfers.length ? '<span class="badge">'+esc(xferLabel(xfers[0]))+" "+esc(xfers[0].code)+"</span>" : "";
+    const catBadge=inP ? "" : '<span class="badge cat">Catalogue</span>';
+    const plu=p.p ? '<span class="plu">PLU '+esc(p.p)+"</span>" : "";
+    return '<div class="item" data-open="'+kind+'" data-i="'+idx+'"><div class="thumb" style="display:flex;align-items:center;justify-content:center;font-size:26px;background:#2a2a2a">'+(p.p?getEmoji(p.n,p.cat):"")+'</div><div class="info"><div class="name">'+esc(p.n)+(p.photo?" 📷":"")+" "+catBadge+'</div><div class="meta">'+esc(productDept(p))+" · "+esc(p.cat||"")+" "+plu+" "+xbadge+"</div></div></div>";
+  }).join("");
+}
+function perteRows(items){
+  return items.map(p=>{
+    const i=P.indexOf(p);
+    const cup=(p.c||"").trim();
+    return '<div class="item" data-open="perte" data-i="'+i+'"><div class="thumb" style="display:flex;align-items:center;justify-content:center;font-size:26px;background:#2a2a2a">'+getEmoji(p.n,p.cat)+'</div><div class="info"><div class="name">'+esc(p.n)+'</div><div class="meta"><span class="plu">PLU '+esc(p.p)+"</span>"+(cup?" · code-barres produit":"")+"</div></div></div>";
+  }).join("");
+}
+function prepRows(items){
+  return items.map(p=>{
+    const i=(CODES.preparations||[]).indexOf(p);
+    const code=barcodeDigits(p.code) ? esc(p.code) : "Pas de code";
+    return '<div class="item" data-open="prep" data-i="'+i+'"><div class="thumb" style="display:flex;align-items:center;justify-content:center;font-size:26px;background:#2a2a2a">'+getEmoji(p.name,p.category)+'</div><div class="info"><div class="name">'+esc(p.name)+'</div><div class="meta">'+esc(p.category)+' · <span class="plu">'+code+"</span></div></div></div>";
+  }).join("");
+}
+function xferRows(items){
+  return items.map(t=>{
+    const i=(CODES.transferts||[]).indexOf(t);
+    return '<div class="item" data-open="xfer" data-i="'+i+'"><div class="thumb" style="display:flex;align-items:center;justify-content:center;font-size:26px;background:#2a2a2a">'+getEmoji(t.name,"")+'</div><div class="info"><div class="name">'+esc(t.name)+'</div><div class="meta">'+esc(xferLabel(t))+' · <span class="plu">'+esc(t.code)+"</span></div></div></div>";
+  }).join("");
+}
+function bindRows(container){
+  if(!container) return;
+  container.querySelectorAll("[data-open]").forEach(el=>{
+    el.onclick=()=>{
+      const kind=el.dataset.open;
+      const i=parseInt(el.dataset.i,10);
+      if(kind==="produit" || kind==="perte") openItem({kind:kind, product:P[i]});
+      else if(kind==="prep") openItem({kind:"prep", prep:CODES.preparations[i]});
+      else if(kind==="xfer") openItem({kind:"transfert", xfer:CODES.transferts[i]});
+      else if(kind==="cat") openItem({kind:"produit", product:FULL_CATALOG[i], fromCatalog:true});
+    };
+  });
+}
+function mixedHTML(query, opt){
+  opt=opt||{};
+  const parts=[];
+  if(opt.products){
+    const voice=opt.voice ? takeVoiceHits() : null;
+    const products=(voice && voice.length) ? voice : filterList(query,{ignoreCat:!!opt.ignoreCat, ignoreTag:!!opt.ignoreTag, ignoreDept:!!opt.ignoreDept});
+    if(products.length) parts.push('<div class="sec">Produits</div>'+productRows(products,"produit"));
+  }
+  if(opt.preps && allowPrepXfer()){
+    const preps=searchPreps(query).slice(0,40);
+    if(preps.length) parts.push('<div class="sec">Préparations</div>'+prepRows(preps));
+  }
+  if(opt.xfers && allowPrepXfer()){
+    const xs=searchXfers(query).slice(0,20);
+    if(xs.length) parts.push('<div class="sec">Transferts</div>'+xferRows(xs));
+  }
+  if(opt.catalog){
+    const cats=catalogHits(query);
+    if(cats.length) parts.push('<div class="sec">Catalogue complet</div>'+productRows(cats,"produit"));
+  }
+  return parts.join("");
+}
+function todayNames(){
+  try{
+    const day=JSON.parse(localStorage.getItem("plu_usage_day")||"null");
+    if(!day || day.date!==ymd() || !day.items) return [];
+    return day.items;
+  }catch(e){ return []; }
+}
+function renderToday(host, limit){
+  if(!host) return;
+  const names=todayNames().slice(0, limit||8);
+  const rows=[];
+  names.forEach(n=>{
+    const p=P.find(x=>x.n===n);
+    if(!p) return;
+    rows.push(productRows([p],"produit"));
+  });
+  if(!rows.length){ host.innerHTML=""; return; }
+  host.innerHTML='<div class="sec">Consultés aujourd\'hui</div><div class="results">'+rows.join("")+"</div>";
+  bindRows(host);
+}
+function renderHome(){
+  const dept=localStorage.getItem("plu_user_dept")||"";
+  const title=document.getElementById("homeTitle");
+  const sub=document.getElementById("homeSub");
+  if(title) title.textContent = dept==="Fruits et légumes" || !dept ? "Fruits et légumes" : dept;
+  if(sub) sub.textContent = (dept==="Fruits et légumes" || !dept)
+    ? "Produits, pertes et préparation du rayon."
+    : "Perte et préparation viennent du rayon fruits et légumes.";
+  const searching=norm(q).length>=1;
+  const doors=document.getElementById("doors");
+  const today=document.getElementById("homeToday");
+  if(doors) doors.style.display=searching?"none":"flex";
+  if(today) today.style.display=searching?"none":"block";
+  const box=document.getElementById("homeResults");
+  const emp=document.getElementById("homeEmp");
+  if(!searching){
+    if(box) box.innerHTML="";
+    if(emp) emp.style.display="none";
+    renderToday(today, 6);
+    return;
+  }
+  if(today) today.innerHTML="";
+  const html=mixedHTML(q,{products:true, preps:true, xfers:true, catalog:true, ignoreCat:true, ignoreTag:true, voice:true});
+  if(!html){
+    if(box) box.innerHTML="";
+    if(emp) emp.style.display="block";
+    return;
+  }
+  if(emp) emp.style.display="none";
+  box.innerHTML=html;
+  bindRows(box);
+}
+function renderProduits(){
+  const voice=takeVoiceHits();
+  const items=(voice && voice.length) ? voice : filterList(q);
+  const r=document.getElementById("res");
+  const e=document.getElementById("emp");
+  let html=items.length ? productRows(items,"produit") : "";
+  const extra=norm(q).length>=1 ? mixedHTML(q,{products:false, preps:true, xfers:true, catalog:true}) : "";
+  if(!html && !extra){ r.innerHTML=""; e.style.display="block"; return; }
+  e.style.display="none";
+  r.innerHTML=html+extra;
+  bindRows(r);
+}
+function renderPerte(){
+  const nq=norm(q);
+  const raw=(q||"").trim();
+  let items=P.filter(p=>productDept(p)==="Fruits et légumes" && barcodeDigits(p.p));
+  if(nq){
+    items=items.filter(p=>norm(p.n).indexOf(nq)>=0 || String(p.p||"").indexOf(raw)>=0 || String(p.c||"").indexOf(raw)>=0);
+  }
+  const usage=getUsage();
+  items.sort((a,b)=>{
+    const du=(usage[b.n]||0)-(usage[a.n]||0);
+    if(du) return du;
+    return String(a.n||"").localeCompare(String(b.n||""),"fr");
+  });
+  const more=items.length>80;
+  items=items.slice(0,80);
+  const r=document.getElementById("perteRes");
+  const e=document.getElementById("perteEmp");
+  if(!items.length){ r.innerHTML=""; e.style.display="block"; return; }
+  e.style.display="none";
+  r.innerHTML=perteRows(items)+(more?'<p class="hint">Cherche un nom ou un PLU pour voir le reste.</p>':"");
+  bindRows(r);
+}
+function renderPrep(){
+  const cats=[];
+  (CODES.preparations||[]).forEach(p=>{ if(cats.indexOf(p.category)<0) cats.push(p.category); });
+  const chips=document.getElementById("prepCats");
+  if(chips){
+    chips.innerHTML='<button type="button" data-cat="" class="'+(prepCat?"":"on")+'">Toutes</button>'+cats.map(c=>'<button type="button" data-cat="'+esc(c)+'" class="'+(prepCat===c?"on":"")+'">'+esc(c)+"</button>").join("");
+    chips.querySelectorAll("button").forEach(b=>{ b.onclick=()=>{ prepCat=b.getAttribute("data-cat")||""; renderPrep(); }; });
+  }
+  const nq=norm(q);
+  const raw=(q||"").trim();
+  const items=(CODES.preparations||[]).filter(p=>(!prepCat || p.category===prepCat) && (!nq || norm(p.name).indexOf(nq)>=0 || (p.code && String(p.code).indexOf(raw)>=0)));
+  const host=document.getElementById("prepRes");
+  let html="";
+  if(!nq && !prepCat){
+    cats.forEach(c=>{
+      const group=items.filter(p=>p.category===c);
+      if(group.length) html+='<div class="sec">'+esc(c)+"</div>"+prepRows(group);
+    });
+  } else if(items.length) html=prepRows(items);
+  if(allowPrepXfer() && nq){
+    const xs=searchXfers(q);
+    if(xs.length) html+='<div class="sec">Transferts</div>'+xferRows(xs);
+  }
+  const emp=document.getElementById("prepEmp");
+  const hint=document.getElementById("prepHint");
+  const missing=(CODES.preparations||[]).filter(p=>!barcodeDigits(p.code)).length;
+  if(hint) hint.textContent=(CODES.preparations||[]).length+" préparations sur la feuille"+(missing ? " · "+missing+" sans code." : ".");
+  if(!html){ if(host) host.innerHTML=""; if(emp) emp.style.display="block"; return; }
+  if(emp) emp.style.display="none";
+  host.innerHTML=html;
+  bindRows(host);
+}
+function paintGun(svgId, boxId, digits){
+  const only=barcodeDigits(digits);
+  const box=document.getElementById(boxId);
+  const svg=document.getElementById(svgId);
+  if(!svg || !box) return false;
+  svg.innerHTML="";
+  if(!only){ box.style.display="none"; svg.dataset.code=""; return false; }
+  box.style.display="block";
+  svg.dataset.code=only;
+  try{
+    JsBarcode("#"+svgId, only, {format:"CODE128", width:2, height:64, displayValue:false, margin:6});
+  }catch(e){
+    box.style.display="none";
+    svg.dataset.code="";
+    return false;
+  }
+  return true;
+}
+function paintTransfers(p, pluDigits){
+  const host=document.getElementById("dxfer");
+  if(!host) return;
+  const list=matchTransfers(p).slice(0,2);
+  if(!list.length){ host.innerHTML=""; return; }
+  host.innerHTML=list.map((t,i)=>{
+    const same=barcodeDigits(t.code) && barcodeDigits(t.code)===pluDigits;
+    const bars=same ? '<div class="notes">Même chiffre que le PLU.</div>' : '<svg id="bcXfer'+i+'"></svg>';
+    return '<div class="xferbox"><div class="meta">'+esc(xferLabel(t))+'</div><b>'+esc(t.name)+'</b><div class="plubig">'+esc(t.code)+"</div>"+bars+"</div>";
+  }).join("");
+  list.forEach((t,i)=>{
+    const d=barcodeDigits(t.code);
+    if(!d || d===pluDigits) return;
+    const el=document.getElementById("bcXfer"+i);
+    if(!el) return;
+    el.dataset.code=d;
+    try{ JsBarcode("#bcXfer"+i, d, {format:"CODE128", width:1.8, height:48, displayValue:false, margin:4}); }
+    catch(err){ el.remove(); }
+  });
+}
+function paintProduct(p, kind, fromCatalog){
+  document.getElementById("demoji").textContent = p.p ? getEmoji(p.n, p.cat) : "";
+  const photoEl=document.getElementById("dphoto");
+  if (p.img && String(p.img).indexOf("data:image")===0 && String(p.img).indexOf("svg+xml")<0) {
+    photoEl.innerHTML = '<img src="'+p.img+'" style="max-width:180px;max-height:140px;border-radius:8px;object-fit:contain" alt="">';
+  }
+  if (p.photo && p._id) showPhotoInto(photoEl, p);
+  document.getElementById("dn").textContent = p.n || "";
+  const bits=[p.cat||"", productDept(p)];
+  if(fromCatalog) bits.push("Catalogue complet");
+  document.getElementById("dc").textContent = bits.filter(Boolean).join(" · ");
+  document.getElementById("dt").innerHTML = (p.tags||[]).map(t=>'<span class="tag">'+esc(t)+"</span>").join("");
+  document.getElementById("dno").textContent = p.notes || "";
+  const digits=barcodeDigits(p.p);
+  document.getElementById("dp").textContent = digits || p.p || "—";
+  if(kind==="perte"){
+    const lead=document.getElementById("dlead");
+    lead.style.display="block";
+    lead.textContent="Pour créer une perte. Scanne seulement ce code : les chiffres du PLU.";
+    document.getElementById("pluLbl").textContent="Pour le pistolet";
+    if(digits) paintGun("bcPlu","pluBox",digits);
+    const cup=String(p.c||"").trim();
+    if(cup){
+      const box=document.getElementById("dcupOnly");
+      box.style.display="block";
+      box.textContent="Code-barres produit : "+cup;
+    }
+    return;
+  }
+  document.getElementById("pluLbl").textContent="PLU";
+  if(digits) paintGun("bcPlu","pluBox",digits);
+  const cup=String(p.c||"").replace(/-/g,"");
+  if(cup){
+    const cupBox=document.getElementById("cupBox");
+    cupBox.style.display="block";
+    document.getElementById("cupText").textContent=p.c;
+    try{
+      JsBarcode("#bcCup", cup, {format:"CODE128", width:1.6, height:45, displayValue:false, margin:0});
+      document.getElementById("bcCup").dataset.code=cup;
+    }catch(e){ cupBox.style.display="none"; }
+  }
+  paintTransfers(p, digits);
+}
+function paintPrep(prep){
+  document.getElementById("demoji").textContent=getEmoji(prep.name, prep.category);
+  document.getElementById("dn").textContent=prep.name;
+  document.getElementById("dc").textContent=(prep.category||"")+" · Préparation";
+  const digits=barcodeDigits(prep.code);
+  if(!digits){
+    document.getElementById("dp").textContent="Pas de code";
+    const lead=document.getElementById("dlead");
+    lead.style.display="block";
+    lead.textContent="Pas de code sur la feuille. On n'en invente pas.";
+    return;
+  }
+  document.getElementById("dp").textContent=digits;
+  document.getElementById("pluLbl").textContent="Pour le pistolet";
+  paintGun("bcPlu","pluBox",digits);
+}
+function productsForTransfer(t){
+  const out=[];
+  for(let i=0;i<P.length;i++){
+    if(transferScore(P[i], t)>0) out.push(P[i]);
+    if(out.length>=8) break;
+  }
+  return out;
+}
+function paintXfer(t){
+  document.getElementById("demoji").textContent=getEmoji(t.name, "");
+  document.getElementById("dn").textContent=t.name;
+  document.getElementById("dc").textContent=xferLabel(t);
+  const digits=barcodeDigits(t.code);
+  document.getElementById("dp").textContent=digits || "—";
+  document.getElementById("pluLbl").textContent="Pour le pistolet";
+  if(digits) paintGun("bcPlu","pluBox",digits);
+  const related=productsForTransfer(t);
+  const host=document.getElementById("dxfer");
+  if(related.length && host){
+    host.innerHTML='<div class="sec" style="padding-left:0">Produits du comptoir</div>'+related.map(p=>'<div class="notes">'+esc(p.n)+(p.p?" · PLU "+esc(p.p):"")+"</div>").join("");
+  }
+}
+function openItem(spec){
+  rememberBack();
+  const kind=spec.kind;
+  const p=spec.product||null;
+  cur=(kind==="produit"||kind==="perte") ? p : null;
+  if(cur && cur.n) trackUsage(cur.n);
+  view="detail";
+  hideChrome();
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById("d").classList.add("active");
+  window.scrollTo(0,0);
+  document.getElementById("dphoto").innerHTML="";
+  document.getElementById("dt").innerHTML="";
+  document.getElementById("dno").textContent="";
+  document.getElementById("dxfer").innerHTML="";
+  const lead=document.getElementById("dlead");
+  lead.style.display="none";
+  lead.textContent="";
+  const cupOnly=document.getElementById("dcupOnly");
+  cupOnly.style.display="none";
+  cupOnly.textContent="";
+  const edit=document.getElementById("editB");
+  edit.style.display = kind==="produit" ? "inline-block" : "none";
+  edit.textContent = spec.fromCatalog ? "Ajouter aux produits utilisés" : "Modifier";
+  document.getElementById("pluBox").style.display="none";
+  document.getElementById("cupBox").style.display="none";
+  document.getElementById("bcPlu").innerHTML="";
+  document.getElementById("bcCup").innerHTML="";
+  document.getElementById("bcPlu").dataset.code="";
+  document.getElementById("bcCup").dataset.code="";
+  document.getElementById("dp").textContent="";
+  document.getElementById("qd").value="";
+  document.getElementById("resd").innerHTML="";
+  if(kind==="prep") return paintPrep(spec.prep);
+  if(kind==="transfert") return paintXfer(spec.xfer);
+  paintProduct(p, kind, !!spec.fromCatalog);
+}
+function show(p){ openItem({kind:"produit", product:p}); }
+function goMain(){
+  const skip={detail:1, form:1, setup:1, set:1, logs:1};
+  const dest=(backView && !skip[backView]) ? backView : "produits";
+  goView(dest);
+}
+function renderMain(){ renderView(); }
+function onScanCode(code){
+  const found=findByCode(code);
+  if(found){
+    openItem({kind: view==="perte" ? "perte" : "produit", product:found});
+    return;
+  }
+  const digits=String(code||"").replace(/\D/g,"");
+  const prep=(CODES.preparations||[]).find(p=>p.code && String(p.code)===digits);
+  if(prep){ openItem({kind:"prep", prep:prep}); return; }
+  const xf=(CODES.transferts||[]).find(t=>String(t.code)===digits);
+  if(xf){ openItem({kind:"transfert", xfer:xf}); return; }
+  const extracted=extractPluFromBarcode(code);
+  q=extracted || code || "";
+  const input=document.getElementById("q");
+  if(input) input.value=q;
+  if(["home","produits","perte","prep"].indexOf(view)<0) goView("home");
+  else renderView();
+}
+function handleMicClick(e){
+  if(e){ e.preventDefault(); e.stopPropagation(); }
+  if(view==="setup" || view==="form") return;
+  const onDetail=view==="detail";
+  const target=onDetail ? document.getElementById("qd") : document.getElementById("q");
+  startVoice(target, (text, products)=>{
+    voiceHits=products && products.length ? products : null;
+    if(onDetail){
+      const box=document.getElementById("resd");
+      const html=mixedHTML(text,{products:true, preps:true, xfers:true, catalog:true, ignoreCat:true, ignoreTag:true, voice:true});
+      box.innerHTML=html;
+      bindRows(box);
+      return;
+    }
+    q=text;
+    const input=document.getElementById("q");
+    if(input) input.value=text;
+    if(["home","produits"].indexOf(view)<0) goView("home");
+    else renderView();
+  });
+}
+function openMine(){
+  rememberBack();
+  view="mine";
+  hideChrome();
+  document.documentElement.classList.remove("need-setup");
+  showScreen("mine");
+  const n=localStorage.getItem("plu_user_name")||"";
+  document.getElementById("mineTitle").textContent=n?("Bonjour, "+n):"Bonjour";
+  document.getElementById("mineDept").textContent=localStorage.getItem("plu_user_dept")||"";
+  renderToday(document.getElementById("mineToday"), 40);
+  if(!document.getElementById("mineToday").innerHTML){
+    document.getElementById("mineToday").innerHTML='<div class="sec">Consultés aujourd\'hui</div><div class="notes">Rien pour l\'instant aujourd\'hui.</div>';
+  }
+  document.getElementById("mineLog").innerHTML='<div class="notes">Chargement du journal…</div>';
+  loadMineLog();
+}
+function paintMineLog(all, name){
+  if(view!=="mine") return;
+  const pending={};
+  getJSON("plu_log_pending",[]).forEach(e=>{ if(e&&e.id) pending[e.id]=1; });
+  const items=all.filter(e=>(e.u||"Inconnu")===name).slice().reverse().slice(0,40);
+  const box=document.getElementById("mineLog");
+  if(!items.length){
+    box.innerHTML='<div class="empty">Aucune modification à ton nom.</div>';
+    return;
+  }
+  box.innerHTML=items.map(e=>{
+    const act=ACT[e.a]||esc(e.a||"");
+    return '<div class="logrow"><b>'+act+"</b> · "+esc(e.n||"")+(e.plu?' <span class="plu">PLU '+esc(e.plu)+"</span>":"")+(pending[e.id]?' <span style="color:#ff9800">(pas encore envoyé)</span>':"")+'<div class="lc">'+esc(fmtDate(e.d))+"</div></div>";
+  }).join("");
+}
+async function loadMineLog(){
+  const name=localStorage.getItem("plu_user_name")||"";
+  let all=mergeLog(getJSON("plu_log_cache",[]), getJSON("plu_log_pending",[]));
+  paintMineLog(all, name);
+  try{
+    const r=await fetchFile(LOG_FILE);
+    if(r.data){
+      setJSON("plu_log_cache", r.data);
+      all=mergeLog(r.data, getJSON("plu_log_pending",[]));
+      paintMineLog(all, name);
+    }
+  }catch(e){}
+}
+async function loadCodes(){
+  try{
+    const r=await fetch("./codes-produits.json?t="+Date.now());
+    if(!r.ok) return;
+    const j=await r.json();
+    if(!j || !Array.isArray(j.preparations) || !j.preparations.length || !Array.isArray(j.transferts)) return;
+    CODES=j;
+  }catch(e){}
+}
+function wireUx(){
+  const qEl=document.getElementById("q");
+  if(qEl) qEl.oninput=e=>{ q=e.target.value; voiceHits=null; renderView(); };
+  const deptEl=document.getElementById("deptF");
+  if(deptEl) deptEl.onchange=()=>{ voiceHits=null; renderView(); };
+  document.getElementById("whoBtn").onclick=()=>openMine();
+  document.getElementById("chgBtn").onclick=()=>{ rememberBack(); goView("setup"); };
+  document.getElementById("setTopB").onclick=()=>{ rememberBack(); openSettings(); };
+  document.getElementById("setB").onclick=()=>{ rememberBack(); openSettings(); };
+  document.getElementById("setupGo").onclick=saveSetup;
+  document.getElementById("setupBack").onclick=()=>goView(backView&&backView!=="setup"?backView:"home");
+  document.getElementById("doorProd").onclick=()=>goView("produits");
+  document.getElementById("doorPerte").onclick=()=>goView("perte");
+  document.getElementById("doorPrep").onclick=()=>goView("prep");
+  document.getElementById("tabHome").onclick=()=>goView("home");
+  document.getElementById("tabProd").onclick=()=>goView("produits");
+  document.getElementById("tabPerte").onclick=()=>goView("perte");
+  document.getElementById("tabPrep").onclick=()=>goView("prep");
+  document.getElementById("mineBack").onclick=()=>goView(backView&&backView!=="mine"?backView:"home");
+  document.getElementById("mineChg").onclick=()=>goView("setup");
+  document.getElementById("mineLogB").onclick=()=>openLog();
+  document.getElementById("setLoadB").onclick=()=>syncFromGitHub(true);
+  document.getElementById("setSaveB").onclick=()=>saveToGitHub();
+  document.getElementById("setProfileB").onclick=()=>{ rememberBack(); goView("setup"); };
+  const admin=document.getElementById("adminCat");
+  if(admin) admin.onchange=()=>{
+    if(admin.checked) localStorage.setItem("plu_admin_catalog","1");
+    else localStorage.removeItem("plu_admin_catalog");
+  };
+  document.getElementById("qd").oninput=e=>{
+    const box=document.getElementById("resd");
+    const query=e.target.value;
+    if(!norm(query)){ box.innerHTML=""; return; }
+    box.innerHTML=mixedHTML(query,{products:true, preps:true, xfers:true, catalog:true, ignoreCat:true, ignoreTag:true});
+    bindRows(box);
+  };
+  const cat=document.getElementById("catF");
+  const tag=document.getElementById("tagF");
+  if(cat) cat.onchange=renderView;
+  if(tag) tag.onchange=renderView;
+}
+function openSettings(){
+  view="set";
+  hideChrome();
+  document.getElementById("setName").value = localStorage.getItem("plu_user_name")||"";
+  const line=document.getElementById("setDeptLine");
+  if(line) line.textContent="Département : "+(localStorage.getItem("plu_user_dept")||"—");
+  const admin=document.getElementById("adminCat");
+  if(admin) admin.checked=localStorage.getItem("plu_admin_catalog")==="1";
+  refreshTokUI();
+  showScreen("set");
+}
+function runAutotest(){
+  const fails=[];
+  const check=(cond,msg)=>{ if(!cond) fails.push(msg); };
+  check((CODES.preparations||[]).length===111, "prep "+(CODES.preparations||[]).length);
+  check((CODES.transferts||[]).length===32, "xfer count");
+  const aioli=(CODES.preparations||[]).find(p=>p.name==="Aïoli (gros)");
+  check(!!aioli && aioli.code===null, "aioli null");
+  const cats=[];
+  (CODES.preparations||[]).forEach(p=>{ if(cats.indexOf(p.category)<0) cats.push(p.category); });
+  check(cats.join("|")==="SALADES VERTES|SALADES COMPOSÉES|FRUITS|TREMPETTES|LÉGUMES|PRÊT À CUIRE", "cats "+cats.join("|"));
+  check(document.querySelectorAll("#tabbar button").length===4, "4 tabs");
+  check(!Array.from(document.querySelectorAll("#tabbar button")).some(b=>/transfert/i.test(b.textContent)), "no transfert tab");
+  const sample=P.find(p=>p.p==="7687" && String(p.c||"").indexOf("68820")>=0);
+  check(!!sample, "sample cup+plu");
+  if(sample){
+    openItem({kind:"perte", product:sample});
+    check(document.getElementById("bcPlu").dataset.code==="7687", "gun "+document.getElementById("bcPlu").dataset.code);
+    check(document.getElementById("cupBox").style.display==="none", "perte hides cup barcode");
+    check(document.getElementById("dcupOnly").textContent.indexOf(sample.c)>=0, "cup text shown");
+    check(document.getElementById("bcPlu").dataset.code!==String(sample.c).replace(/\D/g,""), "gun is not ean");
+  }
+  openItem({kind:"prep", prep:aioli});
+  check(document.getElementById("pluBox").style.display==="none", "aioli box hidden");
+  check(document.getElementById("bcPlu").dataset.code==="", "aioli no digits");
+  check(/pas de code/i.test(document.getElementById("dlead").textContent), "aioli message");
+  const grec=(CODES.preparations||[]).find(p=>p.name==="Grecque (gros)");
+  openItem({kind:"prep", prep:grec});
+  const gtxt=document.getElementById("d").innerText.toLowerCase();
+  check(document.getElementById("bcPlu").dataset.code==="8610", "grecque code "+document.getElementById("bcPlu").dataset.code);
+  check(gtxt.indexOf("feta")<0 && gtxt.indexOf("olive")<0, "pas de recette grecque");
+  const br=P.find(p=>p.n==="BROCOLI" && p.p==="4060");
+  if(br){
+    openItem({kind:"produit", product:br});
+    check(document.getElementById("dxfer").textContent.indexOf("4060")>=0, "brocoli transfert");
+  } else fails.push("brocoli missing");
+  const sprouts=P.find(p=>p.n==="Brussels sprouts");
+  if(sprouts){
+    openItem({kind:"produit", product:sprouts});
+    check(document.getElementById("dxfer").textContent.indexOf("4550")>=0, "brussels transfert");
+  } else fails.push("brussels missing");
+  const cuc=P.find(p=>p.p==="4062");
+  if(cuc){
+    openItem({kind:"produit", product:cuc});
+    const tx=document.getElementById("dxfer").textContent;
+    check(tx.indexOf("4062")<0 && tx.toLowerCase().indexOf("chalote")<0, "pas de transfert échalote sur "+cuc.n);
+  }
+  const prune=P.find(p=>p.p==="4040");
+  if(prune){
+    openItem({kind:"produit", product:prune});
+    const tx=document.getElementById("dxfer").textContent+document.getElementById("dlead").textContent;
+    check(tx.toLowerCase().indexOf("radis")<0, "pas de radis romain sur "+prune.n);
+  }
+  const hiddenName="POMME CORTLAND PETITE";
+  check(!P.some(p=>p.n===hiddenName), "cortland not in working set");
+  check(FULL_CATALOG.some(p=>p.n===hiddenName), "cortland stays in full catalog");
+  q=hiddenName;
+  const qEl=document.getElementById("q"); if(qEl) qEl.value=q;
+  goView("home");
+  check(document.getElementById("homeResults").innerText.toLowerCase().indexOf("cortland petite")<0, "catalogue caché");
+  q="8177";
+  goView("home");
+  check(document.getElementById("homeResults").innerText.indexOf("César")>=0, "recherche prep");
+  q="Butternut";
+  goView("home");
+  check(/Transfert/.test(document.getElementById("homeResults").innerText), "recherche transfert");
+  q="";
+  goView("prep");
+  const prepText=document.getElementById("prepRes").innerText;
+  check(prepText.indexOf("Aïoli (gros)")>=0, "aioli dans la liste");
+  check(prepText.indexOf("Pas de code")>=0, "aioli sans code affiché");
+  check((prepText.match(/SALADES VERTES|SALADES COMPOSÉES|FRUITS|TREMPETTES|LÉGUMES|PRÊT À CUIRE/g)||[]).length>=6, "sections prep");
+  q="";
+  if(document.getElementById("q")) document.getElementById("q").value="";
+  goView("home");
+  const out=document.getElementById("autotestOut");
+  out.hidden=false;
+  out.dataset.status=fails.length?"fail":"ok";
+  out.textContent=fails.length?fails.join("\n"):"OK";
+  document.title=fails.length?"PLU_TEST_FAIL":"PLU_TEST_OK";
+}
+async function boot(){
+  if(location.hash==="#autotest"){
+    localStorage.setItem("plu_user_name","Max");
+    localStorage.setItem("plu_user_dept","Fruits et légumes");
+    localStorage.removeItem("plu_admin_catalog");
+  }
+  wireUx();
+  fillDeptFilter();
+  try{ await loadExternalData(); }catch(e){ console.warn(e); }
+  try{ await loadCodes(); }catch(e){}
+  try{ updateTagFilter(); updateCatFilter(); }catch(e){}
+  const name=localStorage.getItem("plu_user_name");
+  const dept=localStorage.getItem("plu_user_dept");
+  if(!name || !dept) goView("setup");
+  else goView("home");
+  if(location.hash==="#autotest"){
+    try{ runAutotest(); }
+    catch(err){
+      const out=document.getElementById("autotestOut");
+      out.hidden=false;
+      out.dataset.status="fail";
+      out.textContent="EXC "+(err&&err.stack?err.stack:err);
+      document.title="PLU_TEST_FAIL";
+    }
+    document.documentElement.dataset.ready="1";
+    return;
+  }
+  syncFromGitHub(false);
+  document.documentElement.dataset.ready="1";
+}
+
+boot();
 </script>
 </body>
 </html>

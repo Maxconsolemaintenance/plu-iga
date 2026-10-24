@@ -128,9 +128,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .perte-ico svg{width:70%;height:70%;display:block}
 .perte-dept .cnt{font-size:.72rem;font-weight:700;color:#9e9e9e}
 .perte-dept:active,.perte-cat:active{background:#2a2a2a}
-.perte-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:10px 8px 28px}
-.perte-cat{background:#1a1a1a;color:#fff;border:1px solid #2c2c2c;border-radius:14px;padding:8px 3px 8px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:4px;cursor:pointer;min-height:118px;min-width:0;touch-action:manipulation;user-select:none}
-.perte-cat .lbl{font-size:11px;font-weight:700;text-align:center;line-height:1.15;max-width:100%}
+.perte-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:8px 2px 28px;margin:0 -8px}
+.perte-cat{background:#1a1a1a;color:#fff;border:1px solid #2c2c2c;border-radius:14px;padding:8px 1px 8px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:4px;cursor:pointer;min-height:118px;min-width:0;touch-action:manipulation;user-select:none}
+.perte-cat .lbl{font-size:16px;font-weight:800;text-align:center;line-height:1.2;max-width:100%;hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word}
 .perte-cat .cnt{font-size:10px;color:#9ccc65;font-weight:700}
 #perteBody.results{flex:1;min-height:0;padding-bottom:96px;-webkit-overflow-scrolling:touch}
 #perteBody .item{min-height:54px}
@@ -978,6 +978,11 @@ function renderPerteDepts(){
   html += '</div>';
   return html;
 }
+function perteCatLabel(cat){
+  if(cat === "Champignons") return "Champi<br>gnons";
+  if(cat === "Concombres") return "Concom<br>bres";
+  return esc(cat);
+}
 function renderPerteGrid(deptId){
   const cats = perteVisibleCats(deptId);
   if(!cats.length) return '<div class="empty">Aucune catégorie avec un PLU</div>';
@@ -987,7 +992,7 @@ function renderPerteGrid(deptId){
     const n = cats[i].n;
     html += '<button type="button" class="perte-cat" data-cat="'+esc(cat)+'" title="'+esc(cat)+'" aria-label="'+esc(cat)+', '+n+' PLU">'
       + perteMark(cat)
-      + '<span class="lbl">'+esc(cat)+'</span>'
+      + '<span class="lbl">'+perteCatLabel(cat)+'</span>'
       + '<span class="cnt">'+n+'</span></button>';
   }
   html += '</div>';

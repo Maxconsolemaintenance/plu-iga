@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr-CA">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -100,12 +100,54 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .setp input{width:100%;padding:11px;margin-bottom:8px;border:1px solid #444;border-radius:8px;background:#222;color:#fff;font-size:15px}
 .logrow{background:#1a1a1a;border-radius:10px;padding:10px;margin-bottom:6px;font-size:.85em}
 .logrow .lc{color:#aaa;font-size:.9em;margin-top:4px;white-space:pre-wrap}
+
+.home-sticky{position:sticky;top:0;z-index:12;background:#111}
+#s .home-sticky .header{position:static}
+.mode-tabs{display:flex;background:#1a1a1a;border-bottom:1px solid #2a2a2a}
+.mode-tab{flex:1;background:transparent;color:#bdbdbd;border:none;border-bottom:3px solid transparent;padding:13px 8px 10px;font-size:16px;font-weight:800;cursor:pointer;touch-action:manipulation}
+.mode-tab.on{color:#fff;border-bottom-color:#4caf50}
+.mode-tab:active{background:#222}
+#perte.screen.active{height:100vh;height:100dvh;overflow:hidden}
+#perte .topbar{flex:0 0 auto;background:#111}
+#perteSearchBar{flex-wrap:nowrap;position:static}
+#perteSearchBar input{flex:1;min-width:0}
+.perte-mic{background:#1565c0;font-size:20px;min-width:48px;min-height:44px;flex:0 0 auto}
+.perte-navline{display:flex;align-items:center;gap:2px;padding:4px 6px;background:#161616;border-bottom:1px solid #333}
+.perte-navline .back{margin:0;flex:0 0 auto}
+.crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:1px;min-width:0;flex:1}
+.crumbs button{background:none;border:none;color:#90caf9;font:inherit;font-weight:700;padding:8px 4px;cursor:pointer;touch-action:manipulation}
+.crumbs .here{font-weight:800;color:#fff;padding:8px 4px}
+.crumbs .sep{color:#666}
+.perte-depts{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:14px 12px 24px}
+.perte-dept{background:#1c1c1c;color:#fff;border:2px solid #333;border-radius:18px;min-height:190px;padding:14px 8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;font-size:1.35em;font-weight:800;touch-action:manipulation}
+.perte-dept[data-dept="fruits"]{border-color:#c62828}
+.perte-dept[data-dept="legumes"]{border-color:#2e7d32}
+.perte-ico{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:34px;line-height:1;flex:0 0 auto}
+.perte-dept .perte-ico{width:104px;height:104px;font-size:58px}
+.perte-ico svg{width:70%;height:70%;display:block}
+.perte-dept .cnt{font-size:.72rem;font-weight:700;color:#9e9e9e}
+.perte-dept:active,.perte-cat:active{background:#2a2a2a}
+.perte-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:10px 8px 28px}
+.perte-cat{background:#1a1a1a;color:#fff;border:1px solid #2c2c2c;border-radius:14px;padding:8px 3px 8px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:4px;cursor:pointer;min-height:118px;min-width:0;touch-action:manipulation;user-select:none}
+.perte-cat .lbl{font-size:11px;font-weight:700;text-align:center;line-height:1.15;max-width:100%}
+.perte-cat .cnt{font-size:10px;color:#9ccc65;font-weight:700}
+#perteBody.results{flex:1;min-height:0;padding-bottom:96px;-webkit-overflow-scrolling:touch}
+#perteBody .item{min-height:54px}
+#perteBody .name{white-space:normal;overflow:visible;text-overflow:unset;line-height:1.25}
+.perte-plu{color:#4caf50;font-weight:800;font-size:1.2em;letter-spacing:.02em;flex:0 0 auto;text-align:right;padding-left:8px;line-height:1.05}
+.perte-plu span{display:block;font-size:.48em;font-weight:800;letter-spacing:.08em;color:#81c784}
+.mode-tab:focus-visible,.perte-cat:focus-visible,.perte-dept:focus-visible,.crumbs button:focus-visible{outline:2px solid #4caf50;outline-offset:2px}
 </style>
 </head>
 <body>
 <button id="floatMic" onclick="handleMicClick(event)">🎤</button>
 
 <div id="s" class="screen active">
+<div class="home-sticky">
+<div class="mode-tabs" role="tablist" aria-label="Sections">
+<button type="button" class="mode-tab on" data-mode="search" role="tab" aria-selected="true">Recherche</button>
+<button type="button" class="mode-tab" data-mode="perte" role="tab" aria-selected="false">Perte</button>
+</div>
 <div class="header">
 <input type="text" id="q" placeholder="Rechercher dans le stock utilisé...">
 <select id="catF"><option value="">Toutes catégories</option><option value="Agrumes">Agrumes</option><option value="Baies">Baies</option><option value="Bananes">Bananes</option><option value="Cerises">Cerises</option><option value="Champignons">Champignons</option><option value="Concombres">Concombres</option><option value="FLORAL ORCHIDEES">FLORAL ORCHIDEES</option><option value="FLORAL PLANTES">FLORAL PLANTES</option><option value="FLORAL ROSES">FLORAL ROSES</option><option value="Floral">Floral</option><option value="Fruits & Légumes V. Ajout">Fruits & Légumes V. Ajout</option><option value="Fruits Ethniques">Fruits Ethniques</option><option value="Fruits Saisonniers">Fruits Saisonniers</option><option value="Fruits Tropicaux">Fruits Tropicaux</option><option value="Fruits à noyau">Fruits à noyau</option><option value="GRAINES OISEAUX">GRAINES OISEAUX</option><option value="Herbes">Herbes</option><option value="Ingrédients">Ingrédients</option><option value="Jus, Vinaigrettes & Trempettes Réfrigérés">Jus, Vinaigrettes & Trempettes Réfrigérés</option><option value="Légumes Champ">Légumes Champ</option><option value="Légumes Cuisson">Légumes Cuisson</option><option value="Légumes Ethniques">Légumes Ethniques</option><option value="Légumes Racine">Légumes Racine</option><option value="Légumes Salade">Légumes Salade</option><option value="MULTICULT VRAC">MULTICULT VRAC</option><option value="Melons">Melons</option><option value="NE PAS UTILISER">NE PAS UTILISER</option><option value="PANIERS SUSPENDUS">PANIERS SUSPENDUS</option><option value="PLANTES EN FLEURS">PLANTES EN FLEURS</option><option value="Poires">Poires</option><option value="Poivrons">Poivrons</option><option value="Pommes">Pommes</option><option value="Pommes de terre">Pommes de terre</option><option value="Produits Secs V. Ajout">Produits Secs V. Ajout</option><option value="Raisins">Raisins</option><option value="Salades Emballées V. Ajout">Salades Emballées V. Ajout</option><option value="Standard">Standard</option><option value="Substituts Viande">Substituts Viande</option><option value="Tomates">Tomates</option><option value="VENTE CENTR. JARDIN">VENTE CENTR. JARDIN</option><option value="VENTE FLEURS">VENTE FLEURS</option><option value="VENTE FR. ET LEG.">VENTE FR. ET LEG.</option><option value="VIVACES">VIVACES</option><option value="Vrac Valeur Ajoutée">Vrac Valeur Ajoutée</option></select>
@@ -117,6 +159,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <button class="btn" id="githubSaveB" title="Sauvegarder sur GitHub" style="background:#2e7d32">💾 GitHub</button>
 <button class="btn" id="setB" title="Paramètres" style="background:#455a64">⚙️</button>
 <button class="btn p" id="addB">+</button>
+</div>
 </div>
 <div id="syncStatus" style="font-size:12px;padding:4px 8px;color:#555"></div>
 <div class="results" id="res"></div>
@@ -228,6 +271,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div id="logInfo" style="font-size:.75em;color:#888;margin-bottom:8px"></div>
 <div id="logList"></div>
 </div>
+</div>
+
+<div id="perte" class="screen">
+<div class="topbar">
+<div class="mode-tabs" role="tablist" aria-label="Sections">
+<button type="button" class="mode-tab" data-mode="search" role="tab" aria-selected="false">Recherche</button>
+<button type="button" class="mode-tab on" data-mode="perte" role="tab" aria-selected="true">Perte</button>
+</div>
+<div class="perte-navline">
+<button class="btn back" id="perteBackB" type="button">Retour</button>
+<nav class="crumbs" id="perteCrumbs" aria-label="Fil d'Ariane"></nav>
+</div>
+<div class="header" id="perteSearchBar" style="display:none">
+<input type="text" id="perteQ" placeholder="Rechercher dans cette catégorie…" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
+<button type="button" class="btn perte-mic" id="perteMic" title="Recherche vocale" aria-label="Recherche vocale dans cette catégorie">🎤</button>
+</div>
+</div>
+<div id="perteHint" class="inv-hint"></div>
+<div class="results" id="perteBody"></div>
 </div>
 
 <input type="file" id="camInput" accept="image/*" capture="environment">
@@ -662,6 +724,344 @@ function goMain(){
   resetToRoot();
 }
 
+// Onglet Perte : Fruits ou Légumes, puis la catégorie, puis les PLU de cette catégorie seulement.
+const PERTE_DEPTS = [
+  {id:"fruits", label:"Fruits", cats:["Agrumes","Baies","Bananes","Cerises","Fruits Ethniques","Fruits Saisonniers","Fruits Tropicaux","Fruits à noyau","Melons","Poires","Pommes","Raisins","Tomates","Fruits & Légumes V. Ajout"]},
+  {id:"legumes", label:"Légumes", cats:["Légumes Cuisson","Légumes Racine","Poivrons","Légumes Salade","Pommes de terre","Champignons","Herbes","Concombres","Légumes Champ","Légumes Ethniques","Salades Emballées V. Ajout","Vrac Valeur Ajoutée"]}
+];
+const PERTE_MARK = {
+  fruits:{e:"🍎", bg:"#5c1a1a"},
+  legumes:{e:"🥕", bg:"#5a3510"},
+  "Pommes":{e:"🍎", bg:"#5c1a1a"},
+  "Agrumes":{e:"🍊", bg:"#6a3a08"},
+  "Bananes":{e:"🍌", bg:"#5c4a10"},
+  "Poires":{e:"🍐", bg:"#2d4a16"},
+  "Raisins":{e:"🍇", bg:"#3a2158"},
+  "Baies":{e:"🍓", bg:"#6a1c2a"},
+  "Cerises":{e:"🍒", bg:"#5a1020"},
+  "Fruits à noyau":{e:"🍑", bg:"#6a3a28"},
+  "Melons":{e:"🍉", bg:"#1d4a2a"},
+  "Fruits Tropicaux":{e:"🍍", bg:"#4a4a10"},
+  "Fruits Ethniques":{e:"🥝", bg:"#3a4a18"},
+  "Tomates":{e:"🍅", bg:"#6a1c18"},
+  "Fruits Saisonniers":{e:"🍂", bg:"#5a3a12"},
+  "Fruits & Légumes V. Ajout":{e:"🥗", bg:"#2a4a28"},
+  "Légumes Cuisson":{e:"🥦", bg:"#1c4a28"},
+  "Légumes Racine":{e:"🥕", bg:"#5a3510"},
+  "Poivrons":{e:"🌶️", bg:"#5a1c18"},
+  "Légumes Salade":{e:"🥬", bg:"#1e4a22"},
+  "Pommes de terre":{e:"🥔", bg:"#4a3828"},
+  "Champignons":{e:"🍄", bg:"#5a2a22"},
+  "Herbes":{e:"🌿", bg:"#1a4a32"},
+  "Concombres":{e:"🥒", bg:"#1a4a28"},
+  "Légumes Champ":{bg:"#1e4a22", svg:'<svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><circle cx="32" cy="36" r="18" fill="#8bc34a"/><path d="M32 16c-4 10-4 26 0 38M16 34c10 6 22 6 32 0M20 46c8-4 16-4 24 2" stroke="#2e5a16" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>'},
+  "Légumes Ethniques":{e:"🍆", bg:"#3a2048"},
+  "Salades Emballées V. Ajout":{e:"🥡", bg:"#3a3a3a"},
+  "Vrac Valeur Ajoutée":{e:"🥜", bg:"#4a3820"}
+};
+function perteMark(name){
+  const m = PERTE_MARK[name] || PERTE_MARK.fruits;
+  return '<span class="perte-ico" style="background:'+m.bg+'" aria-hidden="true">'+(m.svg || m.e)+'</span>';
+}
+function hasRealPlu(p){
+  return /^\d{4,5}$/.test(String(p && p.p || "").trim());
+}
+function perteDeptById(id){
+  for(let i=0;i<PERTE_DEPTS.length;i++) if(PERTE_DEPTS[i].id===id) return PERTE_DEPTS[i];
+  return PERTE_DEPTS[0];
+}
+function perteDeptLabel(id){
+  return perteDeptById(id).label;
+}
+function pertePluCounts(){
+  const m = new Map();
+  for(let i=0;i<P.length;i++){
+    const p = P[i];
+    if(!hasRealPlu(p)) continue;
+    const c = (p.cat || "").trim();
+    if(!c) continue;
+    m.set(c, (m.get(c) || 0) + 1);
+  }
+  return m;
+}
+function perteVisibleCats(deptId){
+  const counts = pertePluCounts();
+  const dept = perteDeptById(deptId);
+  const out = [];
+  for(let i=0;i<dept.cats.length;i++){
+    const cat = dept.cats[i];
+    const n = counts.get(cat) || 0;
+    if(n > 0) out.push({cat:cat, n:n});
+  }
+  return out;
+}
+function perteProducts(cat){
+  const usage = getUsage();
+  const items = [];
+  for(let i=0;i<P.length;i++){
+    const p = P[i];
+    if((p.cat || "").trim() !== cat) continue;
+    if(!hasRealPlu(p)) continue;
+    items.push(p);
+  }
+  items.sort((a, b) => {
+    const au = usage[a.n] || 0;
+    const bu = usage[b.n] || 0;
+    if(au !== bu) return bu - au;
+    return String(a.n || "").localeCompare(String(b.n || ""), "fr", {sensitivity:"base"});
+  });
+  return items;
+}
+function perteFilter(items, query){
+  const raw = (query || "").trim();
+  if(!raw) return items;
+  const nq = norm(raw);
+  const digits = raw.replace(/\D/g, "");
+  const words = nq.split(/\s+/).filter(w => w.length > 1);
+  return items.filter(p => {
+    const name = norm(p.n || "");
+    if(words.length && words.every(w => name.includes(w))) return true;
+    if(!words.length && nq && name.includes(nq)) return true;
+    const plu = String(p.p || "");
+    if(digits && plu.indexOf(digits) === 0) return true;
+    return false;
+  });
+}
+function scopedPerteMatches(spoken, poolOrCat){
+  const pool = Array.isArray(poolOrCat) ? poolOrCat : perteProducts(poolOrCat);
+  const normalized = normalizeSpoken(spoken);
+  const words = cleanWords(normalized);
+  const digits = String(spoken || "").replace(/\D/g, "");
+  if(!words.length && digits.length < 3) return pool.slice();
+  const plain = perteFilter(pool, words.join(" ") || digits);
+  if(plain.length) return plain;
+  const hits = [];
+  for(let i=0;i<pool.length;i++){
+    const p = pool[i];
+    const tokens = norm(p.n).split(/\s+/).filter(function(t){ return t.length >= 3; });
+    let best = 1;
+    if(digits.length >= 3 && String(p.p || "").indexOf(digits) === 0) best = 0;
+    for(let w=0; w<words.length; w++){
+      const word = words[w];
+      for(let t=0; t<tokens.length; t++){
+        const token = tokens[t];
+        const score = (token.indexOf(word) >= 0 || word.indexOf(token) >= 0)
+          ? 0.12
+          : levenshtein(word, token) / Math.max(word.length, token.length, 1);
+        if(score < best) best = score;
+      }
+    }
+    if(best <= 0.34) hits.push({p:p, best:best});
+  }
+  hits.sort(function(a,b){ return a.best - b.best; });
+  return hits.map(function(h){ return h.p; });
+}
+function syncFloatMic(){
+  const btn = document.getElementById("floatMic");
+  if(!btn) return;
+  const top = nav[nav.length - 1];
+  const hide = !!(top && top.screen === "perte" && top.level !== "list");
+  btn.style.display = hide ? "none" : "flex";
+}
+function perteBackTo(idx){
+  if(!(idx >= 0) || idx >= nav.length - 1) return;
+  const steps = nav.length - 1 - idx;
+  if(historyWorks){
+    history.go(-steps);
+    return;
+  }
+  nav = nav.slice(0, idx + 1);
+  applyNav(nav[nav.length - 1]);
+}
+function goRecherche(){
+  if(nav.length === 1 && nav[0].screen === "s") return;
+  resetToRoot();
+}
+function openPerteHome(){
+  const top = nav[nav.length - 1];
+  if(top && top.screen === "perte" && (top.level || "dept") === "dept") return;
+  const idx = nav.findIndex(e => e.screen === "perte" && (e.level || "dept") === "dept");
+  if(idx >= 0 && idx < nav.length - 1){
+    perteBackTo(idx);
+    return;
+  }
+  pushNav({screen:"perte", level:"dept"});
+}
+function renderPerteCrumbs(entry){
+  const el = document.getElementById("perteCrumbs");
+  if(!el) return;
+  const level = entry.level || "dept";
+  const parts = [];
+  const deptIdx = nav.findIndex(e => e.screen === "perte" && (e.level || "dept") === "dept");
+  const catIdx = nav.findIndex(e => e.screen === "perte" && e.level === "cats" && e.dept === entry.dept);
+  if(level === "dept"){
+    parts.push('<span class="here">Perte</span>');
+  } else {
+    parts.push('<button type="button" data-nav="'+deptIdx+'">Perte</button>');
+    parts.push('<span class="sep" aria-hidden="true">›</span>');
+    const deptLabel = perteDeptLabel(entry.dept);
+    if(level === "cats"){
+      parts.push('<span class="here">'+esc(deptLabel)+'</span>');
+    } else {
+      parts.push('<button type="button" data-nav="'+catIdx+'">'+esc(deptLabel)+'</button>');
+      parts.push('<span class="sep" aria-hidden="true">›</span>');
+      parts.push('<span class="here">'+esc(entry.cat || "")+'</span>');
+    }
+  }
+  el.innerHTML = parts.join("");
+  const buttons = el.querySelectorAll("button[data-nav]");
+  for(let i=0;i<buttons.length;i++){
+    buttons[i].onclick = function(){ perteBackTo(parseInt(this.getAttribute("data-nav"), 10)); };
+  }
+}
+function renderPerteDepts(){
+  const counts = [
+    perteVisibleCats("fruits"),
+    perteVisibleCats("legumes")
+  ];
+  if(!counts[0].length && !counts[1].length){
+    return '<div class="empty">Aucune catégorie avec un PLU</div>';
+  }
+  let html = '<div class="perte-depts">';
+  for(let i=0;i<PERTE_DEPTS.length;i++){
+    const dept = PERTE_DEPTS[i];
+    const cats = i === 0 ? counts[0] : counts[1];
+    if(!cats.length) continue;
+    const nLabel = cats.length + " catégorie" + (cats.length > 1 ? "s" : "");
+    html += '<button type="button" class="perte-dept" data-dept="'+dept.id+'">'
+      + perteMark(dept.id)
+      + '<span>'+esc(dept.label)+'</span>'
+      + '<span class="cnt">'+nLabel+'</span></button>';
+  }
+  html += '</div>';
+  return html;
+}
+function renderPerteGrid(deptId){
+  const cats = perteVisibleCats(deptId);
+  if(!cats.length) return '<div class="empty">Aucune catégorie avec un PLU</div>';
+  let html = '<div class="perte-grid">';
+  for(let i=0;i<cats.length;i++){
+    const cat = cats[i].cat;
+    const n = cats[i].n;
+    html += '<button type="button" class="perte-cat" data-cat="'+esc(cat)+'" title="'+esc(cat)+'" aria-label="'+esc(cat)+', '+n+' PLU">'
+      + perteMark(cat)
+      + '<span class="lbl">'+esc(cat)+'</span>'
+      + '<span class="cnt">'+n+'</span></button>';
+  }
+  html += '</div>';
+  return html;
+}
+function perteRow(p){
+  const i = P.indexOf(p);
+  return '<div class="item perte-row" data-i="'+i+'">'
+    + '<div class="thumb" style="display:flex;align-items:center;justify-content:center;font-size:26px;background:#2a2a2a">'+getEmoji(p.n, p.cat)+'</div>'
+    + '<div class="info"><div class="name">'+esc(p.n)+'</div></div>'
+    + '<div class="perte-plu"><span>PLU</span>'+esc(p.p)+'</div></div>';
+}
+function renderPerteProducts(entry, preset){
+  const all = perteProducts(entry.cat);
+  const items = Array.isArray(preset) ? preset : perteFilter(all, perteQuery);
+  const body = document.getElementById("perteBody");
+  const hint = document.getElementById("perteHint");
+  if(!body) return;
+  if(!all.length){
+    if(hint) hint.textContent = "Aucun PLU dans cette catégorie.";
+    body.innerHTML = '<div class="empty">Aucun PLU dans cette catégorie</div>';
+    return;
+  }
+  if(!items.length){
+    if(hint) hint.textContent = "Aucun résultat dans cette catégorie.";
+    body.innerHTML = '<div class="empty">Aucun résultat dans '+esc(entry.cat)+'</div>';
+    return;
+  }
+  const scoped = (perteQuery || "").trim()
+    ? "Résultat dans cette catégorie seulement."
+    : "Les plus utilisés d'abord. La recherche reste dans cette catégorie.";
+  if(hint) hint.textContent = items.length + " PLU · " + scoped;
+  body.innerHTML = items.map(perteRow).join("");
+  body.scrollTop = 0;
+}
+function renderPerte(entry){
+  if(!entry) entry = {screen:"perte", level:"dept"};
+  const level = entry.level || "dept";
+  const searchBar = document.getElementById("perteSearchBar");
+  const hint = document.getElementById("perteHint");
+  const body = document.getElementById("perteBody");
+  const root = document.getElementById("perte");
+  if(root) root.setAttribute("data-level", level);
+  renderPerteCrumbs(entry);
+  if(level !== "list"){
+    if(searchBar) searchBar.style.display = "none";
+    perteQuery = "";
+    perteQueryCat = "";
+    const qEl = document.getElementById("perteQ");
+    if(qEl) qEl.value = "";
+  }
+  if(!body) { syncFloatMic(); return; }
+  if(level === "dept"){
+    if(hint) hint.textContent = "Choisissez Fruits ou Légumes.";
+    body.innerHTML = renderPerteDepts();
+  } else if(level === "cats"){
+    if(hint) hint.textContent = "Choisissez une catégorie.";
+    body.innerHTML = renderPerteGrid(entry.dept);
+  } else {
+    if(searchBar) searchBar.style.display = "flex";
+    if(perteQueryCat !== entry.cat){
+      perteQuery = "";
+      perteQueryCat = entry.cat || "";
+      const cleared = document.getElementById("perteQ");
+      if(cleared) cleared.value = "";
+    }
+    const qEl = document.getElementById("perteQ");
+    if(qEl){
+      qEl.placeholder = "Rechercher dans " + (entry.cat || "cette catégorie") + "…";
+      if(document.activeElement !== qEl && qEl.value !== perteQuery) qEl.value = perteQuery;
+    }
+    if(hint) hint.textContent = "Les plus utilisés d'abord. La recherche reste dans cette catégorie.";
+    renderPerteProducts(entry);
+  }
+  syncFloatMic();
+}
+function bindPerteUi(){
+  const qEl = document.getElementById("perteQ");
+  if(qEl) qEl.oninput = function(){
+    perteQuery = qEl.value;
+    const top = nav[nav.length - 1];
+    if(top && top.screen === "perte" && top.level === "list") renderPerteProducts(top);
+  };
+  const mic = document.getElementById("perteMic");
+  if(mic) mic.onclick = function(e){ handleMicClick(e); };
+  const back = document.getElementById("perteBackB");
+  if(back) back.onclick = function(){ handleAppBack(); };
+  const tabs = document.querySelectorAll("[data-mode]");
+  for(let i=0;i<tabs.length;i++){
+    tabs[i].onclick = function(){
+      if(this.getAttribute("data-mode") === "perte") openPerteHome();
+      else goRecherche();
+    };
+  }
+  const body = document.getElementById("perteBody");
+  if(body) body.addEventListener("click", function(e){
+    const dept = e.target.closest && e.target.closest("[data-dept]");
+    if(dept){
+      pushNav({screen:"perte", level:"cats", dept:dept.getAttribute("data-dept")});
+      return;
+    }
+    const catBtn = e.target.closest && e.target.closest("[data-cat]");
+    if(catBtn){
+      const top = nav[nav.length - 1];
+      pushNav({screen:"perte", level:"list", dept:(top && top.dept) || "", cat:catBtn.getAttribute("data-cat")});
+      return;
+    }
+    const row = e.target.closest && e.target.closest(".perte-row");
+    if(!row) return;
+    const p = P[parseInt(row.getAttribute("data-i"), 10)];
+    if(p) show(p);
+  });
+}
+bindPerteUi();
+
+
 function openForm(p, idx){
   editIdx = idx;
   document.getElementById("ftitle").textContent = p ? "Modifier" : "Nouveau produit";
@@ -691,6 +1091,9 @@ function navState(){
     if(e.pid) o.pid=e.pid;
     if(e.user) o.user=e.user;
     if(typeof e.editIdx==="number") o.editIdx=e.editIdx;
+    if(e.level) o.level=e.level;
+    if(e.dept) o.dept=e.dept;
+    if(e.cat) o.cat=e.cat;
     return o;
   })};
 }
@@ -732,7 +1135,10 @@ function applyNav(entry){
     renderLog();
   } else if(entry.screen==="inv"){
     renderInventoryScreen();
+  } else if(entry.screen==="perte"){
+    renderPerte(entry);
   }
+  syncFloatMic();
 }
 function resetToRoot(){
   const steps=Math.max(0, nav.length-1);
@@ -1028,15 +1434,17 @@ function normalizeSpoken(spoken) {
   return s;
 }
 
-function findBestMatches(spoken, limit = 15) {
+function findBestMatches(spoken, limit = 15, pool) {
   const normalized = normalizeSpoken(spoken);
   const hint = detectCategoryHint(normalized);
   const words = cleanWords(normalized);
-  if (!words.length && !hint) return [];
+  const digits = String(spoken||"").replace(/\D/g,"");
+  if (!words.length && !hint && !(pool && digits.length>=3)) return [];
 
+  const source = pool || P;
   const candidates = [];
-  for (const p of P) {
-    if(!inActiveInventory(p)) continue;
+  for (const p of source) {
+    if(!pool && !inActiveInventory(p)) continue;
     // Prefer category match, but don't exclude completely if score is very good
     const catMatch = !hint || productMatchesCategory(p, hint);
     const pn = norm(p.n);
@@ -1062,7 +1470,8 @@ function findBestMatches(spoken, limit = 15) {
     
     // PLU items get priority (lower score = better)
     if (p.p && String(p.p).trim()) bestScore *= 0.6;
-    
+    if (pool && digits.length>=3 && String(p.p||"").indexOf(digits)===0) bestScore = Math.min(bestScore, 0.05);
+
     // Accept if reasonably close
     if (bestScore <= 0.55) {
       candidates.push({ p, score: bestScore });
@@ -1072,7 +1481,7 @@ function findBestMatches(spoken, limit = 15) {
   return candidates.slice(0, limit).map(c => c.p);
 }
 
-function startVoice(targetInput, after) {
+function startVoice(targetInput, after, pool) {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) {
     alert("Recherche vocale non supportée");
@@ -1101,10 +1510,18 @@ function startVoice(targetInput, after) {
     finish();
     const text = (e.results && e.results[0] && e.results[0][0]) ? e.results[0][0].transcript : "";
     if (text && targetInput) {
-      const matches = findBestMatches(text);
-      const cleaned = cleanWords(text).join(" ") || text.trim();
-      targetInput.value = cleaned;
-      if (after) after(cleaned, matches);
+      if (pool) {
+        const words = cleanWords(normalizeSpoken(text));
+        const digits = String(text).replace(/\D/g, "");
+        const qv = words.join(" ") || (digits.length>=3 ? digits : "");
+        targetInput.value = qv;
+        if (after) after(qv, scopedPerteMatches(text, pool));
+      } else {
+        const matches = findBestMatches(text);
+        const cleaned = cleanWords(text).join(" ") || text.trim();
+        targetInput.value = cleaned;
+        if (after) after(cleaned, matches);
+      }
     }
   };
   
@@ -1135,6 +1552,17 @@ function resetMicBtn() {
 
 function handleMicClick(e) {
   if (e) { e.preventDefault(); e.stopPropagation(); }
+  const top = nav[nav.length-1];
+  if (top && top.screen==="perte" && top.level==="list") {
+    const input = document.getElementById("perteQ");
+    const pool = perteProducts(top.cat);
+    startVoice(input, (text, products) => {
+      perteQuery = text || "";
+      perteQueryCat = top.cat || "";
+      renderPerteProducts(top, products || []);
+    }, pool);
+    return;
+  }
   startVoice(document.getElementById("q"), (text, products) => {
     q = text;
     if (products && products.length) {
@@ -1212,7 +1640,7 @@ function mergeData(base, local, remote){
   return { data: out, localWins, remoteNew };
 }
 async function fetchRemote(){ const r=await fetchFile(GITHUB_FILE); if(r.data) ensureIds(r.data); return r; }
-function refreshUI(){ try{ updateTagFilter(); updateCatFilter(); renderMain(); if(nav.length && nav[nav.length-1].screen==="inv") renderInventoryScreen(); if(cur && document.getElementById("d").classList.contains("active")) paintStock(cur); }catch(e){} }
+function refreshUI(){ try{ updateTagFilter(); updateCatFilter(); renderMain(); const top=nav[nav.length-1]; if(top && top.screen==="inv") renderInventoryScreen(); if(top && top.screen==="perte") renderPerte(top); if(cur && document.getElementById("d").classList.contains("active")) paintStock(cur); }catch(e){} }
 function fmtTime(){ return new Date().toLocaleTimeString("fr-CA",{hour:"2-digit",minute:"2-digit"}); }
 
 // Récupère la dernière version sur GitHub et la fusionne avec les changements locaux (sans pousser)
@@ -1515,6 +1943,7 @@ try {
     updateCatFilter();
     q = "";
     renderMain();
+    if(nav[nav.length-1] && nav[nav.length-1].screen==="perte") renderPerte(nav[nav.length-1]);
     syncFromGitHub(false);
     setTimeout(askNameOnce, 800);
   }).catch(() => {
@@ -1522,6 +1951,7 @@ try {
     updateCatFilter();
     q = "";
     renderMain();
+    if(nav[nav.length-1] && nav[nav.length-1].screen==="perte") renderPerte(nav[nav.length-1]);
   });
   // Si toujours vide, forcer un rendu direct
   if (!document.getElementById("res").children.length) {
@@ -1581,7 +2011,7 @@ function initHistory(){
     if(navSilent>0){ navSilent--; return; }
     const st=history.state;
     if(st && Array.isArray(st.nav) && st.nav.length){
-      nav=st.nav.map(e=>({screen:e.screen, pid:e.pid||"", user:e.user||"", editIdx:e.editIdx}));
+      nav=st.nav.map(e=>({screen:e.screen, pid:e.pid||"", user:e.user||"", editIdx:e.editIdx, level:e.level||"", dept:e.dept||"", cat:e.cat||""}));
       applyNav(nav[nav.length-1]);
       return;
     }

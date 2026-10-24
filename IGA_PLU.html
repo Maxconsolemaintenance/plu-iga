@@ -82,15 +82,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .ph-thumb{max-width:120px;max-height:120px;border-radius:8px;object-fit:cover;cursor:pointer}
 .ph-big{max-width:240px;max-height:240px}
 .setp{padding:14px;padding-top:8px;flex:1;overflow-y:auto}
-.stock-row{display:none;gap:12px;align-items:flex-start;text-align:left;margin:14px auto 0;max-width:420px;background:#1a1a1a;border-radius:12px;padding:12px 14px;cursor:pointer}
-.stock-row input{width:26px;height:26px;margin-top:2px;flex:0 0 auto;accent-color:#4caf50}
+.stock-row{display:none;gap:12px;align-items:flex-start;text-align:left;margin:0 0 10px;background:#1a1a1a;border-radius:12px;padding:12px 14px;cursor:pointer}
+.stock-row input{width:22px;height:22px;margin-top:2px;flex:0 0 auto;accent-color:#4caf50}
+.fstock-label{display:block;font-weight:700;font-size:.95em;color:#eee}
+.stock-status{display:none;margin:12px auto 0;max-width:420px;text-align:center}
 #dstockLabel{display:block;font-weight:700;font-size:.95em;color:#eee}
 #dstock{display:block;margin-top:4px}
 .inv-row{cursor:pointer}
-.inv-row input{width:26px;height:26px;flex:0 0 auto;accent-color:#4caf50}
+.inv-ck{display:flex;align-items:center;justify-content:center;flex:0 0 auto;min-width:32px;min-height:32px}
+.inv-row input{width:20px;height:20px;margin:0;accent-color:#4caf50}
 #inv.screen.active{height:100vh;height:100dvh;overflow:hidden}
-#inv .setp{display:flex;flex-direction:column;overflow:hidden;min-height:0}
-#invList{flex:1;overflow-y:auto;min-height:0;padding-bottom:28px}
+#inv .header{flex-wrap:nowrap}
+#inv .header .back{margin:0;align-self:center;flex:0 0 auto}
+.inv-hint{font-size:.75em;color:#888;padding:6px 10px 0;line-height:1.35}
+#invList.results{flex:1;min-height:0;padding-bottom:28px}
 .setp h3{margin:14px 0 8px}
 .setp input{width:100%;padding:11px;margin-bottom:8px;border:1px solid #444;border-radius:8px;background:#222;color:#fff;font-size:15px}
 .logrow{background:#1a1a1a;border-radius:10px;padding:10px;margin-bottom:6px;font-size:.85em}
@@ -102,7 +107,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 
 <div id="s" class="screen active">
 <div class="header">
-<input type="text" id="q" placeholder="Rechercher un produit...">
+<input type="text" id="q" placeholder="Rechercher dans le stock utilisé...">
 <select id="catF"><option value="">Toutes catégories</option><option value="Agrumes">Agrumes</option><option value="Baies">Baies</option><option value="Bananes">Bananes</option><option value="Cerises">Cerises</option><option value="Champignons">Champignons</option><option value="Concombres">Concombres</option><option value="FLORAL ORCHIDEES">FLORAL ORCHIDEES</option><option value="FLORAL PLANTES">FLORAL PLANTES</option><option value="FLORAL ROSES">FLORAL ROSES</option><option value="Floral">Floral</option><option value="Fruits & Légumes V. Ajout">Fruits & Légumes V. Ajout</option><option value="Fruits Ethniques">Fruits Ethniques</option><option value="Fruits Saisonniers">Fruits Saisonniers</option><option value="Fruits Tropicaux">Fruits Tropicaux</option><option value="Fruits à noyau">Fruits à noyau</option><option value="GRAINES OISEAUX">GRAINES OISEAUX</option><option value="Herbes">Herbes</option><option value="Ingrédients">Ingrédients</option><option value="Jus, Vinaigrettes & Trempettes Réfrigérés">Jus, Vinaigrettes & Trempettes Réfrigérés</option><option value="Légumes Champ">Légumes Champ</option><option value="Légumes Cuisson">Légumes Cuisson</option><option value="Légumes Ethniques">Légumes Ethniques</option><option value="Légumes Racine">Légumes Racine</option><option value="Légumes Salade">Légumes Salade</option><option value="MULTICULT VRAC">MULTICULT VRAC</option><option value="Melons">Melons</option><option value="NE PAS UTILISER">NE PAS UTILISER</option><option value="PANIERS SUSPENDUS">PANIERS SUSPENDUS</option><option value="PLANTES EN FLEURS">PLANTES EN FLEURS</option><option value="Poires">Poires</option><option value="Poivrons">Poivrons</option><option value="Pommes">Pommes</option><option value="Pommes de terre">Pommes de terre</option><option value="Produits Secs V. Ajout">Produits Secs V. Ajout</option><option value="Raisins">Raisins</option><option value="Salades Emballées V. Ajout">Salades Emballées V. Ajout</option><option value="Standard">Standard</option><option value="Substituts Viande">Substituts Viande</option><option value="Tomates">Tomates</option><option value="VENTE CENTR. JARDIN">VENTE CENTR. JARDIN</option><option value="VENTE FLEURS">VENTE FLEURS</option><option value="VENTE FR. ET LEG.">VENTE FR. ET LEG.</option><option value="VIVACES">VIVACES</option><option value="Vrac Valeur Ajoutée">Vrac Valeur Ajoutée</option></select>
 <select id="tagF"><option value="">Tous tags</option></select>
 
@@ -137,13 +142,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 </div>
 <div class="tags" id="dt"></div>
 <div class="notes" id="dno"></div>
-<label id="dstockRow" class="stock-row">
-  <input type="checkbox" id="dstockCk">
-  <span>
-    <span id="dstockLabel">Stock utilisé</span>
-    <span class="notes" id="dstock"></span>
-  </span>
-</label>
+<div id="dstockRow" class="stock-status">
+  <span id="dstockLabel">Stock utilisé</span>
+  <span class="notes" id="dstock"></span>
+</div>
 <div style="margin-top:12px;display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
 <button class="btn" id="editB">Modifier</button>
 </div>
@@ -174,6 +176,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   <button class="btn" id="fphotoDelB" type="button" style="display:none;background:#6d4c41">🗑️ Retirer la photo</button>
 </div>
 <input type="file" id="fphotoIn" accept="image/*" capture="environment" style="display:none">
+<label id="fstockRow" class="stock-row">
+  <input type="checkbox" id="fstockCk">
+  <span>
+    <span class="fstock-label">Stock utilisé</span>
+    <span class="notes">Cochez pour le montrer dans la recherche. Décochez pour le retirer du stock utilisé. Le produit reste dans l'inventaire complet.</span>
+  </span>
+</label>
 <div class="factions">
 <button class="btn" id="fscanB">📷 Scanner CUP</button>
 <button class="btn p" id="fsaveB">Sauver</button>
@@ -196,21 +205,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <h3>📜 Journal</h3>
 <button class="btn" id="logB" style="background:#1565c0">Journal des modifications</button>
 <h3>Inventaire — fruits et légumes</h3>
-<p style="font-size:.85em;color:#aaa;line-height:1.35;margin-bottom:8px">Le stock utilisé se coche dans l'inventaire complet. La recherche principale reste la liste habituelle.</p>
+<p style="font-size:.85em;color:#aaa;line-height:1.35;margin-bottom:8px">La recherche principale affiche seulement le stock utilisé. L'inventaire complet liste tous les fruits et légumes : cochez pour les ajouter au stock utilisé, décochez pour les en retirer.</p>
 <button class="btn p" id="invOpenB" type="button">Inventaire complet</button>
 <div style="font-size:.75em;color:#666;margin-top:18px">PLU IGA v1.2</div>
 </div>
 </div>
 
 <div id="inv" class="screen">
+<div class="header">
 <button class="btn back" id="invBackB" type="button">Retour</button>
-<div class="setp">
-<h3>Inventaire complet</h3>
-<p style="font-size:.85em;color:#aaa;line-height:1.35;margin-bottom:8px">Fruits et légumes seulement. Case cochée = stock utilisé (inventaire limité). Décocher retire du stock utilisé et laisse le produit dans l'inventaire complet.</p>
-<div id="invHint" style="font-size:.8em;color:#888;margin-bottom:8px"></div>
-<input type="text" id="invQ" placeholder="Filtrer par nom, PLU ou CUP…" autocomplete="off" style="width:100%;padding:11px;margin-bottom:8px;border:1px solid #444;border-radius:8px;background:#222;color:#fff;font-size:15px">
-<div id="invList"></div>
+<input type="text" id="invQ" placeholder="Rechercher un produit..." autocomplete="off">
 </div>
+<div id="invHint" class="inv-hint"></div>
+<div class="results" id="invList"></div>
 </div>
 
 <div id="logs" class="screen">
@@ -337,11 +344,8 @@ function isStockUsed(p){
   if(p.stock==="non") return false;
   return !!(p.p && String(p.p).trim());
 }
-function inActiveInventory(){
-  return true;
-}
-function stockLabel(p){
-  return isStockUsed(p) ? "Stock utilisé" : "Stock non utilisé";
+function inActiveInventory(p){
+  return isStockUsed(p);
 }
 function setStock(p, used){
   if(!p || !isFruitsLegumes(p)) return;
@@ -367,7 +371,7 @@ function updateInvHint(){
   const hint=document.getElementById("invHint");
   if(!hint) return;
   const counts=inventoryCounts();
-  hint.textContent = "Fruits et légumes : "+counts.full+" produits. Stock utilisé : "+counts.used+". Les autres restent dans l'inventaire complet seulement.";
+  hint.textContent = "Inventaire complet · "+counts.full+" fruits et légumes · "+counts.used+" dans le stock utilisé. Cochez pour inclure, décochez pour retirer.";
 }
 function renderInventoryScreen(){
   const box=document.getElementById("invList");
@@ -385,7 +389,7 @@ function renderInventoryScreen(){
   }
   items.sort((a,b)=>String(P[a].n||"").localeCompare(String(P[b].n||""),"fr",{sensitivity:"base"}));
   if(!items.length){
-    box.innerHTML = '<div class="empty">Aucun produit du rayon</div>';
+    box.innerHTML = '<div class="empty">Aucun produit</div>';
     return;
   }
   const html=new Array(items.length);
@@ -393,9 +397,9 @@ function renderInventoryScreen(){
     const i=items[k];
     const p=P[i];
     const used=isStockUsed(p);
-    const plu=p.p ? ("PLU "+esc(p.p)) : "sans PLU";
-    html[k]='<label class="item inv-row"><input type="checkbox" data-stock-i="'+i+'"'+(used?" checked":"")+'>'
-      +'<div class="info"><div class="name">'+esc(p.n)+'</div><div class="meta">'+esc(p.cat||"")+" · "+plu+' · <span data-stock-label>'+stockLabel(p)+'</span></div></div></label>';
+    const plu=p.p ? '<span class="plu">PLU '+esc(p.p)+'</span>' : '';
+    html[k]='<div class="item inv-row" data-i="'+i+'"><label class="inv-ck"><input type="checkbox" data-stock-i="'+i+'"'+(used?" checked":"")+' aria-label="Stock utilisé pour '+esc(p.n)+'"></label>'
+      +'<div class="info"><div class="name">'+esc(p.n)+'</div>'+(plu?'<div class="meta">'+plu+'</div>':'')+'</div></div>';
   }
   box.innerHTML=html.join("");
   box.scrollTop=0;
@@ -407,32 +411,41 @@ function onInvToggle(e){
   if(!p || !isFruitsLegumes(p)) return;
   setStock(p, inp.checked);
   inp.checked=isStockUsed(p);
-  const label=inp.closest(".item") && inp.closest(".item").querySelector("[data-stock-label]");
-  if(label) label.textContent=stockLabel(p);
   updateInvHint();
   if(cur===p) paintStock(p);
 }
 function paintStock(p){
   const row=document.getElementById("dstockRow");
-  const ck=document.getElementById("dstockCk");
+  const label=document.getElementById("dstockLabel");
   const line=document.getElementById("dstock");
-  if(!row || !ck || !line) return;
+  if(!row || !label || !line) return;
   if(!p || !isFruitsLegumes(p)){
     row.style.display="none";
     line.textContent="";
     return;
   }
-  row.style.display="flex";
-  ck.checked=isStockUsed(p);
-  line.textContent = isStockUsed(p)
-    ? "Coché : dans le stock utilisé (inventaire limité)."
-    : "Décoché : retiré du stock utilisé. Le produit reste dans l'inventaire complet.";
+  const used=isStockUsed(p);
+  row.style.display="block";
+  label.textContent = used ? "Stock utilisé" : "Stock non utilisé";
+  line.textContent = "Pour le changer : Modifier le produit, ou l'inventaire complet.";
+}
+function formCatValue(){
+  const sel=document.getElementById("fcat");
+  if(!sel) return "";
+  if(sel.value==="__new__") return (document.getElementById("fcatNew").value||"").trim();
+  return (sel.value||"").trim();
+}
+function syncFormStock(){
+  const row=document.getElementById("fstockRow");
+  if(!row) return;
+  row.style.display = isFruitsLegumes({cat:formCatValue()}) ? "flex" : "none";
 }
 function filterList(query){
   const nq = norm(query);
   const cat = document.getElementById("catF").value;
   const tag = document.getElementById("tagF").value;
   let items = P.filter(p=>{
+    if(!isStockUsed(p)) return false;
     if(cat && p.cat !== cat) return false;
     if(tag && !(p.tags||[]).includes(tag)) return false;
     if(nq.length >= 1 && !norm(p.n).includes(nq) && !(p.p||"").includes(query) && !(p.c||"").includes(query)) return false;
@@ -571,7 +584,12 @@ function renderMain(){
   const items = filterList(q);
   const r = document.getElementById("res");
   const e = document.getElementById("emp");
-  if(!items.length){r.innerHTML=""; e.style.display="block"; return;}
+  if(!items.length){
+    r.innerHTML="";
+    e.textContent = (q||"").trim() ? "Aucun résultat dans le stock utilisé" : "Aucun produit dans le stock utilisé";
+    e.style.display="block";
+    return;
+  }
   e.style.display="none";
   renderList(r, items);
 }
@@ -661,6 +679,9 @@ function openForm(p, idx){
   document.getElementById("ft").value = p ? (p.tags||[]).join(", ") : "";
   document.getElementById("fno").value = p ? p.notes : "";
   initFormPhoto(p);
+  const stockCk=document.getElementById("fstockCk");
+  if(stockCk) stockCk.checked = p ? isStockUsed(p) : true;
+  syncFormStock();
   pushNav({screen:"f", editIdx:idx, pid:p&&p._id||""});
 }
 
@@ -841,15 +862,17 @@ document.getElementById("setB").onclick = openSettings;
 document.getElementById("logB").onclick = openLog;
 document.getElementById("logQ").oninput = renderLog;
 document.getElementById("setNameB").onclick = ()=>{ const v=document.getElementById("setName").value.trim(); localStorage.setItem("plu_user_name", v); alert(v?("✅ Nom enregistré : "+v):"Nom effacé."); };
-document.getElementById("dstockCk").onchange = ()=>{
-  if(!cur || !isFruitsLegumes(cur)) return;
-  setStock(cur, document.getElementById("dstockCk").checked);
-  paintStock(cur);
-};
 document.getElementById("invOpenB").onclick = ()=>pushNav({screen:"inv"});
 let invFilterTimer=0;
 document.getElementById("invQ").oninput = ()=>{ clearTimeout(invFilterTimer); invFilterTimer=setTimeout(()=>renderInventoryScreen(), 120); };
 document.getElementById("invList").addEventListener("change", onInvToggle);
+document.getElementById("invList").addEventListener("click", (e)=>{
+  if(e.target && e.target.closest && e.target.closest("input[data-stock-i], .inv-ck")) return;
+  const row=e.target && e.target.closest && e.target.closest(".inv-row");
+  if(!row) return;
+  const p=P[parseInt(row.getAttribute("data-i"),10)];
+  if(p) show(p);
+});
 document.getElementById("setTokB").onclick = ()=>{ const t=prompt("Colle ton token GitHub (fine-grained, Contents: Read and write sur plu-iga) :"); if(t&&t.trim()){ localStorage.setItem("github_token", t.trim()); refreshTokUI(); alert("✅ Token enregistré."); } };
 document.getElementById("clrTokB").onclick = ()=>{ if(confirm("Effacer le token de ce téléphone ?")){ localStorage.removeItem("github_token"); refreshTokUI(); } };
 document.getElementById("fphotoB").onclick = ()=>document.getElementById("fphotoIn").click();
@@ -865,7 +888,9 @@ document.getElementById("editB").onclick = ()=>openForm(cur, P.indexOf(cur));
 
 document.getElementById("fcat").onchange = function(){
   document.getElementById("fcatNew").style.display = (this.value === "__new__") ? "block" : "none";
+  syncFormStock();
 };
+document.getElementById("fcatNew").oninput = syncFormStock;
 
 document.getElementById("fsaveB").onclick = ()=>{
   const obj = {
@@ -880,6 +905,7 @@ document.getElementById("fsaveB").onclick = ()=>{
   if(editIdx >= 0 && P[editIdx]._id) obj._id = P[editIdx]._id; else obj._id = newId();
   const oldP = editIdx >= 0 ? P[editIdx] : null;
   if(oldP){ for(const k in oldP){ if(!(k in obj)) obj[k]=oldP[k]; } }
+  if(isFruitsLegumes(obj)) obj.stock = document.getElementById("fstockCk").checked ? "utilise" : "non";
   if(!obj.n) return;
   applyFormPhoto(obj);
   logChange(oldP ? "modif" : "ajout", oldP, obj);

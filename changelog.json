@@ -3284,5 +3284,69 @@
     "utilisé"
    ]
   }
+ },
+ {
+  "id": "id_mvnoxmj3_5db025",
+  "d": "2026-10-25T10:34:24.207Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_rib8jk",
+  "plu": "4678",
+  "n": "Banane Jaune Long) Poivrons (capsicums)",
+  "ch": {
+   "stock": [
+    "∅",
+    "utilisé"
+   ]
+  }
+ },
+ {
+  "id": "id_mvnoz2sl_dnybx1",
+  "d": "2026-10-25T10:35:31.941Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_8exflq",
+  "plu": "4757",
+  "n": "Banane Courge",
+  "ch": {
+   "cat": [
+    "Bananes",
+    "Légumes Cuisson"
+   ],
+   "stock": [
+    "∅",
+    "utilisé"
+   ]
+  }
+ },
+ {
+  "id": "id_mvnp0kag_4kbg0n",
+  "d": "2026-10-25T10:36:41.272Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_rib8jk",
+  "plu": "4678",
+  "n": "Banane Jaune Long) Poivrons (capsicums)",
+  "ch": {
+   "cat": [
+    "Poivrons",
+    "Raisins"
+   ]
+  }
+ },
+ {
+  "id": "id_mvnp0xzg_umj1pu",
+  "d": "2026-10-25T10:36:59.020Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_rib8jk",
+  "plu": "4678",
+  "n": "Banane Jaune Long) Poivrons (capsicums)",
+  "ch": {
+   "cat": [
+    "Raisins",
+    "Poivrons"
+   ]
+  }
  }
 ]

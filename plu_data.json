@@ -1974,11 +1974,12 @@
     "n": "Curuba/Banana Passion Fruit",
     "p": "3311",
     "c": "",
-    "cat": "Bananes",
+    "cat": "Fruits Tropicaux",
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjZjM5YzEyIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+QzwvdGV4dD48L3N2Zz4=",
-    "_id": "h_d0p14u"
+    "_id": "h_d0p14u",
+    "stock": "utilise"
   },
   {
     "n": "D'Estivale Pommes",
@@ -2849,7 +2850,8 @@
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjZDM1NDAwIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+VjwvdGV4dD48L3N2Zz4=",
-    "_id": "h_1vkt5fk"
+    "_id": "h_1vkt5fk",
+    "stock": "non"
   },
   {
     "n": "Vert Chou",
@@ -3027,7 +3029,8 @@
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjZTc0YzNjIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+SDwvdGV4dD48L3N2Zz4=",
-    "_id": "h_1b5lcjm"
+    "_id": "h_1b5lcjm",
+    "stock": "utilise"
   },
   {
     "n": "Hearts Céleri",
@@ -4904,7 +4907,8 @@
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjOGU0NGFkIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+TDwvdGV4dD48L3N2Zz4=",
-    "_id": "h_nugwdc"
+    "_id": "h_nugwdc",
+    "stock": "non"
   },
   {
     "n": "Citron Concombre",
@@ -5762,7 +5766,8 @@
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjMjdhZTYwIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+TjwvdGV4dD48L3N2Zz4=",
-    "_id": "h_u97652"
+    "_id": "h_u97652",
+    "stock": "non"
   },
   {
     "n": "Northern Spy Pommes",
@@ -6614,7 +6619,8 @@
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjMjk4MGI5IiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+UjwvdGV4dD48L3N2Zz4=",
-    "_id": "h_1il5teu"
+    "_id": "h_1il5teu",
+    "stock": "non"
   },
   {
     "n": "Rouge Belgian endive (witloof chicory)",
@@ -7822,7 +7828,8 @@
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjZDM1NDAwIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+UjwvdGV4dD48L3N2Zz4=",
-    "_id": "h_1r6vtcb"
+    "_id": "h_1r6vtcb",
+    "stock": "non"
   },
   {
     "n": "Retailer Assigned Bananes",
@@ -7832,7 +7839,8 @@
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjOGU0NGFkIiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+UjwvdGV4dD48L3N2Zz4=",
-    "_id": "h_1r6vtd8"
+    "_id": "h_1r6vtd8",
+    "stock": "non"
   },
   {
     "n": "Retailer Assigned Haricots",
@@ -13031,7 +13039,8 @@
     "tags": [],
     "notes": "",
     "img": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjOWI1OWI2IiByeD0iNiIvPjx0ZXh0IHg9IjI0IiB5PSIzMiIgZm9udC1zaXplPSIyMiIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+UDwvdGV4dD48L3N2Zz4=",
-    "_id": "h_11ujjnl"
+    "_id": "h_11ujjnl",
+    "stock": "non"
   },
   {
     "n": "Petit Jaune Flesh Nectarine",

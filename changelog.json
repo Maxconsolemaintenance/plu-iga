@@ -3348,5 +3348,159 @@
     "Poivrons"
    ]
   }
+ },
+ {
+  "id": "id_mvnq2ftd_z2pj52",
+  "d": "2026-10-25T11:06:08.401Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_d0p14u",
+  "plu": "3311",
+  "n": "Curuba/Banana Passion Fruit",
+  "ch": {
+   "cat": [
+    "Bananes",
+    "Fruits Tropicaux"
+   ],
+   "stock": [
+    "∅",
+    "utilisé"
+   ]
+  }
+ },
+ {
+  "id": "id_mvnq4lvp_inw5ie",
+  "d": "2026-10-25T11:07:49.573Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_1b5lcjm",
+  "plu": "3287",
+  "n": "Hawaiian plantain Bananes",
+  "ch": {
+   "stock": [
+    "∅",
+    "non utilisé"
+   ]
+  }
+ },
+ {
+  "id": "id_mvnq4ohy_k1iyib",
+  "d": "2026-10-25T11:07:52.966Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_1b5lcjm",
+  "plu": "3287",
+  "n": "Hawaiian plantain Bananes",
+  "ch": {
+   "stock": [
+    "non utilisé",
+    "utilisé"
+   ]
+  }
+ },
+ {
+  "id": "id_mvnq4w03_7rdd3q",
+  "d": "2026-10-25T11:08:02.691Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_11ujjnl",
+  "plu": "4186",
+  "n": "Petit Jaune Bananes",
+  "ch": {
+   "stock": [
+    "∅",
+    "non utilisé"
+   ]
+  }
+ },
+ {
+  "id": "id_mvnq4xrv_9kmb3n",
+  "d": "2026-10-25T11:08:04.987Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_1r6vtcb",
+  "plu": "4237",
+  "n": "Retailer Assigned Bananes",
+  "ch": {
+   "stock": [
+    "∅",
+    "non utilisé"
+   ]
+  }
+ },
+ {
+  "id": "id_mvnq4xzp_vwb0nl",
+  "d": "2026-10-25T11:08:05.269Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_1r6vtd8",
+  "plu": "4238",
+  "n": "Retailer Assigned Bananes",
+  "ch": {
+   "stock": [
+    "∅",
+    "non utilisé"
+   ]
+  }
+ },
+ {
+  "id": "id_mvnq4zko_2dh52g",
+  "d": "2026-10-25T11:08:07.320Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_1il5teu",
+  "plu": "4236",
+  "n": "Rouge Bananes",
+  "ch": {
+   "stock": [
+    "∅",
+    "non utilisé"
+   ]
+  }
+ },
+ {
+  "id": "id_mvnq51a6_fp2d5h",
+  "d": "2026-10-25T11:08:09.534Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_1vkt5fk",
+  "plu": "4231",
+  "n": "Vert Bananes",
+  "ch": {
+   "stock": [
+    "∅",
+    "non utilisé"
+   ]
+  }
+ },
+ {
+  "id": "id_mvnq53ns_3s3t38",
+  "d": "2026-10-25T11:08:12.616Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_u97652",
+  "plu": "4234",
+  "n": "Nino Bananes",
+  "ch": {
+   "stock": [
+    "∅",
+    "non utilisé"
+   ]
+  }
+ },
+ {
+  "id": "id_mvnq5dja_tnr1xt",
+  "d": "2026-10-25T11:08:25.414Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_nugwdc",
+  "plu": "4232",
+  "n": "Leaves Bananes",
+  "ch": {
+   "stock": [
+    "∅",
+    "non utilisé"
+   ]
+  }
  }
 ]

@@ -107,8 +107,9 @@ body.mic-on #s .results{padding-bottom:calc(56px + env(safe-area-inset-bottom, 0
 .inv-ck{display:flex;align-items:center;justify-content:center;flex:0 0 auto;min-width:32px;min-height:32px}
 .inv-row input{width:20px;height:20px;margin:0;accent-color:#4caf50}
 #inv.screen.active{height:100vh;height:100dvh;overflow:hidden}
-#inv .header{flex-wrap:nowrap}
+#inv .header{flex-wrap:wrap}
 #inv .header .back{margin:0;align-self:center;flex:0 0 auto}
+#invCat{flex:1 0 100%;width:100%;max-width:100%;min-width:0}
 .inv-hint{font-size:.75em;color:#888;padding:6px 10px 0;line-height:1.35}
 #invList.results{flex:1;min-height:0;padding-bottom:28px}
 .setp h3{margin:14px 0 8px}
@@ -303,6 +304,7 @@ body.mic-on #s .results{padding-bottom:calc(56px + env(safe-area-inset-bottom, 0
 <div class="header">
 <button class="btn back" id="invBackB" type="button">Retour</button>
 <input type="text" id="invQ" placeholder="Rechercher un produit..." autocomplete="off">
+<select id="invCat" aria-label="Catégorie"><option value="">Toutes catégories</option></select>
 </div>
 <div id="invHint" class="inv-hint"></div>
 <div class="results" id="invList"></div>
@@ -493,23 +495,35 @@ function updateInvHint(){
   const counts=inventoryCounts();
   hint.textContent = "Inventaire complet · "+counts.full+" fruits et légumes · "+counts.used+" dans le stock utilisé. Cochez pour inclure, décochez pour retirer.";
 }
+function updateInvCatFilter(){
+  const sel=document.getElementById("invCat");
+  if(!sel) return;
+  const current=sel.value;
+  const cats=getCategories().filter(c=>isFruitsLegumes({cat:c}));
+  sel.innerHTML='<option value="">Toutes catégories</option>'+cats.map(c=>'<option value="'+esc(c)+'">'+esc(c)+'</option>').join("");
+  if(cats.includes(current)) sel.value=current;
+}
 function renderInventoryScreen(){
   const box=document.getElementById("invList");
   const qEl=document.getElementById("invQ");
+  const catEl=document.getElementById("invCat");
   if(!box) return;
+  updateInvCatFilter();
   updateInvHint();
   const query=(qEl && qEl.value || "").trim();
   const nq=norm(query);
+  const cat=(catEl && catEl.value || "").trim();
   const items=[];
   for(let i=0;i<P.length;i++){
     const p=P[i];
     if(!isFruitsLegumes(p)) continue;
+    if(cat && (p.cat||"").trim() !== cat) continue;
     if(nq && !norm(p.n).includes(nq) && !String(p.p||"").includes(query) && !String(p.c||"").includes(query)) continue;
     items.push(i);
   }
   items.sort((a,b)=>String(P[a].n||"").localeCompare(String(P[b].n||""),"fr",{sensitivity:"base"}));
   if(!items.length){
-    box.innerHTML = '<div class="empty">Aucun produit</div>';
+    box.innerHTML = '<div class="empty">'+(cat?"Aucun produit dans cette catégorie":"Aucun produit")+'</div>';
     return;
   }
   const html=new Array(items.length);
@@ -1608,6 +1622,7 @@ document.getElementById("setNameB").onclick = ()=>{ const v=document.getElementB
 document.getElementById("invOpenB").onclick = ()=>pushNav({screen:"inv"});
 let invFilterTimer=0;
 document.getElementById("invQ").oninput = ()=>{ clearTimeout(invFilterTimer); invFilterTimer=setTimeout(()=>renderInventoryScreen(), 120); };
+document.getElementById("invCat").onchange = ()=>renderInventoryScreen();
 document.getElementById("invList").addEventListener("change", onInvToggle);
 document.getElementById("invList").addEventListener("click", (e)=>{
   if(e.target && e.target.closest && e.target.closest("input[data-stock-i], .inv-ck")) return;

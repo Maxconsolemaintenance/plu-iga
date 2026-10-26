@@ -3502,5 +3502,122 @@
     "non utilisé"
    ]
   }
+ },
+ {
+  "id": "id_mvp8uqbv_sj0oaj",
+  "d": "2026-10-26T12:39:47.659Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_1gk5gr",
+  "plu": "7687",
+  "n": "COMP PAMPLEMOUSSE RGE 3LB 8/1.36KG",
+  "ch": {
+   "stock": [
+    "∅",
+    "non utilisé"
+   ]
+  }
+ },
+ {
+  "id": "id_mvp8v0p5_19nbo8",
+  "d": "2026-10-26T12:40:01.097Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_6pv59g",
+  "plu": "94033",
+  "n": "CITRON GROS BIO",
+  "ch": {
+   "stock": [
+    "∅",
+    "non utilisé"
+   ]
+  }
+ },
+ {
+  "id": "id_mvp8v121_nl040h",
+  "d": "2026-10-26T12:40:01.561Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_6pv6xy",
+  "plu": "94053",
+  "n": "CITRON GROS BIO",
+  "ch": {
+   "stock": [
+    "∅",
+    "non utilisé"
+   ]
+  }
+ },
+ {
+  "id": "id_mvp8v1fh_bddzdw",
+  "d": "2026-10-26T12:40:02.045Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_6q24ms",
+  "plu": "94958",
+  "n": "CITRON GROS BIO",
+  "ch": {
+   "stock": [
+    "∅",
+    "non utilisé"
+   ]
+  }
+ },
+ {
+  "id": "id_mvp8w416_niwtmc",
+  "d": "2026-10-26T12:40:52.075Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_cnp3v",
+  "plu": "4595",
+  "n": "Citron Concombre",
+  "ch": {
+   "stock": [
+    "∅",
+    "non utilisé"
+   ]
+  }
+ },
+ {
+  "id": "id_mvp8wjwo_oxa7ti",
+  "d": "2026-10-26T12:41:12.648Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_6pv6xy",
+  "plu": "4053",
+  "n": "CITRON GROS",
+  "ch": {
+   "n": [
+    "CITRON GROS BIO",
+    "CITRON GROS"
+   ],
+   "p": [
+    "94053",
+    "4053"
+   ],
+   "stock": [
+    "non utilisé",
+    "utilisé"
+   ]
+  }
+ },
+ {
+  "id": "id_mvp8xa1v_u36qyw",
+  "d": "2026-10-26T12:41:46.531Z",
+  "u": "Max",
+  "a": "modif",
+  "pid": "h_6pv6xy",
+  "plu": "94053",
+  "n": "CITRON GROS BIO",
+  "ch": {
+   "n": [
+    "CITRON GROS",
+    "CITRON GROS BIO"
+   ],
+   "p": [
+    "4053",
+    "94053"
+   ]
+  }
  }
 ]
